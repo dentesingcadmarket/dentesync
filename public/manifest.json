@@ -1,0 +1,26 @@
+{
+  "name": "DenteSync — D-Console",
+  "short_name": "DenteSync",
+  "description": "Diş teknisyenleri için yapay zeka destekli iş yönetim platformu",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#0a0a0b",
+  "theme_color": "#0a0a0b",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["medical", "productivity", "business"],
+  "lang": "tr"
+}
