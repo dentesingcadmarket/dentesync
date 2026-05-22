@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
@@ -15,7 +15,6 @@ export interface Message {
 }
 
 interface ChatProps {
-  apiKey: string
   initialSessionId?: string
   initialMessages?: Message[]
 }
@@ -27,7 +26,7 @@ function CopyButton({ text }: { text: string }) {
       onClick={() => { navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000) }}
       className="absolute top-2 right-2 p-1.5 rounded-md bg-white/10 hover:bg-white/20 transition-colors"
     >
-      {copied ? <Check className="w-3 h-3 text-[#10b981]" /> : <Copy className="w-3 h-3 text-[#71717a]" />}
+      {copied ? <Check className="w-3 h-3 text-[#0075ff]" /> : <Copy className="w-3 h-3 text-[#999999]" />}
     </button>
   )
 }
@@ -43,16 +42,16 @@ function MessageBubble({ message }: { message: Message }) {
     >
       {/* Avatar */}
       <div className={`w-7 h-7 rounded-full shrink-0 flex items-center justify-center text-xs font-bold mt-1 ${
-        isUser ? 'bg-[#2563eb] text-white' : 'bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)]'
+        isUser ? 'bg-[#0075ff] text-white' : 'bg-[#292929] border border-[rgba(229,231,235,0.08)]'
       }`}>
-        {isUser ? 'S' : <Terminal className="w-3.5 h-3.5 text-[#2563eb]" />}
+        {isUser ? 'S' : <Terminal className="w-3.5 h-3.5 text-[#0075ff]" />}
       </div>
 
       {/* Mesaj */}
       <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm ${
         isUser
-          ? 'bg-[#2563eb] text-white rounded-tr-sm'
-          : 'bg-[#111114] border border-[rgba(255,255,255,0.07)] text-[#f4f4f5] rounded-tl-sm'
+          ? 'bg-[#0075ff] text-white rounded-tr-sm'
+          : 'bg-[#212121] border border-[rgba(229,231,235,0.08)] text-[#ffffff] rounded-tl-sm'
       }`}>
         {isUser ? (
           <p className="whitespace-pre-wrap">{message.content}</p>
@@ -83,13 +82,13 @@ function MessageBubble({ message }: { message: Message }) {
               p: ({ children }) => <p className="mb-2 last:mb-0 leading-relaxed">{children}</p>,
               ul: ({ children }) => <ul className="mb-2 pl-4 space-y-1 list-disc">{children}</ul>,
               ol: ({ children }) => <ol className="mb-2 pl-4 space-y-1 list-decimal">{children}</ol>,
-              li: ({ children }) => <li className="text-[#f4f4f5]">{children}</li>,
-              h1: ({ children }) => <h1 className="text-lg font-semibold mb-2 text-[#f4f4f5]">{children}</h1>,
-              h2: ({ children }) => <h2 className="text-base font-semibold mb-2 text-[#f4f4f5]">{children}</h2>,
-              h3: ({ children }) => <h3 className="text-sm font-semibold mb-1 text-[#f4f4f5]">{children}</h3>,
-              strong: ({ children }) => <strong className="font-semibold text-[#f4f4f5]">{children}</strong>,
+              li: ({ children }) => <li className="text-[#ffffff]">{children}</li>,
+              h1: ({ children }) => <h1 className="text-lg font-semibold mb-2 text-[#ffffff]">{children}</h1>,
+              h2: ({ children }) => <h2 className="text-base font-semibold mb-2 text-[#ffffff]">{children}</h2>,
+              h3: ({ children }) => <h3 className="text-sm font-semibold mb-1 text-[#ffffff]">{children}</h3>,
+              strong: ({ children }) => <strong className="font-semibold text-[#ffffff]">{children}</strong>,
               blockquote: ({ children }) => (
-                <blockquote className="border-l-2 border-[#2563eb] pl-3 my-2 text-[#71717a]">{children}</blockquote>
+                <blockquote className="border-l-2 border-[#0075ff] pl-3 my-2 text-[#999999]">{children}</blockquote>
               ),
             }}
           >
@@ -105,15 +104,15 @@ function MessageBubble({ message }: { message: Message }) {
 function ThinkingIndicator() {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3">
-      <div className="w-7 h-7 rounded-full bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)] flex items-center justify-center shrink-0 mt-1">
-        <Terminal className="w-3.5 h-3.5 text-[#2563eb]" />
+      <div className="w-7 h-7 rounded-full bg-[#292929] border border-[rgba(229,231,235,0.08)] flex items-center justify-center shrink-0 mt-1">
+        <Terminal className="w-3.5 h-3.5 text-[#0075ff]" />
       </div>
-      <div className="bg-[#111114] border border-[rgba(255,255,255,0.07)] rounded-2xl rounded-tl-sm px-4 py-3">
+      <div className="bg-[#212121] border border-[rgba(229,231,235,0.08)] rounded-2xl rounded-tl-sm px-4 py-3">
         <div className="flex gap-1.5 items-center h-4">
           {[0, 1, 2].map(i => (
             <motion.div
               key={i}
-              className="w-1.5 h-1.5 rounded-full bg-[#71717a]"
+              className="w-1.5 h-1.5 rounded-full bg-[#999999]"
               animate={{ y: [0, -4, 0] }}
               transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15 }}
             />
@@ -124,7 +123,7 @@ function ThinkingIndicator() {
   )
 }
 
-export function Chat({ apiKey, initialSessionId, initialMessages = [] }: ChatProps) {
+export function Chat({ initialSessionId, initialMessages = [] }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>(initialMessages)
   const [input, setInput] = useState('')
   const [isStreaming, setIsStreaming] = useState(false)
@@ -173,7 +172,7 @@ export function Chat({ apiKey, initialSessionId, initialMessages = [] }: ChatPro
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: newMessages, apiKey, sessionId: sid }),
+        body: JSON.stringify({ messages: newMessages, sessionId: sid }),
       })
 
       if (!res.ok || !res.body) {
@@ -245,17 +244,17 @@ export function Chat({ apiKey, initialSessionId, initialMessages = [] }: ChatPro
   return (
     <div className="flex flex-col h-full">
       {/* Toolbar */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-[rgba(255,255,255,0.07)] shrink-0">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-[rgba(229,231,235,0.08)] shrink-0">
         <div className="flex items-center gap-2">
-          <Terminal className="w-4 h-4 text-[#2563eb]" />
-          <span className="text-[#f4f4f5] text-sm font-medium">D-Console</span>
+          <Terminal className="w-4 h-4 text-[#0075ff]" />
+          <span className="text-[#ffffff] text-sm font-medium">D-Console</span>
           {sessionId && (
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#10b981]/15 text-[#10b981]">Oturum aktif</span>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#0075ff]/15 text-[#0075ff]">Oturum aktif</span>
           )}
         </div>
         <button
           onClick={newChat}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[#71717a] hover:text-[#f4f4f5] hover:bg-[#1a1a1f] text-xs transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[#999999] hover:text-[#ffffff] hover:bg-[#292929] text-xs transition-colors"
         >
           <Plus className="w-3.5 h-3.5" />
           Yeni sohbet
@@ -270,11 +269,11 @@ export function Chat({ apiKey, initialSessionId, initialMessages = [] }: ChatPro
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col items-center justify-center h-full text-center py-12"
           >
-            <div className="w-14 h-14 rounded-2xl bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)] flex items-center justify-center mb-4">
-              <Terminal className="w-7 h-7 text-[#2563eb]" />
+            <div className="w-14 h-14 rounded-2xl bg-[#292929] border border-[rgba(229,231,235,0.08)] flex items-center justify-center mb-4">
+              <Terminal className="w-7 h-7 text-[#0075ff]" />
             </div>
-            <h3 className="text-[#f4f4f5] font-medium mb-2">D-Console&apos;a hoş geldiniz</h3>
-            <p className="text-[#71717a] text-sm max-w-xs">
+            <h3 className="text-[#ffffff] font-medium mb-2">D-Console&apos;a hoş geldiniz</h3>
+            <p className="text-[#999999] text-sm max-w-xs">
               Diş teknisyenliği konularında sorularınızı sorun. Protez, implant, zirkonyum ve daha fazlası.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-6 w-full max-w-sm">
@@ -287,7 +286,7 @@ export function Chat({ apiKey, initialSessionId, initialMessages = [] }: ChatPro
                 <button
                   key={s}
                   onClick={() => setInput(s)}
-                  className="text-left px-3 py-2 rounded-xl bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)] text-[#71717a] text-xs hover:text-[#f4f4f5] hover:border-[rgba(255,255,255,0.12)] transition-all"
+                  className="text-left px-3 py-2 rounded-xl bg-[#292929] border border-[rgba(229,231,235,0.08)] text-[#999999] text-xs hover:text-[#ffffff] hover:border-[rgba(255,255,255,0.12)] transition-all"
                 >
                   {s}
                 </button>
@@ -308,8 +307,8 @@ export function Chat({ apiKey, initialSessionId, initialMessages = [] }: ChatPro
       </div>
 
       {/* Input */}
-      <div className="px-4 pb-4 pt-2 shrink-0 border-t border-[rgba(255,255,255,0.07)]">
-        <div className="flex gap-3 items-end bg-[#111114] border border-[rgba(255,255,255,0.07)] rounded-2xl px-4 py-3 focus-within:border-[#2563eb]/50 transition-colors">
+      <div className="px-4 pb-4 pt-2 shrink-0 border-t border-[rgba(229,231,235,0.08)]">
+        <div className="flex gap-3 items-end bg-[#212121] border border-[rgba(229,231,235,0.08)] rounded-2xl px-4 py-3 focus-within:border-[#0075ff]/50 transition-colors">
           <textarea
             ref={textareaRef}
             value={input}
@@ -317,7 +316,7 @@ export function Chat({ apiKey, initialSessionId, initialMessages = [] }: ChatPro
             onKeyDown={handleKeyDown}
             placeholder="Mesajınızı yazın... (Enter gönderin, Shift+Enter satır atlar)"
             rows={1}
-            className="flex-1 bg-transparent text-[#f4f4f5] placeholder:text-[#71717a] text-sm resize-none focus:outline-none leading-relaxed"
+            className="flex-1 bg-transparent text-[#ffffff] placeholder:text-[#999999] text-sm resize-none focus:outline-none leading-relaxed"
             style={{ maxHeight: '160px' }}
             disabled={isStreaming}
           />
@@ -326,7 +325,7 @@ export function Chat({ apiKey, initialSessionId, initialMessages = [] }: ChatPro
             whileTap={{ scale: 0.95 }}
             onClick={handleSend}
             disabled={!input.trim() || isStreaming}
-            className="w-8 h-8 rounded-full bg-[#2563eb] flex items-center justify-center shrink-0 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity cursor-pointer"
+            className="w-8 h-8 rounded-full bg-[#0075ff] flex items-center justify-center shrink-0 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity cursor-pointer"
           >
             {isStreaming
               ? <Loader2 className="w-4 h-4 text-white animate-spin" />
@@ -334,9 +333,6 @@ export function Chat({ apiKey, initialSessionId, initialMessages = [] }: ChatPro
             }
           </motion.button>
         </div>
-        <p className="text-[#71717a] text-[10px] text-center mt-2">
-          claude-sonnet-4-20250514 • Mesajlarınız Supabase&apos;e kaydedilir
-        </p>
       </div>
     </div>
   )

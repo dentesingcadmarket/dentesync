@@ -1,3 +1,5 @@
+﻿export const dynamic = 'force-dynamic'
+
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 import { createClient } from '@/lib/supabase/server'
@@ -15,7 +17,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
   }
 
   return (
-    <div className="h-[100dvh] bg-[#0a0a0b] flex overflow-hidden">
+    <div className="h-[100dvh] bg-ebony-canvas flex overflow-hidden">
       {/* Desktop sidebar */}
       <div className="hidden lg:flex">
         <Sidebar />
@@ -24,11 +26,11 @@ export default async function DashboardLayout({ children }: { children: React.Re
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0 h-full">
         {/* Mobile topbar — pt-safe for notch */}
-        <header className="lg:hidden flex items-center gap-2 px-4 py-2 border-b border-[rgba(255,255,255,0.07)] bg-[#111114] shrink-0 pt-safe">
+        <header className="lg:hidden flex items-center gap-2 px-4 py-2 border-b border-outline-haze/[0.06] bg-nightfall-gray shrink-0 pt-safe">
           <MobileSidebar>
             <Sidebar />
           </MobileSidebar>
-          <span className="text-[#f4f4f5] font-semibold text-sm">DenteSync</span>
+          <span className="text-cloud-white font-semibold text-body">DenteSync</span>
         </header>
 
         {/* pb-16 lg:pb-0 — bottom nav için alan */}

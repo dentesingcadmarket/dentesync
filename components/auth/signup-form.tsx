@@ -98,13 +98,13 @@ export default function SignupForm() {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md text-center"
       >
-        <div className="bg-[#111114] border border-[rgba(255,255,255,0.07)] rounded-2xl p-10">
-          <div className="w-16 h-16 rounded-full bg-[#10b981]/10 flex items-center justify-center mx-auto mb-6">
-            <Check className="w-8 h-8 text-[#10b981]" />
+        <div className="bg-nightfall-gray border border-outline-haze/[0.08] rounded-cards p-10">
+          <div className="w-16 h-16 rounded-pill bg-morphic-blue/10 flex items-center justify-center mx-auto mb-6">
+            <Check className="w-8 h-8 text-morphic-blue" />
           </div>
-          <h2 className="text-xl font-semibold text-[#f4f4f5] mb-2">Hesabınız oluşturuldu!</h2>
-          <p className="text-[#71717a] text-sm">
-            <span className="text-[#f4f4f5]">{email}</span> adresine doğrulama bağlantısı gönderdik.
+          <h2 className="text-[22px] font-bold tracking-tight text-cloud-white mb-2">Hesabınız oluşturuldu!</h2>
+          <p className="text-muted-silver text-body">
+            <span className="text-cloud-white">{email}</span> adresine doğrulama bağlantısı gönderdik.
             Lütfen e-postanızı kontrol edin.
           </p>
         </div>
@@ -121,14 +121,14 @@ export default function SignupForm() {
     >
       <div className="text-center mb-8">
         <div className="inline-flex items-center gap-2 mb-4">
-          <Image src="/logo.png" alt="DenteSync" width={36} height={36} className="rounded-lg" />
-          <span className="text-[#f4f4f5] font-semibold text-lg">DenteSync</span>
+          <Image src="/logo.png" alt="DenteSync" width={36} height={36} className="rounded-buttons" />
+          <span className="text-cloud-white font-semibold text-body-lg tracking-tight">DenteSync</span>
         </div>
-        <h1 className="text-2xl font-semibold text-[#f4f4f5]">Hesap oluşturun</h1>
-        <p className="text-[#71717a] mt-1 text-sm">14 gün ücretsiz deneyin</p>
+        <h1 className="text-[26px] font-bold tracking-tight text-cloud-white">Hesap oluşturun</h1>
+        <p className="text-muted-silver mt-1 text-body">14 gün ücretsiz deneyin</p>
       </div>
 
-      <div className="bg-[#111114] border border-[rgba(255,255,255,0.07)] rounded-2xl p-8">
+      <div className="bg-nightfall-gray border border-outline-haze/[0.08] rounded-cards p-8">
         {step === 1 ? (
           <>
             <motion.button
@@ -136,59 +136,59 @@ export default function SignupForm() {
               whileTap={{ scale: 0.98 }}
               onClick={handleGoogleSignup}
               disabled={googleLoading}
-              className="w-full flex items-center justify-center gap-3 px-4 py-2.5 rounded-full border border-[rgba(255,255,255,0.07)] bg-transparent text-[#f4f4f5] text-sm font-medium hover:bg-white/5 transition-colors disabled:opacity-50 cursor-pointer"
+              className="w-full flex items-center justify-center gap-3 px-4 py-2.5 rounded-buttons border border-outline-haze/[0.08] bg-transparent text-cloud-white text-body font-medium hover:bg-white/[0.06] transition-colors disabled:opacity-50 cursor-pointer"
             >
               {googleLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Globe className="w-4 h-4" />}
               Google ile kayıt ol
             </motion.button>
 
             <div className="flex items-center gap-3 my-6">
-              <div className="h-px flex-1 bg-[rgba(255,255,255,0.07)]" />
-              <span className="text-[#71717a] text-xs">veya</span>
-              <div className="h-px flex-1 bg-[rgba(255,255,255,0.07)]" />
+              <div className="h-px flex-1 bg-outline-haze/[0.08]" />
+              <span className="text-muted-silver text-caption">veya</span>
+              <div className="h-px flex-1 bg-outline-haze/[0.08]" />
             </div>
 
             <div className="space-y-4">
               <div className="space-y-1.5">
-                <Label htmlFor="fullName" className="text-[#f4f4f5] text-sm">Ad Soyad</Label>
+                <Label htmlFor="fullName" className="text-cloud-white text-body">Ad Soyad</Label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#71717a]" />
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-silver" />
                   <Input
                     id="fullName"
                     value={fullName}
                     onChange={e => setFullName(e.target.value)}
                     placeholder="Ad Soyad"
-                    className="pl-10 bg-[#1a1a1f] border-[rgba(255,255,255,0.07)] text-[#f4f4f5] placeholder:text-[#71717a] rounded-xl"
+                    className="pl-10 bg-charcoal-surface border-outline-haze/[0.08] text-cloud-white placeholder:text-muted-silver focus:border-morphic-blue focus:ring-morphic-blue/20 rounded-inputs"
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="email" className="text-[#f4f4f5] text-sm">E-posta</Label>
+                <Label htmlFor="email" className="text-cloud-white text-body">E-posta</Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#71717a]" />
+                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-silver" />
                   <Input
                     id="email"
                     type="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     placeholder="ad@ornek.com"
-                    className="pl-10 bg-[#1a1a1f] border-[rgba(255,255,255,0.07)] text-[#f4f4f5] placeholder:text-[#71717a] rounded-xl"
+                    className="pl-10 bg-charcoal-surface border-outline-haze/[0.08] text-cloud-white placeholder:text-muted-silver focus:border-morphic-blue focus:ring-morphic-blue/20 rounded-inputs"
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="password" className="text-[#f4f4f5] text-sm">Şifre</Label>
+                <Label htmlFor="password" className="text-cloud-white text-body">Şifre</Label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#71717a]" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-silver" />
                   <Input
                     id="password"
                     type="password"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     placeholder="En az 8 karakter"
-                    className="pl-10 bg-[#1a1a1f] border-[rgba(255,255,255,0.07)] text-[#f4f4f5] placeholder:text-[#71717a] rounded-xl"
+                    className="pl-10 bg-charcoal-surface border-outline-haze/[0.08] text-cloud-white placeholder:text-muted-silver focus:border-morphic-blue focus:ring-morphic-blue/20 rounded-inputs"
                   />
                 </div>
               </div>
@@ -201,17 +201,17 @@ export default function SignupForm() {
                   setError('')
                   setStep(2)
                 }}
-                className="w-full px-4 py-2.5 rounded-full bg-white text-black text-sm font-medium hover:bg-white/90 transition-colors cursor-pointer"
+                className="w-full px-4 py-2.5 rounded-buttons bg-morphic-blue text-cloud-white text-body font-medium hover:bg-morphic-blue-hover transition-colors cursor-pointer"
               >
                 Devam Et
               </motion.button>
 
-              {error && <p className="text-red-400 text-sm">{error}</p>}
+              {error && <p className="text-anchor-graphite text-body">{error}</p>}
             </div>
           </>
         ) : (
           <form onSubmit={handleSignup}>
-            <h3 className="text-[#f4f4f5] font-medium mb-4">Plan seçin</h3>
+            <h3 className="text-cloud-white font-semibold tracking-tight mb-4">Plan seçin</h3>
             <div className="space-y-3 mb-6">
               {PLANS.map(plan => (
                 <motion.button
@@ -221,30 +221,30 @@ export default function SignupForm() {
                   whileTap={{ scale: 0.99 }}
                   onClick={() => setSelectedPlan(plan.id)}
                   className={cn(
-                    'w-full text-left p-4 rounded-xl border transition-all cursor-pointer',
+                    'w-full text-left p-4 rounded-inputs border transition-all cursor-pointer',
                     selectedPlan === plan.id
-                      ? 'border-[#2563eb] bg-[#2563eb]/10'
-                      : 'border-[rgba(255,255,255,0.07)] hover:border-white/20'
+                      ? 'border-morphic-blue bg-morphic-blue/10'
+                      : 'border-outline-haze/[0.08] hover:border-white/20'
                   )}
                 >
                   <div className="flex justify-between items-start">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-[#f4f4f5] font-medium">{plan.name}</span>
+                        <span className="text-cloud-white font-medium">{plan.name}</span>
                         {'recommended' in plan && plan.recommended && (
-                          <span className="text-xs px-2 py-0.5 rounded-full bg-[#2563eb]/20 text-[#2563eb]">
+                          <span className="text-caption px-2 py-0.5 rounded-pill bg-morphic-blue/20 text-morphic-blue">
                             Önerilen
                           </span>
                         )}
                       </div>
-                      <p className="text-[#71717a] text-xs mt-0.5">{plan.description}</p>
+                      <p className="text-muted-silver text-caption mt-0.5">{plan.description}</p>
                     </div>
-                    <span className="text-[#f4f4f5] text-sm font-medium">{plan.price}</span>
+                    <span className="text-cloud-white text-body font-medium">{plan.price}</span>
                   </div>
                   <ul className="mt-2 space-y-1">
                     {plan.features.map(f => (
-                      <li key={f} className="text-[#71717a] text-xs flex items-center gap-1.5">
-                        <Check className="w-3 h-3 text-[#10b981]" />
+                      <li key={f} className="text-muted-silver text-caption flex items-center gap-1.5">
+                        <Check className="w-3 h-3 text-morphic-blue" />
                         {f}
                       </li>
                     ))}
@@ -254,7 +254,7 @@ export default function SignupForm() {
             </div>
 
             {error && (
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-400 text-sm mb-4">
+              <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-anchor-graphite text-body mb-4">
                 {error}
               </motion.p>
             )}
@@ -263,7 +263,7 @@ export default function SignupForm() {
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="flex-1 px-4 py-2.5 rounded-full border border-[rgba(255,255,255,0.07)] text-[#f4f4f5] text-sm hover:bg-white/5 transition-colors"
+                className="flex-1 px-4 py-2.5 rounded-buttons border border-outline-haze/[0.08] text-cloud-white text-body hover:bg-white/[0.06] transition-colors"
               >
                 Geri
               </button>
@@ -272,7 +272,7 @@ export default function SignupForm() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 disabled={loading}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-white text-black text-sm font-medium hover:bg-white/90 transition-colors disabled:opacity-50 cursor-pointer"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-buttons bg-morphic-blue text-cloud-white text-body font-medium hover:bg-morphic-blue-hover transition-colors disabled:opacity-50 cursor-pointer"
               >
                 {loading && <Loader2 className="w-4 h-4 animate-spin" />}
                 Kayıt Ol
@@ -282,9 +282,9 @@ export default function SignupForm() {
         )}
       </div>
 
-      <p className="text-center text-[#71717a] text-sm mt-6">
+      <p className="text-center text-muted-silver text-body mt-6">
         Zaten hesabınız var mı?{' '}
-        <Link href="/login" className="text-[#2563eb] hover:underline">
+        <Link href="/login" className="text-morphic-blue hover:underline">
           Giriş yapın
         </Link>
       </p>

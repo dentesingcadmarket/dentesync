@@ -17,7 +17,7 @@ export function MobileBottomNav() {
 
   return (
     /* lg:hidden — sadece mobil görünür | pb-safe — home indicator alanı */
-    <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-[#111114] border-t border-[rgba(255,255,255,0.07)] pb-safe">
+    <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-[#161617] border-t border-[rgba(229,231,235,0.08)] pb-safe">
       <div className="flex items-center">
         {NAV_ITEMS.map(({ href, icon: Icon, label, exact }) => {
           const active = exact ? pathname === href : pathname.startsWith(href)
@@ -27,7 +27,7 @@ export function MobileBottomNav() {
               href={href}
               /* min 44px touch target per mobile-design — kullanıcı başarısız dokunuşları önler */
               className={`flex-1 flex flex-col items-center justify-center min-h-[56px] gap-1 transition-colors active:scale-95 ${
-                active ? 'text-[#2563eb]' : 'text-[#71717a]'
+                active ? 'text-[#2563eb]' : 'text-[#999999]'
               }`}
             >
               <Icon className="w-5 h-5 shrink-0" />

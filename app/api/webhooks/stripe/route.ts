@@ -18,11 +18,11 @@ function getDB() {
 
 function getTierFromSubscription(subscription: Stripe.Subscription): string {
   const priceId = subscription.items.data[0]?.price.id ?? ''
-  const map: Record<string, string> = {
-    [process.env.STRIPE_PRICE_M1 ?? '']: 'm1',
-    [process.env.STRIPE_PRICE_M2 ?? '']: 'm2',
-    [process.env.STRIPE_PRICE_M3 ?? '']: 'm3',
-  }
+  if (!priceId) return 'm1'
+  const map: Record<string, string> = {}
+  if (process.env.STRIPE_PRICE_M1) map[process.env.STRIPE_PRICE_M1] = 'm1'
+  if (process.env.STRIPE_PRICE_M2) map[process.env.STRIPE_PRICE_M2] = 'm2'
+  if (process.env.STRIPE_PRICE_M3) map[process.env.STRIPE_PRICE_M3] = 'm3'
   return map[priceId] ?? 'm1'
 }
 

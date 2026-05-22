@@ -4,12 +4,11 @@ import { useState, useCallback, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Dumbbell, Sparkles, ChevronRight, RotateCcw, Trophy,
-  CheckCircle2, XCircle, AlertCircle, Loader2, Key, Target,
+  CheckCircle2, XCircle, AlertCircle, Loader2, Target,
   Brain, Zap, Star,
 } from 'lucide-react'
 import { toast } from 'sonner'
 import confetti from 'canvas-confetti'
-import { ApiKeyModal } from '@/components/console/api-key-modal'
 
 interface Question {
   id: string
@@ -56,33 +55,25 @@ const CATEGORIES = [
 ]
 
 const DIFFICULTIES = [
-  { id: 'kolay', label: 'Kolay', description: 'Temel kavramlar, 3 soru', color: '#10b981' },
-  { id: 'orta', label: 'Orta', description: 'Analiz gerektiren, 3 soru', color: '#f59e0b' },
-  { id: 'zor', label: 'Zor', description: 'Kompleks vakalar, 3 soru', color: '#ef4444' },
+  { id: 'kolay', label: 'Kolay', description: 'Temel kavramlar, 3 soru', color: '#2563eb' },
+  { id: 'orta', label: 'Orta', description: 'Analiz gerektiren, 3 soru', color: '#999999' },
+  { id: 'zor', label: 'Zor', description: 'Kompleks vakalar, 3 soru', color: '#525252' },
 ] as const
 
-interface Props {
-  hasApiKey: boolean
-  apiKey: string | null
-}
-
-export function PracticeWrapper({ hasApiKey: initialHasKey, apiKey: initialApiKey }: Props) {
+export function PracticeWrapper() {
   const [stage, setStage] = useState<Stage>('setup')
   const [difficulty, setDifficulty] = useState<'kolay' | 'orta' | 'zor'>('orta')
   const [category, setCategory] = useState(CATEGORIES[0].id)
-  const [hasApiKey, setHasApiKey] = useState(initialHasKey)
-  const [apiKeyModalOpen, setApiKeyModalOpen] = useState(false)
   const [caseData, setCaseData] = useState<CaseData | null>(null)
   const [sessionId, setSessionId] = useState<string | null>(null)
   const [answers, setAnswers] = useState<Record<string, string | number>>({})
   const [evaluation, setEvaluation] = useState<Evaluation | null>(null)
-  const [currentApiKey, setCurrentApiKey] = useState(initialApiKey)
   const confettiFired = useRef(false)
 
   const fireConfetti = useCallback(() => {
     if (confettiFired.current) return
     confettiFired.current = true
-    confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 }, colors: ['#2563eb', '#10b981', '#f59e0b', '#f4f4f5'] })
+    confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 }, colors: ['#2563eb', '#2563eb', '#999999', '#ffffff'] })
     setTimeout(() => {
       confetti({ particleCount: 60, spread: 100, origin: { y: 0.4 }, angle: 60 })
       confetti({ particleCount: 60, spread: 100, origin: { y: 0.4 }, angle: 120 })
@@ -96,13 +87,12 @@ export function PracticeWrapper({ hasApiKey: initialHasKey, apiKey: initialApiKe
   }, [stage, evaluation, fireConfetti])
 
   async function handleGenerate() {
-    if (!hasApiKey) { setApiKeyModalOpen(true); return }
     setStage('generating')
     try {
       const res = await fetch('/api/practice/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ difficulty, category, apiKey: currentApiKey }),
+        body: JSON.stringify({ difficulty, category }),
       })
       const data = await res.json()
       if (!res.ok) { toast.error(data.error || 'Vaka oluşturulamadı.'); setStage('setup'); return }
@@ -127,7 +117,7 @@ export function PracticeWrapper({ hasApiKey: initialHasKey, apiKey: initialApiKe
       const res = await fetch('/api/practice/evaluate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId, caseData, userAnswers: answers, apiKey: currentApiKey }),
+        body: JSON.stringify({ sessionId, caseData, userAnswers: answers }),
       })
       const data = await res.json()
       if (!res.ok) { toast.error(data.error || 'Değerlendirme yapılamadı.'); setStage('practice'); return }
@@ -165,9 +155,7 @@ export function PracticeWrapper({ hasApiKey: initialHasKey, apiKey: initialApiKe
               setDifficulty={setDifficulty}
               category={category}
               setCategory={setCategory}
-              hasApiKey={hasApiKey}
               onGenerate={handleGenerate}
-              onOpenApiKey={() => setApiKeyModalOpen(true)}
             />
           )}
           {stage === 'generating' && <GeneratingScreen key="generating" />}
@@ -193,37 +181,18 @@ export function PracticeWrapper({ hasApiKey: initialHasKey, apiKey: initialApiKe
         </AnimatePresence>
       </div>
 
-      <ApiKeyModal
-        open={apiKeyModalOpen}
-        onOpenChange={setApiKeyModalOpen}
-        hasKey={hasApiKey}
-        onKeySaved={async () => {
-          const res = await fetch('/api/practice/api-key-check')
-          if (res.ok) {
-            const { hasKey, apiKey: key } = await res.json()
-            setHasApiKey(hasKey)
-            setCurrentApiKey(key)
-          } else {
-            setHasApiKey(false)
-            setCurrentApiKey(null)
-          }
-        }}
-      />
     </>
   )
 }
 
 function SetupScreen({
-  difficulty, setDifficulty, category, setCategory,
-  hasApiKey, onGenerate, onOpenApiKey,
+  difficulty, setDifficulty, category, setCategory, onGenerate,
 }: {
   difficulty: 'kolay' | 'orta' | 'zor'
   setDifficulty: (d: 'kolay' | 'orta' | 'zor') => void
   category: string
   setCategory: (c: string) => void
-  hasApiKey: boolean
   onGenerate: () => void
-  onOpenApiKey: () => void
 }) {
   return (
     <motion.div
@@ -237,33 +206,13 @@ function SetupScreen({
           <Dumbbell className="w-5 h-5 text-[#2563eb]" />
         </div>
         <div>
-          <h1 className="text-2xl font-semibold text-[#f4f4f5]">Vaka Pratiği</h1>
-          <p className="text-[#71717a] text-sm">AI tarafından oluşturulan gerçekçi vakalarla pratik yapın</p>
+          <h1 className="text-2xl font-semibold text-[#ffffff]">Vaka Pratiği</h1>
+          <p className="text-[#999999] text-sm">AI tarafından oluşturulan gerçekçi vakalarla pratik yapın</p>
         </div>
       </div>
 
-      {!hasApiKey && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="p-4 rounded-xl bg-[#f59e0b]/10 border border-[#f59e0b]/20 flex items-start gap-3"
-        >
-          <AlertCircle className="w-4 h-4 text-[#f59e0b] mt-0.5 shrink-0" />
-          <div className="flex-1">
-            <p className="text-[#f4f4f5] text-sm font-medium">API Key Gerekli</p>
-            <p className="text-[#71717a] text-xs mt-0.5">Vaka pratiği için Anthropic API key&apos;inizi eklemeniz gerekiyor.</p>
-          </div>
-          <button
-            onClick={onOpenApiKey}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#f59e0b]/20 text-[#f59e0b] text-xs font-medium hover:bg-[#f59e0b]/30 transition-colors"
-          >
-            <Key className="w-3 h-3" /> Ekle
-          </button>
-        </motion.div>
-      )}
-
       <div className="space-y-3">
-        <p className="text-[#f4f4f5] text-sm font-medium">Zorluk Seviyesi</p>
+        <p className="text-[#ffffff] text-sm font-medium">Zorluk Seviyesi</p>
         <div className="grid grid-cols-3 gap-3">
           {DIFFICULTIES.map(d => (
             <button
@@ -272,21 +221,21 @@ function SetupScreen({
               className={`p-4 rounded-xl border text-left transition-all ${
                 difficulty === d.id
                   ? 'border-[#2563eb] bg-[#2563eb]/10'
-                  : 'border-[rgba(255,255,255,0.07)] bg-[#111114] hover:bg-[#1a1a1f]'
+                  : 'border-[rgba(229,231,235,0.08)] bg-[#161617] hover:bg-[#1f1f20]'
               }`}
             >
               <div className="flex items-center gap-2 mb-1">
                 <div className="w-2 h-2 rounded-full" style={{ backgroundColor: d.color }} />
-                <span className="text-[#f4f4f5] text-sm font-medium">{d.label}</span>
+                <span className="text-[#ffffff] text-sm font-medium">{d.label}</span>
               </div>
-              <p className="text-[#71717a] text-xs">{d.description}</p>
+              <p className="text-[#999999] text-xs">{d.description}</p>
             </button>
           ))}
         </div>
       </div>
 
       <div className="space-y-3">
-        <p className="text-[#f4f4f5] text-sm font-medium">Konu</p>
+        <p className="text-[#ffffff] text-sm font-medium">Konu</p>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {CATEGORIES.map(cat => (
             <button
@@ -294,8 +243,8 @@ function SetupScreen({
               onClick={() => setCategory(cat.id)}
               className={`px-3 py-2.5 rounded-xl border text-sm transition-all ${
                 category === cat.id
-                  ? 'border-[#2563eb] bg-[#2563eb]/10 text-[#f4f4f5]'
-                  : 'border-[rgba(255,255,255,0.07)] bg-[#111114] text-[#71717a] hover:text-[#f4f4f5] hover:bg-[#1a1a1f]'
+                  ? 'border-[#2563eb] bg-[#2563eb]/10 text-[#ffffff]'
+                  : 'border-[rgba(229,231,235,0.08)] bg-[#161617] text-[#999999] hover:text-[#ffffff] hover:bg-[#1f1f20]'
               }`}
             >
               {cat.label}
@@ -331,13 +280,13 @@ function GeneratingScreen() {
         <div className="w-16 h-16 rounded-full bg-[#2563eb]/10 flex items-center justify-center">
           <Brain className="w-8 h-8 text-[#2563eb]" />
         </div>
-        <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#0a0a0b] flex items-center justify-center">
+        <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#000000] flex items-center justify-center">
           <Loader2 className="w-3 h-3 text-[#2563eb] animate-spin" />
         </div>
       </div>
       <div className="text-center">
-        <p className="text-[#f4f4f5] font-medium">Vaka hazırlanıyor...</p>
-        <p className="text-[#71717a] text-sm mt-1">AI seçtiğiniz konuda gerçekçi bir senaryo oluşturuyor</p>
+        <p className="text-[#ffffff] font-medium">Vaka hazırlanıyor...</p>
+        <p className="text-[#999999] text-sm mt-1">AI seçtiğiniz konuda gerçekçi bir senaryo oluşturuyor</p>
       </div>
     </motion.div>
   )
@@ -353,16 +302,16 @@ function EvaluatingScreen() {
       className="flex flex-col items-center justify-center min-h-[60vh] gap-6"
     >
       <div className="relative">
-        <div className="w-16 h-16 rounded-full bg-[#10b981]/10 flex items-center justify-center">
-          <Zap className="w-8 h-8 text-[#10b981]" />
+        <div className="w-16 h-16 rounded-full bg-[#2563eb]/10 flex items-center justify-center">
+          <Zap className="w-8 h-8 text-[#2563eb]" />
         </div>
-        <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#0a0a0b] flex items-center justify-center">
-          <Loader2 className="w-3 h-3 text-[#10b981] animate-spin" />
+        <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#000000] flex items-center justify-center">
+          <Loader2 className="w-3 h-3 text-[#2563eb] animate-spin" />
         </div>
       </div>
       <div className="text-center">
-        <p className="text-[#f4f4f5] font-medium">Yanıtlarınız değerlendiriliyor...</p>
-        <p className="text-[#71717a] text-sm mt-1">AI cevaplarınızı analiz ediyor</p>
+        <p className="text-[#ffffff] font-medium">Yanıtlarınız değerlendiriliyor...</p>
+        <p className="text-[#999999] text-sm mt-1">AI cevaplarınızı analiz ediyor</p>
       </div>
     </motion.div>
   )
@@ -377,7 +326,7 @@ function PracticeScreen({
   onSubmit: () => void
   allAnswered: boolean
 }) {
-  const difficultyColor = { kolay: '#10b981', orta: '#f59e0b', zor: '#ef4444' }[caseData.difficulty]
+  const difficultyColor = { kolay: '#2563eb', orta: '#999999', zor: '#525252' }[caseData.difficulty]
 
   return (
     <motion.div
@@ -391,18 +340,18 @@ function PracticeScreen({
         <span className="text-xs capitalize font-medium" style={{ color: difficultyColor }}>
           {caseData.difficulty}
         </span>
-        <span className="text-[#71717a] text-xs">•</span>
-        <span className="text-[#71717a] text-xs">{caseData.category}</span>
+        <span className="text-[#999999] text-xs">•</span>
+        <span className="text-[#999999] text-xs">{caseData.category}</span>
       </div>
 
-      <div className="p-5 rounded-xl bg-[#111114] border border-[rgba(255,255,255,0.07)]">
+      <div className="p-5 rounded-xl bg-[#161617] border border-[rgba(229,231,235,0.08)]">
         <div className="flex items-start gap-3">
           <div className="w-8 h-8 rounded-full bg-[#2563eb]/10 flex items-center justify-center shrink-0 mt-0.5">
             <Target className="w-4 h-4 text-[#2563eb]" />
           </div>
           <div>
-            <h2 className="text-[#f4f4f5] font-semibold mb-2">{caseData.title}</h2>
-            <p className="text-[#71717a] text-sm leading-relaxed">{caseData.scenario}</p>
+            <h2 className="text-[#ffffff] font-semibold mb-2">{caseData.title}</h2>
+            <p className="text-[#999999] text-sm leading-relaxed">{caseData.scenario}</p>
           </div>
         </div>
       </div>
@@ -414,9 +363,9 @@ function PracticeScreen({
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.08 }}
-            className="p-5 rounded-xl bg-[#111114] border border-[rgba(255,255,255,0.07)]"
+            className="p-5 rounded-xl bg-[#161617] border border-[rgba(229,231,235,0.08)]"
           >
-            <p className="text-[#f4f4f5] text-sm font-medium mb-4">
+            <p className="text-[#ffffff] text-sm font-medium mb-4">
               <span className="text-[#2563eb] mr-2">{index + 1}.</span>
               {q.question}
             </p>
@@ -429,8 +378,8 @@ function PracticeScreen({
                     onClick={() => setAnswers({ ...answers, [q.id]: i })}
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border text-left text-sm transition-all ${
                       answers[q.id] === i
-                        ? 'border-[#2563eb] bg-[#2563eb]/10 text-[#f4f4f5]'
-                        : 'border-[rgba(255,255,255,0.07)] text-[#71717a] hover:text-[#f4f4f5] hover:border-[rgba(255,255,255,0.15)] hover:bg-[#1a1a1f]'
+                        ? 'border-[#2563eb] bg-[#2563eb]/10 text-[#ffffff]'
+                        : 'border-[rgba(229,231,235,0.08)] text-[#999999] hover:text-[#ffffff] hover:border-[rgba(255,255,255,0.15)] hover:bg-[#1f1f20]'
                     }`}
                   >
                     <span className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 text-xs font-medium ${
@@ -448,7 +397,7 @@ function PracticeScreen({
                 onChange={e => setAnswers({ ...answers, [q.id]: e.target.value })}
                 placeholder="Yanıtınızı buraya yazın..."
                 rows={4}
-                className="w-full px-4 py-3 rounded-xl bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)] text-[#f4f4f5] placeholder:text-[#71717a] text-sm resize-none focus:outline-none focus:border-[#2563eb] transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm resize-none focus:outline-none focus:border-[#2563eb] transition-colors"
               />
             )}
           </motion.div>
@@ -477,7 +426,7 @@ function ResultsScreen({
   onReset: () => void
 }) {
   const score = evaluation.score
-  const scoreColor = score >= 80 ? '#10b981' : score >= 60 ? '#f59e0b' : '#ef4444'
+  const scoreColor = score >= 80 ? '#2563eb' : score >= 60 ? '#999999' : '#525252'
   const scoreLabel = score >= 80 ? 'Mükemmel!' : score >= 60 ? 'İyi iş!' : 'Geliştirebilirsiniz'
 
   return (
@@ -487,7 +436,7 @@ function ResultsScreen({
       exit={{ opacity: 0, y: -16 }}
       className="max-w-2xl mx-auto space-y-6"
     >
-      <div className="p-8 rounded-xl bg-[#111114] border border-[rgba(255,255,255,0.07)] text-center">
+      <div className="p-8 rounded-xl bg-[#161617] border border-[rgba(229,231,235,0.08)] text-center">
         <motion.div
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -512,33 +461,33 @@ function ResultsScreen({
         >
           {score}
         </motion.p>
-        <p className="text-[#f4f4f5] font-medium">{scoreLabel}</p>
-        <p className="text-[#71717a] text-sm mt-2 leading-relaxed max-w-sm mx-auto">{evaluation.feedback}</p>
+        <p className="text-[#ffffff] font-medium">{scoreLabel}</p>
+        <p className="text-[#999999] text-sm mt-2 leading-relaxed max-w-sm mx-auto">{evaluation.feedback}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         {evaluation.strengths.length > 0 && (
-          <div className="p-4 rounded-xl bg-[#10b981]/5 border border-[#10b981]/15">
+          <div className="p-4 rounded-xl bg-[#2563eb]/5 border border-[#2563eb]/15">
             <div className="flex items-center gap-2 mb-3">
-              <CheckCircle2 className="w-4 h-4 text-[#10b981]" />
-              <p className="text-[#10b981] text-sm font-medium">Güçlü Yönler</p>
+              <CheckCircle2 className="w-4 h-4 text-[#2563eb]" />
+              <p className="text-[#2563eb] text-sm font-medium">Güçlü Yönler</p>
             </div>
             <ul className="space-y-1.5">
               {evaluation.strengths.map((s, i) => (
-                <li key={i} className="text-[#71717a] text-xs">{s}</li>
+                <li key={i} className="text-[#999999] text-xs">{s}</li>
               ))}
             </ul>
           </div>
         )}
         {evaluation.improvements.length > 0 && (
-          <div className="p-4 rounded-xl bg-[#f59e0b]/5 border border-[#f59e0b]/15">
+          <div className="p-4 rounded-xl bg-[#999999]/5 border border-[#999999]/15">
             <div className="flex items-center gap-2 mb-3">
-              <AlertCircle className="w-4 h-4 text-[#f59e0b]" />
-              <p className="text-[#f59e0b] text-sm font-medium">Geliştirin</p>
+              <AlertCircle className="w-4 h-4 text-[#999999]" />
+              <p className="text-[#999999] text-sm font-medium">Geliştirin</p>
             </div>
             <ul className="space-y-1.5">
               {evaluation.improvements.map((s, i) => (
-                <li key={i} className="text-[#71717a] text-xs">{s}</li>
+                <li key={i} className="text-[#999999] text-xs">{s}</li>
               ))}
             </ul>
           </div>
@@ -546,27 +495,27 @@ function ResultsScreen({
       </div>
 
       <div className="space-y-3">
-        <p className="text-[#f4f4f5] text-sm font-medium">Soru Bazlı Değerlendirme</p>
+        <p className="text-[#ffffff] text-sm font-medium">Soru Bazlı Değerlendirme</p>
         {caseData.questions.map((q, index) => {
           const fb = evaluation.question_feedbacks.find(f => f.question_id === q.id)
           return (
-            <div key={q.id} className="p-4 rounded-xl bg-[#111114] border border-[rgba(255,255,255,0.07)]">
+            <div key={q.id} className="p-4 rounded-xl bg-[#161617] border border-[rgba(229,231,235,0.08)]">
               <div className="flex items-start gap-3">
                 {fb?.correct ? (
-                  <CheckCircle2 className="w-4 h-4 text-[#10b981] mt-0.5 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#2563eb] mt-0.5 shrink-0" />
                 ) : (
-                  <XCircle className="w-4 h-4 text-[#ef4444] mt-0.5 shrink-0" />
+                  <XCircle className="w-4 h-4 text-[#525252] mt-0.5 shrink-0" />
                 )}
                 <div>
-                  <p className="text-[#f4f4f5] text-sm">
-                    <span className="text-[#71717a] mr-1">{index + 1}.</span>{q.question}
+                  <p className="text-[#ffffff] text-sm">
+                    <span className="text-[#999999] mr-1">{index + 1}.</span>{q.question}
                   </p>
                   {fb?.comment && (
-                    <p className="text-[#71717a] text-xs mt-1.5">{fb.comment}</p>
+                    <p className="text-[#999999] text-xs mt-1.5">{fb.comment}</p>
                   )}
-                  <div className="mt-2 p-2.5 rounded-lg bg-[#1a1a1f]">
-                    <p className="text-[#71717a] text-xs">
-                      <span className="text-[#10b981] font-medium">Açıklama: </span>
+                  <div className="mt-2 p-2.5 rounded-lg bg-[#1f1f20]">
+                    <p className="text-[#999999] text-xs">
+                      <span className="text-[#2563eb] font-medium">Açıklama: </span>
                       {q.explanation}
                     </p>
                   </div>

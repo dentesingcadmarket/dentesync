@@ -73,76 +73,76 @@ export function CaseForm({ mode, existingCase, onSuccess }: CaseFormProps) {
             Yeni Vaka
           </motion.button>
         ) : (
-          <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[rgba(255,255,255,0.07)] text-[#71717a] text-sm hover:text-[#f4f4f5] hover:bg-[#1a1a1f] transition-colors cursor-pointer">
+          <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[rgba(229,231,235,0.08)] text-[#999999] text-sm hover:text-[#ffffff] hover:bg-[#1f1f20] transition-colors cursor-pointer">
             <Edit2 className="w-3.5 h-3.5" />
             Düzenle
           </button>
         )}
       </SheetTrigger>
 
-      <SheetContent className="bg-[#111114] border-l border-[rgba(255,255,255,0.07)] text-[#f4f4f5] w-full sm:max-w-lg overflow-y-auto">
+      <SheetContent className="bg-[#161617] border-l border-[rgba(229,231,235,0.08)] text-[#ffffff] w-full sm:max-w-lg overflow-y-auto">
         <SheetHeader className="mb-6">
-          <SheetTitle className="text-[#f4f4f5]">
+          <SheetTitle className="text-[#ffffff]">
             {mode === 'create' ? 'Yeni Vaka Oluştur' : 'Vakayı Düzenle'}
           </SheetTitle>
         </SheetHeader>
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-1.5">
-            <Label className="text-[#f4f4f5] text-sm">Başlık *</Label>
+            <Label className="text-[#ffffff] text-sm">Başlık *</Label>
             <Input
               value={title}
               onChange={e => setTitle(e.target.value)}
               placeholder="Vaka başlığını girin"
-              className="bg-[#1a1a1f] border-[rgba(255,255,255,0.07)] text-[#f4f4f5] placeholder:text-[#71717a] rounded-xl focus:border-[#2563eb]"
+              className="bg-[#1f1f20] border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] rounded-xl focus:border-[#2563eb]"
               required
             />
           </div>
 
           <div className="space-y-1.5">
-            <Label className="text-[#f4f4f5] text-sm">Açıklama</Label>
+            <Label className="text-[#ffffff] text-sm">Açıklama</Label>
             <textarea
               value={description}
               onChange={e => setDescription(e.target.value)}
               placeholder="Vaka hakkında kısa bir açıklama..."
               rows={3}
-              className="w-full px-3 py-2 rounded-xl bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)] text-[#f4f4f5] placeholder:text-[#71717a] text-sm resize-none focus:outline-none focus:border-[#2563eb] transition-colors"
+              className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm resize-none focus:outline-none focus:border-[#2563eb] transition-colors"
             />
           </div>
 
           <div className="space-y-1.5">
-            <Label className="text-[#f4f4f5] text-sm">Durum</Label>
+            <Label className="text-[#ffffff] text-sm">Durum</Label>
             <Select value={status} onValueChange={(v) => setStatus(v as typeof status)}>
-              <SelectTrigger className="bg-[#1a1a1f] border-[rgba(255,255,255,0.07)] text-[#f4f4f5] rounded-xl">
+              <SelectTrigger className="bg-[#1f1f20] border-[rgba(229,231,235,0.08)] text-[#ffffff] rounded-xl">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="bg-[#1a1a1f] border-[rgba(255,255,255,0.07)]">
-                <SelectItem value="open" className="text-[#f4f4f5]">Açık</SelectItem>
-                <SelectItem value="in_progress" className="text-[#f4f4f5]">Devam Ediyor</SelectItem>
-                <SelectItem value="completed" className="text-[#f4f4f5]">Tamamlandı</SelectItem>
-                <SelectItem value="archived" className="text-[#f4f4f5]">Arşivlendi</SelectItem>
+              <SelectContent className="bg-[#1f1f20] border-[rgba(229,231,235,0.08)]">
+                <SelectItem value="open" className="text-[#ffffff]">Açık</SelectItem>
+                <SelectItem value="in_progress" className="text-[#ffffff]">Devam Ediyor</SelectItem>
+                <SelectItem value="completed" className="text-[#ffffff]">Tamamlandı</SelectItem>
+                <SelectItem value="archived" className="text-[#ffffff]">Arşivlendi</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="space-y-1.5">
-            <Label className="text-[#f4f4f5] text-sm">Etiketler</Label>
+            <Label className="text-[#ffffff] text-sm">Etiketler</Label>
             <Input
               value={tags}
               onChange={e => setTags(e.target.value)}
               placeholder="kron, implant, zirkonyum (virgülle ayırın)"
-              className="bg-[#1a1a1f] border-[rgba(255,255,255,0.07)] text-[#f4f4f5] placeholder:text-[#71717a] rounded-xl focus:border-[#2563eb]"
+              className="bg-[#1f1f20] border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] rounded-xl focus:border-[#2563eb]"
             />
           </div>
 
           <div className="space-y-1.5">
-            <Label className="text-[#f4f4f5] text-sm">Notlar</Label>
+            <Label className="text-[#ffffff] text-sm">Notlar</Label>
             <textarea
               value={notes}
               onChange={e => setNotes(e.target.value)}
               placeholder="Ek notlar..."
               rows={4}
-              className="w-full px-3 py-2 rounded-xl bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)] text-[#f4f4f5] placeholder:text-[#71717a] text-sm resize-none focus:outline-none focus:border-[#2563eb] transition-colors"
+              className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm resize-none focus:outline-none focus:border-[#2563eb] transition-colors"
             />
           </div>
 
@@ -150,7 +150,7 @@ export function CaseForm({ mode, existingCase, onSuccess }: CaseFormProps) {
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="flex-1 px-4 py-2.5 rounded-full border border-[rgba(255,255,255,0.07)] text-[#71717a] text-sm hover:bg-white/5 transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-full border border-[rgba(229,231,235,0.08)] text-[#999999] text-sm hover:bg-white/5 transition-colors"
             >
               İptal
             </button>

@@ -3,9 +3,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
-import { Send, Loader2, Map, Key } from 'lucide-react'
+import { Send, Loader2, Map } from 'lucide-react'
 import { toast } from 'sonner'
-import Link from 'next/link'
 import type { PlanStep } from '@/app/actions/plan'
 
 interface Message {
@@ -20,7 +19,6 @@ interface NextStepTrigger {
 }
 
 interface PlanChatProps {
-  apiKey: string | null
   steps: PlanStep[]
   nextStepTrigger: NextStepTrigger | null
   onStepGenerated: (step: { title: string; description: string }) => Promise<void>
@@ -36,15 +34,15 @@ const STARTER_PROMPTS = [
 function ThinkingDots() {
   return (
     <div className="flex gap-3">
-      <div className="w-7 h-7 rounded-full bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)] flex items-center justify-center shrink-0 mt-1">
+      <div className="w-7 h-7 rounded-full bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] flex items-center justify-center shrink-0 mt-1">
         <Map className="w-3.5 h-3.5 text-[#2563eb]" />
       </div>
-      <div className="bg-[#111114] border border-[rgba(255,255,255,0.07)] rounded-2xl rounded-tl-sm px-4 py-3">
+      <div className="bg-[#161617] border border-[rgba(229,231,235,0.08)] rounded-2xl rounded-tl-sm px-4 py-3">
         <div className="flex gap-1.5 items-center h-4">
           {[0, 1, 2].map(i => (
             <motion.div
               key={i}
-              className="w-1.5 h-1.5 rounded-full bg-[#71717a]"
+              className="w-1.5 h-1.5 rounded-full bg-[#999999]"
               animate={{ y: [0, -4, 0] }}
               transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15 }}
             />
@@ -55,17 +53,20 @@ function ThinkingDots() {
   )
 }
 
-export function PlanChat({ apiKey, steps, nextStepTrigger, onStepGenerated }: PlanChatProps) {
+export function PlanChat({ steps, nextStepTrigger, onStepGenerated }: PlanChatProps) {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [isStreaming, setIsStreaming] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const prevTriggerTs = useRef<number | null>(null)
+  const abortRef = useRef<AbortController | null>(null)
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, isStreaming])
+
+  useEffect(() => () => abortRef.current?.abort(), [])
 
   // Auto-send when a step is completed
   useEffect(() => {
@@ -78,7 +79,11 @@ export function PlanChat({ apiKey, steps, nextStepTrigger, onStepGenerated }: Pl
   }, [nextStepTrigger]) // eslint-disable-line react-hooks/exhaustive-deps
 
   async function sendMessage(text: string) {
-    if (!text.trim() || isStreaming || !apiKey) return
+    if (!text.trim() || isStreaming) return
+
+    abortRef.current?.abort()
+    const controller = new AbortController()
+    abortRef.current = controller
 
     const userMessage: Message = { role: 'user', content: text }
     const newMessages = [...messages, userMessage]
@@ -88,25 +93,25 @@ export function PlanChat({ apiKey, steps, nextStepTrigger, onStepGenerated }: Pl
 
     if (textareaRef.current) textareaRef.current.style.height = 'auto'
 
+    let reader: ReadableStreamDefaultReader<Uint8Array> | null = null
     try {
       const res = await fetch('/api/plan-chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           messages: newMessages,
-          apiKey,
           currentSteps: steps.map(s => ({ title: s.title, status: s.status })),
         }),
+        signal: controller.signal,
       })
 
       if (!res.ok || !res.body) {
         const err = await res.json().catch(() => ({ error: 'Bağlantı hatası.' }))
         toast.error(err.error ?? 'Bir hata oluştu.')
-        setIsStreaming(false)
         return
       }
 
-      const reader = res.body.getReader()
+      reader = res.body.getReader()
       const decoder = new TextDecoder()
       let assistantText = ''
       let pendingStep: { title: string; description: string } | null = null
@@ -160,9 +165,14 @@ export function PlanChat({ apiKey, steps, nextStepTrigger, onStepGenerated }: Pl
         await onStepGenerated(pendingStep)
       }
     } catch (err) {
+      if (err instanceof DOMException && err.name === 'AbortError') return
       toast.error(err instanceof Error ? err.message : 'Bir hata oluştu.')
     } finally {
-      setIsStreaming(false)
+      try { reader?.releaseLock() } catch { /* zaten serbest */ }
+      if (abortRef.current === controller) {
+        abortRef.current = null
+        setIsStreaming(false)
+      }
     }
   }
 
@@ -179,32 +189,12 @@ export function PlanChat({ apiKey, steps, nextStepTrigger, onStepGenerated }: Pl
     e.target.style.height = Math.min(e.target.scrollHeight, 140) + 'px'
   }
 
-  if (!apiKey) {
-    return (
-      <div className="h-full flex flex-col items-center justify-center px-6 text-center">
-        <div className="w-12 h-12 rounded-2xl bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)] flex items-center justify-center mb-4">
-          <Key className="w-5 h-5 text-[#2563eb]" />
-        </div>
-        <p className="text-[#f4f4f5] font-medium mb-1">API Key Gerekli</p>
-        <p className="text-[#71717a] text-sm mb-4 max-w-xs">
-          Planım özelliğini kullanmak için önce D-Console&apos;da Anthropic API key&apos;inizi girin.
-        </p>
-        <Link
-          href="/dashboard/search/console"
-          className="px-4 py-2 rounded-full bg-[#2563eb] text-white text-sm font-medium hover:bg-[#2563eb]/90 transition-colors"
-        >
-          D-Console&apos;a Git
-        </Link>
-      </div>
-    )
-  }
-
   return (
     <div className="h-full flex flex-col">
       {/* Header */}
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-[rgba(255,255,255,0.07)] shrink-0">
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-[rgba(229,231,235,0.08)] shrink-0">
         <Map className="w-4 h-4 text-[#2563eb]" />
-        <span className="text-[#f4f4f5] text-sm font-medium">Plan Asistanı</span>
+        <span className="text-[#ffffff] text-sm font-medium">Plan Asistanı</span>
       </div>
 
       {/* Messages */}
@@ -215,11 +205,11 @@ export function PlanChat({ apiKey, steps, nextStepTrigger, onStepGenerated }: Pl
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col items-center justify-center h-full text-center py-8"
           >
-            <div className="w-12 h-12 rounded-2xl bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)] flex items-center justify-center mb-3">
+            <div className="w-12 h-12 rounded-2xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] flex items-center justify-center mb-3">
               <Map className="w-6 h-6 text-[#2563eb]" />
             </div>
-            <h3 className="text-[#f4f4f5] font-medium mb-1 text-sm">Hedefini Paylaş</h3>
-            <p className="text-[#71717a] text-xs max-w-[240px] mb-5 leading-relaxed">
+            <h3 className="text-[#ffffff] font-medium mb-1 text-sm">Hedefini Paylaş</h3>
+            <p className="text-[#999999] text-xs max-w-[240px] mb-5 leading-relaxed">
               Ne üzerinde gelişmek istediğini anlat. Sana adım adım bir plan oluşturayım.
             </p>
             <div className="grid grid-cols-1 gap-2 w-full max-w-xs">
@@ -227,7 +217,7 @@ export function PlanChat({ apiKey, steps, nextStepTrigger, onStepGenerated }: Pl
                 <button
                   key={p}
                   onClick={() => setInput(p)}
-                  className="text-left px-3 py-2 rounded-xl bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)] text-[#71717a] text-xs hover:text-[#f4f4f5] hover:border-[rgba(255,255,255,0.12)] transition-all"
+                  className="text-left px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#999999] text-xs hover:text-[#ffffff] hover:border-[rgba(255,255,255,0.12)] transition-all"
                 >
                   {p}
                 </button>
@@ -247,14 +237,14 @@ export function PlanChat({ apiKey, steps, nextStepTrigger, onStepGenerated }: Pl
             <div className={`w-7 h-7 rounded-full shrink-0 flex items-center justify-center text-xs font-bold mt-0.5 ${
               msg.role === 'user'
                 ? 'bg-[#2563eb] text-white'
-                : 'bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)]'
+                : 'bg-[#1f1f20] border border-[rgba(229,231,235,0.08)]'
             }`}>
               {msg.role === 'user' ? 'S' : <Map className="w-3.5 h-3.5 text-[#2563eb]" />}
             </div>
             <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${
               msg.role === 'user'
                 ? 'bg-[#2563eb] text-white rounded-tr-sm'
-                : 'bg-[#111114] border border-[rgba(255,255,255,0.07)] text-[#f4f4f5] rounded-tl-sm'
+                : 'bg-[#161617] border border-[rgba(229,231,235,0.08)] text-[#ffffff] rounded-tl-sm'
             }`}>
               {msg.role === 'user' ? (
                 <p className="whitespace-pre-wrap text-sm">{msg.content}</p>
@@ -265,9 +255,9 @@ export function PlanChat({ apiKey, steps, nextStepTrigger, onStepGenerated }: Pl
                       p: ({ children }) => <p className="mb-2 last:mb-0 leading-relaxed">{children}</p>,
                       ul: ({ children }) => <ul className="mb-2 pl-4 list-disc space-y-1">{children}</ul>,
                       ol: ({ children }) => <ol className="mb-2 pl-4 list-decimal space-y-1">{children}</ol>,
-                      li: ({ children }) => <li className="text-[#f4f4f5]">{children}</li>,
-                      strong: ({ children }) => <strong className="font-semibold text-[#f4f4f5]">{children}</strong>,
-                      h3: ({ children }) => <h3 className="text-sm font-semibold mb-1 text-[#f4f4f5]">{children}</h3>,
+                      li: ({ children }) => <li className="text-[#ffffff]">{children}</li>,
+                      strong: ({ children }) => <strong className="font-semibold text-[#ffffff]">{children}</strong>,
+                      h3: ({ children }) => <h3 className="text-sm font-semibold mb-1 text-[#ffffff]">{children}</h3>,
                     }}
                   >
                     {msg.content}
@@ -283,8 +273,8 @@ export function PlanChat({ apiKey, steps, nextStepTrigger, onStepGenerated }: Pl
       </div>
 
       {/* Input */}
-      <div className="px-4 pb-4 pt-2 shrink-0 border-t border-[rgba(255,255,255,0.07)]">
-        <div className="flex gap-2.5 items-end bg-[#111114] border border-[rgba(255,255,255,0.07)] rounded-2xl px-4 py-2.5 focus-within:border-[#2563eb]/50 transition-colors">
+      <div className="px-4 pb-4 pt-2 shrink-0 border-t border-[rgba(229,231,235,0.08)]">
+        <div className="flex gap-2.5 items-end bg-[#161617] border border-[rgba(229,231,235,0.08)] rounded-2xl px-4 py-2.5 focus-within:border-[#2563eb]/50 transition-colors">
           <textarea
             ref={textareaRef}
             value={input}
@@ -292,7 +282,7 @@ export function PlanChat({ apiKey, steps, nextStepTrigger, onStepGenerated }: Pl
             onKeyDown={handleKeyDown}
             placeholder="Hedefini veya sorununu yaz..."
             rows={1}
-            className="flex-1 bg-transparent text-[#f4f4f5] placeholder:text-[#71717a] text-sm resize-none focus:outline-none leading-relaxed"
+            className="flex-1 bg-transparent text-[#ffffff] placeholder:text-[#999999] text-sm resize-none focus:outline-none leading-relaxed"
             style={{ maxHeight: '140px' }}
             disabled={isStreaming}
           />

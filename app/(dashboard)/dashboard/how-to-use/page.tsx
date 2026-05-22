@@ -4,7 +4,7 @@ const GUIDES = [
   {
     icon: Key,
     title: 'API Key Kurulumu',
-    color: '#f59e0b',
+    color: '#999999',
     steps: [
       'console.anthropic.com adresine gidin ve hesap oluşturun.',
       'Settings > API Keys menüsünden yeni bir key oluşturun.',
@@ -26,7 +26,7 @@ const GUIDES = [
   {
     icon: FolderOpen,
     title: 'Vaka Yönetimi',
-    color: '#10b981',
+    color: '#2563eb',
     steps: [
       '"Tüm Vakalar" sayfasından yeni vaka oluşturun.',
       'STL (max 50MB), PDF, PNG ve DOCX dosyaları yükleyebilirsiniz.',
@@ -37,7 +37,7 @@ const GUIDES = [
   {
     icon: Map,
     title: 'Planım Özelliği',
-    color: '#8b5cf6',
+    color: '#2563eb',
     steps: [
       '"Planım" sayfasına gidin ve hedeflerinizi yazın.',
       'AI ile sohbet ederek adım adım plan oluşturun.',
@@ -48,7 +48,7 @@ const GUIDES = [
   {
     icon: AlertTriangle,
     title: 'Hata Analizi',
-    color: '#ef4444',
+    color: '#525252',
     steps: [
       'Vaka detay sayfasından "Hata Analizi Ekle" butonuna tıklayın.',
       'Karşılaştığınız sorunu detaylıca açıklayın.',
@@ -59,7 +59,7 @@ const GUIDES = [
   {
     icon: Dumbbell,
     title: 'Vaka Pratiği (M2+)',
-    color: '#f59e0b',
+    color: '#999999',
     steps: [
       '"Vaka Pratiği" sayfasında zorluk ve konu seçin.',
       '"Vaka Oluştur" butonuna tıklayın — AI senaryo üretir.',
@@ -70,7 +70,7 @@ const GUIDES = [
   {
     icon: Users,
     title: 'Topluluk (M2+)',
-    color: '#10b981',
+    color: '#2563eb',
     steps: [
       '"Topluluk" sayfasında diğer teknisyenlerin paylaşımlarını görün.',
       'M2+ plan ile gönderi paylaşabilir ve yorum yazabilirsiniz.',
@@ -99,8 +99,8 @@ export default function HowToUsePage() {
           <BookOpen className="w-5 h-5 text-[#2563eb]" />
         </div>
         <div>
-          <h1 className="text-2xl font-semibold text-[#f4f4f5]">Nasıl Kullanılır</h1>
-          <p className="text-[#71717a] text-sm">DenteSync özelliklerinin adım adım kılavuzu</p>
+          <h1 className="text-2xl font-semibold text-[#ffffff]">Nasıl Kullanılır</h1>
+          <p className="text-[#999999] text-sm">DenteSync özelliklerinin adım adım kılavuzu</p>
         </div>
       </div>
 
@@ -110,7 +110,7 @@ export default function HowToUsePage() {
           return (
             <div
               key={guide.title}
-              className="p-5 rounded-xl bg-[#111114] border border-[rgba(255,255,255,0.07)]"
+              className="p-5 rounded-xl bg-[#161617] border border-[rgba(229,231,235,0.08)]"
             >
               <div className="flex items-center gap-3 mb-4">
                 <div
@@ -119,13 +119,13 @@ export default function HowToUsePage() {
                 >
                   <Icon className="w-4 h-4" style={{ color: guide.color }} />
                 </div>
-                <h2 className="text-[#f4f4f5] font-medium text-sm">{guide.title}</h2>
+                <h2 className="text-[#ffffff] font-medium text-sm">{guide.title}</h2>
               </div>
               <ol className="space-y-2.5">
                 {guide.steps.map((step, i) => (
                   <li key={i} className="flex items-start gap-2.5">
                     <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 shrink-0" style={{ color: guide.color }} />
-                    <span className="text-[#71717a] text-xs leading-relaxed">{step}</span>
+                    <span className="text-[#999999] text-xs leading-relaxed">{step}</span>
                   </li>
                 ))}
               </ol>
@@ -135,8 +135,8 @@ export default function HowToUsePage() {
       </div>
 
       <div className="p-5 rounded-xl bg-[#2563eb]/5 border border-[#2563eb]/15">
-        <p className="text-[#f4f4f5] text-sm font-medium mb-1">Hâlâ sorunuz mu var?</p>
-        <p className="text-[#71717a] text-xs">
+        <p className="text-[#ffffff] text-sm font-medium mb-1">Hâlâ sorunuz mu var?</p>
+        <p className="text-[#999999] text-xs">
           Destek sayfasından bize ulaşabilir veya toplulukta soru sorabilirsiniz (M2+).
         </p>
       </div>

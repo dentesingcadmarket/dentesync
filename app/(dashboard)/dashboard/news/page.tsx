@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { Newspaper, Clock, ExternalLink } from 'lucide-react'
 
@@ -40,13 +41,13 @@ export default async function NewsPage() {
           <Newspaper className="w-5 h-5 text-[#2563eb]" />
         </div>
         <div>
-          <h1 className="text-2xl font-semibold text-[#f4f4f5]">Haberler</h1>
-          <p className="text-[#71717a] text-sm">Sektör haberleri ve DenteSync duyuruları</p>
+          <h1 className="text-2xl font-semibold text-[#ffffff]">Haberler</h1>
+          <p className="text-[#999999] text-sm">Sektör haberleri ve DenteSync duyuruları</p>
         </div>
       </div>
 
       {items.length === 0 ? (
-        <div className="text-center py-20 text-[#71717a]">
+        <div className="text-center py-20 text-[#999999]">
           <Newspaper className="w-8 h-8 mx-auto mb-3 opacity-40" />
           <p className="text-sm">Henüz haber yok. Yakında içerik gelecek.</p>
         </div>
@@ -55,7 +56,7 @@ export default async function NewsPage() {
           {items.map((item, i) => (
             <div
               key={item.id}
-              className={`p-5 rounded-xl bg-[#111114] border border-[rgba(255,255,255,0.07)] flex gap-4 ${i === 0 ? 'ring-1 ring-[#2563eb]/20' : ''}`}
+              className={`p-5 rounded-xl bg-[#161617] border border-[rgba(229,231,235,0.08)] flex gap-4 ${i === 0 ? 'ring-1 ring-[#2563eb]/20' : ''}`}
             >
               {item.cover_image_url && (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -71,20 +72,20 @@ export default async function NewsPage() {
                     Son Haber
                   </span>
                 )}
-                <h2 className="text-[#f4f4f5] font-medium text-sm mb-1.5 leading-snug">{item.title}</h2>
+                <h2 className="text-[#ffffff] font-medium text-sm mb-1.5 leading-snug">{item.title}</h2>
                 {item.excerpt && (
-                  <p className="text-[#71717a] text-xs leading-relaxed line-clamp-2 mb-2">{item.excerpt}</p>
+                  <p className="text-[#999999] text-xs leading-relaxed line-clamp-2 mb-2">{item.excerpt}</p>
                 )}
                 <div className="flex items-center gap-3">
                   {item.published_at && (
-                    <span className="flex items-center gap-1 text-[#71717a] text-xs">
+                    <span className="flex items-center gap-1 text-[#999999] text-xs">
                       <Clock className="w-3 h-3" />
                       {timeAgo(item.published_at)}
                     </span>
                   )}
-                  <button className="flex items-center gap-1 text-[#2563eb] text-xs hover:underline">
+                  <Link href={`/dashboard/news/${item.id}`} className="flex items-center gap-1 text-[#2563eb] text-xs hover:underline">
                     Devamını oku <ExternalLink className="w-3 h-3" />
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

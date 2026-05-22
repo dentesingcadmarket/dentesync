@@ -14,16 +14,16 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json()
-    const { sessionId, caseData, userAnswers, apiKey } = body as {
+    const { sessionId, caseData, userAnswers } = body as {
       sessionId: string
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       caseData: any
       userAnswers: Record<string, string | number>
-      apiKey: string
     }
 
+    const apiKey = process.env.ANTHROPIC_API_KEY
     if (!apiKey) {
-      return Response.json({ error: 'API key bulunamadı.' }, { status: 400 })
+      return Response.json({ error: 'Servis şu an kullanılamıyor.' }, { status: 503 })
     }
 
     const questionsText = caseData.questions.map((q: {

@@ -5,6 +5,36 @@
 @tailwind utilities;
 
 @layer utilities {
+  /* === Marketing animations === */
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.45), 0 0 0 0 rgba(20, 184, 166, 0.25); }
+    50% { box-shadow: 0 0 0 6px rgba(20, 184, 166, 0.18), 0 0 22px 6px rgba(20, 184, 166, 0.30); }
+  }
+  @keyframes mesh-drift {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.85; }
+    50% { transform: translate3d(2%, -1.5%, 0) scale(1.04); opacity: 1; }
+  }
+  .shimmer-badge {
+    background-image: linear-gradient(90deg,
+      #14b8a6 0%,
+      #2dd4bf 35%,
+      rgba(255, 255, 255, 0.85) 50%,
+      #2dd4bf 65%,
+      #14b8a6 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2.6s linear infinite;
+  }
+  .animate-pulse-glow {
+    animation: pulse-glow 2.4s ease-in-out infinite;
+  }
+  .animate-mesh-drift {
+    animation: mesh-drift 14s ease-in-out infinite;
+  }
+
   .text-balance {
     text-wrap: balance;
   }
@@ -28,46 +58,146 @@
 
 @layer base {
   :root {
-    --background: #0a0a0b;
-    --foreground: #f4f4f5;
-    --card: #111114;
-    --card-foreground: #f4f4f5;
-    --popover: #1a1a1f;
-    --popover-foreground: #f4f4f5;
-    --primary: #2563eb;
+    /* === Morphic "Midnight Command Canvas" semantic tokens === */
+    --background: #000000;
+    --foreground: #ffffff;
+    --card: #161617;
+    --card-foreground: #ffffff;
+    --popover: #1f1f20;
+    --popover-foreground: #ffffff;
+    --primary: #2dd4bf;
     --primary-foreground: #ffffff;
-    --secondary: #1a1a1f;
-    --secondary-foreground: #f4f4f5;
-    --muted: #1a1a1f;
-    --muted-foreground: #71717a;
-    --accent: #10b981;
+    --secondary: #161617;
+    --secondary-foreground: #ffffff;
+    --muted: #161617;
+    --muted-foreground: #999999;
+    --accent: #2dd4bf;
     --accent-foreground: #ffffff;
-    --destructive: #ef4444;
-    --border: rgba(255,255,255,0.07);
-    --input: rgba(255,255,255,0.07);
-    --ring: #2563eb;
+    --destructive: #525252;
+    --destructive-foreground: #ffffff;
+    --border: rgba(229, 231, 235, 0.08);
+    --input: rgba(229, 231, 235, 0.08);
+    --ring: #2dd4bf;
     --radius: 0.625rem;
-    --sidebar: #111114;
-    --sidebar-foreground: #f4f4f5;
-    --sidebar-primary: #2563eb;
+
+    --sidebar: #161617;
+    --sidebar-foreground: #ffffff;
+    --sidebar-primary: #2dd4bf;
     --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: #1a1a1f;
-    --sidebar-accent-foreground: #f4f4f5;
-    --sidebar-border: rgba(255,255,255,0.07);
-    --sidebar-ring: #2563eb;
+    --sidebar-accent: #1f1f20;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: rgba(229, 231, 235, 0.08);
+    --sidebar-ring: #2dd4bf;
+
+    /* === Morphic palette tokens === */
+    --color-absolute-zero: #2dd4bf;
+    --color-morphic-teal: #14b8a6;
+    --color-morphic-teal-hover: #0d9488;
+    --color-morphic-aqua: #2dd4bf;
+    --color-morphic-aqua-hover: #5eead4;
+    --color-morphic-blue: #2563eb;
+    --color-morphic-blue-hover: #1d4ed8;
+    --color-morphic-green: #22c55e;
+    --color-morphic-green-hover: #16a34a;
+    --color-ebony-canvas: #000000;
+    --color-nightfall-gray: #161617;
+    --color-charcoal-surface: #1f1f20;
+    --color-deep-graphite: #333333;
+    --color-cloud-white: #ffffff;
+    --color-light-mist: #f5f5f5;
+    --color-outline-haze: #e5e7eb;
+    --color-muted-silver: #999999;
+    --color-subtle-gray: #737373;
+    --color-anchor-graphite: #525252;
+    --color-dim-gray: #404040;
+
+    /* === Legacy 099 tokens (kept as aliases to Morphic) === */
+    --color-midnight-oil: #000000;
+    --color-ghost-white: #ffffff;
+    --color-steel-gray: #161617;
+    --color-muted-ash: #1f1f20;
+
+    /* === Typography === */
+    --font-soehne-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+    --text-caption: 10px;       --leading-caption: 1.5;     --tracking-caption: -0.1px;
+    --text-body: 14px;          --leading-body: 1.33;       --tracking-body: -0.22px;
+    --text-body-lg: 16px;       --leading-body-lg: 1.29;    --tracking-body-lg: -0.256px;
+    --text-subheading: 18px;    --leading-subheading: 1.2;  --tracking-subheading: -0.27px;
+    --text-heading: 20px;       --leading-heading: 1.15;    --tracking-heading: -0.28px;
+    --text-heading-lg: 40px;    --leading-heading-lg: 1.17; --tracking-heading-lg: -0.96px;
+    --text-display: 52px;       --leading-display: 1;       --tracking-display: -1.352px;
+
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* === Spacing (Morphic 4px-based scale) === */
+    --spacing-unit: 4px;
+    --spacing-4: 4px;
+    --spacing-8: 8px;
+    --spacing-12: 12px;
+    --spacing-16: 16px;
+    --spacing-20: 20px;
+    --spacing-24: 24px;
+    --spacing-28: 28px;
+    --spacing-32: 32px;
+    --spacing-40: 40px;
+    --spacing-60: 60px;
+    --spacing-72: 72px;
+    --spacing-80: 80px;
+    --spacing-96: 96px;
+    --spacing-100: 100px;
+    --spacing-140: 140px;
+    --spacing-180: 180px;
+
+    /* Legacy spacing aliases (kept so existing classes still resolve) */
+    --spacing-5: 5px;
+    --spacing-6: 6px;
+    --spacing-19: 19px;
+    --spacing-26: 26px;
+    --spacing-27: 27px;
+
+    --page-max-width: 1600px;
+    --section-gap: 96px;
+    --element-gap: 8px;
+    --card-padding: 12px;
+
+    /* === Border Radius === */
+    --radius-lg: 14px;
+    --radius-cards: 14px;
+    --radius-inputs: 10px;
+    --radius-buttons: 7px;
+    --radius-large: 16px;
+    --radius-super-large: 24px;
+    --radius-hero: 32px;
+    --radius-pill: 100px;
+    --radius-default: 0px;
+
+    /* === Shadows === */
+    --shadow-xl: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.1) 0px 8px 10px -6px;
   }
 
   * {
-    border-color: rgba(255,255,255,0.07);
-    /* Smooth scrolling on iOS */
+    border-color: rgba(229, 231, 235, 0.08);
     -webkit-overflow-scrolling: touch;
     box-sizing: border-box;
+    /* Kaydırma çubuğunu site genelinde gizle — scroll işlevi korunur */
+    scrollbar-width: none;       /* Firefox */
+    -ms-overflow-style: none;    /* IE / eski Edge */
+  }
+
+  /* Chrome, Safari, yeni Edge */
+  *::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
   }
 
   body {
-    background-color: #0a0a0b;
-    color: #f4f4f5;
-    /* Prevent overscroll bounce on body */
+    background-color: #000000;
+    color: #ffffff;
     overscroll-behavior: none;
   }
 
@@ -86,5 +216,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    letter-spacing: -0.01em;
   }
 }

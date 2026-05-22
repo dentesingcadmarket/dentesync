@@ -5,7 +5,6 @@ const PUBLIC_ROUTES = ['/', '/login', '/signup', '/pricing', '/auth/callback']
 
 const TIER_ROUTES: Record<string, string[]> = {
   '/dashboard/case-practice': ['m2', 'm3'],
-  '/dashboard/community': ['m2', 'm3'],
 }
 
 export async function middleware(request: NextRequest) {

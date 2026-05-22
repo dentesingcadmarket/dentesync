@@ -16,14 +16,25 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json()
-    const { messages, apiKey, sessionId } = body as {
+    const { messages, sessionId } = body as {
       messages: Array<{ role: 'user' | 'assistant'; content: string }>
-      apiKey: string
       sessionId?: string
     }
 
+    const apiKey = process.env.ANTHROPIC_API_KEY
     if (!apiKey) {
-      return new Response(JSON.stringify({ error: 'API key bulunamadı.' }), { status: 400 })
+      const encoder = new TextEncoder()
+      const maintenanceStream = new ReadableStream({
+        start(controller) {
+          const msg = 'D-Console şu an bakım modunda. En kısa sürede hizmetinize sunulacak. 🛠️'
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text: msg })}\n\n`))
+          controller.enqueue(encoder.encode('data: [DONE]\n\n'))
+          controller.close()
+        },
+      })
+      return new Response(maintenanceStream, {
+        headers: { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache', Connection: 'keep-alive' },
+      })
     }
 
     const client = new Anthropic({ apiKey })

@@ -38,18 +38,18 @@ function FAQItem({ item, index }: { item: typeof FAQ[0]; index: number }) {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.04 }}
-      className="border border-[rgba(255,255,255,0.07)] rounded-xl overflow-hidden"
+      className="border border-[rgba(229,231,235,0.08)] rounded-xl overflow-hidden"
     >
       <button
         onClick={() => setOpen(p => !p)}
-        className="w-full flex items-center justify-between px-5 py-4 text-left bg-[#111114] hover:bg-[#1a1a1f] transition-colors"
+        className="w-full flex items-center justify-between px-5 py-4 text-left bg-[#161617] hover:bg-[#1f1f20] transition-colors"
       >
-        <span className="text-[#f4f4f5] text-sm font-medium pr-4">{item.q}</span>
-        {open ? <ChevronUp className="w-4 h-4 text-[#71717a] shrink-0" /> : <ChevronDown className="w-4 h-4 text-[#71717a] shrink-0" />}
+        <span className="text-[#ffffff] text-sm font-medium pr-4">{item.q}</span>
+        {open ? <ChevronUp className="w-4 h-4 text-[#999999] shrink-0" /> : <ChevronDown className="w-4 h-4 text-[#999999] shrink-0" />}
       </button>
       {open && (
-        <div className="px-5 pb-4 bg-[#111114]">
-          <p className="text-[#71717a] text-sm leading-relaxed">{item.a}</p>
+        <div className="px-5 pb-4 bg-[#161617]">
+          <p className="text-[#999999] text-sm leading-relaxed">{item.a}</p>
         </div>
       )}
     </motion.div>
@@ -77,8 +77,8 @@ export default function SupportPage() {
           <HelpCircle className="w-5 h-5 text-[#2563eb]" />
         </div>
         <div>
-          <h1 className="text-2xl font-semibold text-[#f4f4f5]">Destek</h1>
-          <p className="text-[#71717a] text-sm">Sorularınız için buradayız</p>
+          <h1 className="text-2xl font-semibold text-[#ffffff]">Destek</h1>
+          <p className="text-[#999999] text-sm">Sorularınız için buradayız</p>
         </div>
       </div>
 
@@ -86,7 +86,7 @@ export default function SupportPage() {
       <div>
         <div className="flex items-center gap-2 mb-4">
           <MessageSquare className="w-4 h-4 text-[#2563eb]" />
-          <h2 className="text-[#f4f4f5] font-medium">Sık Sorulan Sorular</h2>
+          <h2 className="text-[#ffffff] font-medium">Sık Sorulan Sorular</h2>
         </div>
         <div className="space-y-2">
           {FAQ.map((item, i) => <FAQItem key={i} item={item} index={i} />)}
@@ -97,43 +97,43 @@ export default function SupportPage() {
       <div>
         <div className="flex items-center gap-2 mb-4">
           <Mail className="w-4 h-4 text-[#2563eb]" />
-          <h2 className="text-[#f4f4f5] font-medium">Bize Yazın</h2>
+          <h2 className="text-[#ffffff] font-medium">Bize Yazın</h2>
         </div>
 
         {sent ? (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="p-6 rounded-xl bg-[#10b981]/10 border border-[#10b981]/20 flex flex-col items-center text-center gap-3"
+            className="p-6 rounded-xl bg-[#2563eb]/10 border border-[#2563eb]/20 flex flex-col items-center text-center gap-3"
           >
-            <CheckCircle2 className="w-8 h-8 text-[#10b981]" />
-            <p className="text-[#f4f4f5] font-medium">Mesajınız alındı!</p>
-            <p className="text-[#71717a] text-sm">En kısa sürede size geri döneceğiz. Genellikle 24 saat içinde yanıt veriyoruz.</p>
+            <CheckCircle2 className="w-8 h-8 text-[#2563eb]" />
+            <p className="text-[#ffffff] font-medium">Mesajınız alındı!</p>
+            <p className="text-[#999999] text-sm">En kısa sürede size geri döneceğiz. Genellikle 24 saat içinde yanıt veriyoruz.</p>
             <button onClick={() => { setSent(false); setSubject(''); setMessage('') }} className="text-[#2563eb] text-sm hover:underline">
               Yeni mesaj gönder
             </button>
           </motion.div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4 p-5 rounded-xl bg-[#111114] border border-[rgba(255,255,255,0.07)]">
+          <form onSubmit={handleSubmit} className="space-y-4 p-5 rounded-xl bg-[#161617] border border-[rgba(229,231,235,0.08)]">
             <div>
-              <label className="block text-[#f4f4f5] text-sm mb-1.5">Konu</label>
+              <label className="block text-[#ffffff] text-sm mb-1.5">Konu</label>
               <input
                 value={subject}
                 onChange={e => setSubject(e.target.value)}
                 placeholder="Sorununuzu özetleyin"
                 required
-                className="w-full px-4 py-2.5 rounded-xl bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)] text-[#f4f4f5] placeholder:text-[#71717a] text-sm focus:outline-none focus:border-[#2563eb] transition-colors"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2563eb] transition-colors"
               />
             </div>
             <div>
-              <label className="block text-[#f4f4f5] text-sm mb-1.5">Mesaj</label>
+              <label className="block text-[#ffffff] text-sm mb-1.5">Mesaj</label>
               <textarea
                 value={message}
                 onChange={e => setMessage(e.target.value)}
                 placeholder="Sorununuzu detaylı açıklayın..."
                 rows={5}
                 required
-                className="w-full px-4 py-2.5 rounded-xl bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)] text-[#f4f4f5] placeholder:text-[#71717a] text-sm resize-none focus:outline-none focus:border-[#2563eb] transition-colors"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm resize-none focus:outline-none focus:border-[#2563eb] transition-colors"
               />
             </div>
             <motion.button

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useCallback, useEffect } from 'react'
 import { toast } from 'sonner'
@@ -17,10 +17,9 @@ interface NextStepTrigger {
 interface PlanWrapperProps {
   initialSteps: PlanStep[]
   userId: string
-  apiKey: string | null
 }
 
-export function PlanWrapper({ initialSteps, userId, apiKey }: PlanWrapperProps) {
+export function PlanWrapper({ initialSteps, userId }: PlanWrapperProps) {
   const [steps, setSteps] = useState<PlanStep[]>(initialSteps)
   const [nextStepTrigger, setNextStepTrigger] = useState<NextStepTrigger | null>(null)
   const supabase = createClient()
@@ -88,11 +87,10 @@ export function PlanWrapper({ initialSteps, userId, apiKey }: PlanWrapperProps) 
   }, [])
 
   return (
-    <div className="h-full flex flex-col lg:flex-row divide-y lg:divide-y-0 lg:divide-x divide-[rgba(255,255,255,0.07)]">
+    <div className="h-full flex flex-col lg:flex-row divide-y lg:divide-y-0 lg:divide-x divide-[rgba(229,231,235,0.08)]">
       {/* Sol: AI Sohbet */}
       <div className="flex-1 min-h-0 min-w-0">
         <PlanChat
-          apiKey={apiKey}
           steps={steps}
           nextStepTrigger={nextStepTrigger}
           onStepGenerated={handleStepGenerated}

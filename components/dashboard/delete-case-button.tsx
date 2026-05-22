@@ -26,24 +26,24 @@ export function DeleteCaseButton({ caseId }: { caseId: string }) {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-red-500/20 text-red-400 text-sm hover:bg-red-500/10 transition-colors cursor-pointer"
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-anchor-graphite0/20 text-anchor-graphite text-sm hover:bg-anchor-graphite0/10 transition-colors cursor-pointer"
       >
         <Trash2 className="w-3.5 h-3.5" />
         Sil
       </button>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="bg-[#111114] border-[rgba(255,255,255,0.07)] text-[#f4f4f5] max-w-sm">
+        <DialogContent className="bg-[#161617] border-[rgba(229,231,235,0.08)] text-[#ffffff] max-w-sm">
           <DialogHeader>
-            <DialogTitle className="text-[#f4f4f5]">Vakayı Sil</DialogTitle>
+            <DialogTitle className="text-[#ffffff]">Vakayı Sil</DialogTitle>
           </DialogHeader>
-          <p className="text-[#71717a] text-sm">
+          <p className="text-[#999999] text-sm">
             Bu vaka ve tüm dosyaları kalıcı olarak silinecek. Bu işlem geri alınamaz.
           </p>
           <div className="flex gap-3 mt-2">
             <button
               onClick={() => setOpen(false)}
-              className="flex-1 px-4 py-2.5 rounded-full border border-[rgba(255,255,255,0.07)] text-[#71717a] text-sm hover:bg-white/5 transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-full border border-[rgba(229,231,235,0.08)] text-[#999999] text-sm hover:bg-white/5 transition-colors"
             >
               İptal
             </button>
@@ -52,7 +52,7 @@ export function DeleteCaseButton({ caseId }: { caseId: string }) {
               whileTap={{ scale: 0.98 }}
               onClick={handleDelete}
               disabled={isPending}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-red-500 text-white text-sm font-medium hover:bg-red-600 disabled:opacity-50 cursor-pointer transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-anchor-graphite0 text-white text-sm font-medium hover:bg-anchor-graphite disabled:opacity-50 cursor-pointer transition-colors"
             >
               {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
               Sil

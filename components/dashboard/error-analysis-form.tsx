@@ -24,17 +24,16 @@ import { Label } from '@/components/ui/label'
 import { saveErrorAnalysis } from '@/app/actions/error-analysis'
 
 const SEVERITY_CONFIG = {
-  low: { label: 'Düşük', color: 'bg-[#10b981]/15 text-[#10b981] border-[#10b981]/20' },
-  medium: { label: 'Orta', color: 'bg-[#f59e0b]/15 text-[#f59e0b] border-[#f59e0b]/20' },
-  high: { label: 'Yüksek', color: 'bg-orange-500/15 text-orange-400 border-orange-500/20' },
-  critical: { label: 'Kritik', color: 'bg-red-500/15 text-red-400 border-red-500/20' },
+  low: { label: 'Düşük', color: 'bg-[#2563eb]/15 text-[#2563eb] border-[#2563eb]/20' },
+  medium: { label: 'Orta', color: 'bg-[#999999]/15 text-[#999999] border-[#999999]/20' },
+  high: { label: 'Yüksek', color: 'bg-anchor-graphite0/15 text-anchor-graphite border-anchor-graphite0/20' },
+  critical: { label: 'Kritik', color: 'bg-anchor-graphite0/15 text-anchor-graphite border-anchor-graphite0/20' },
 } as const
 
 type Severity = keyof typeof SEVERITY_CONFIG
 type Stage = 'form' | 'analyzing' | 'done'
 
 interface ErrorAnalysisFormProps {
-  apiKey: string | null
   initialCaseId?: string
   initialCaseTitle?: string
   cases?: { id: string; title: string }[]
@@ -42,7 +41,6 @@ interface ErrorAnalysisFormProps {
 }
 
 export function ErrorAnalysisForm({
-  apiKey,
   initialCaseId,
   initialCaseTitle,
   cases = [],
@@ -77,8 +75,6 @@ export function ErrorAnalysisForm({
   async function handleAnalyze(e: React.FormEvent) {
     e.preventDefault()
     if (!errorDescription.trim()) return
-    if (!apiKey) { toast.error('API key bulunamadı. Lütfen önce D-Console\'da API key girin.'); return }
-
     setStage('analyzing')
     setAnalysisText('')
     setMeta(null)
@@ -87,7 +83,7 @@ export function ErrorAnalysisForm({
       const res = await fetch('/api/analyze-error', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ errorDescription, apiKey, caseTitle }),
+        body: JSON.stringify({ errorDescription, caseTitle }),
       })
 
       if (!res.ok || !res.body) {
@@ -160,7 +156,7 @@ export function ErrorAnalysisForm({
           <motion.span
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#f59e0b]/15 border border-[#f59e0b]/25 text-[#f59e0b] text-sm font-medium hover:bg-[#f59e0b]/25 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#999999]/15 border border-[#999999]/25 text-[#999999] text-sm font-medium hover:bg-[#999999]/25 transition-colors cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             Hata Analizi Ekle
@@ -170,16 +166,16 @@ export function ErrorAnalysisForm({
 
       <SheetContent
         side="right"
-        className="w-full sm:max-w-xl bg-[#111114] border-l border-[rgba(255,255,255,0.07)] text-[#f4f4f5] overflow-y-auto"
+        className="w-full sm:max-w-xl bg-[#161617] border-l border-[rgba(229,231,235,0.08)] text-[#ffffff] overflow-y-auto"
       >
         <SheetHeader className="mb-6">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-[#f59e0b]/10 flex items-center justify-center">
-              <AlertTriangle className="w-4 h-4 text-[#f59e0b]" />
+            <div className="w-8 h-8 rounded-full bg-[#999999]/10 flex items-center justify-center">
+              <AlertTriangle className="w-4 h-4 text-[#999999]" />
             </div>
-            <SheetTitle className="text-[#f4f4f5]">Hata Analizi</SheetTitle>
+            <SheetTitle className="text-[#ffffff]">Hata Analizi</SheetTitle>
           </div>
-          <p className="text-[#71717a] text-sm">
+          <p className="text-[#999999] text-sm">
             Hatayı açıkla, AI kök neden analizi ve çözüm önerileri sunsun.
           </p>
         </SheetHeader>
@@ -199,57 +195,51 @@ export function ErrorAnalysisForm({
               {/* Case selector (only if no initialCaseId and cases available) */}
               {!initialCaseId && cases.length > 0 && (
                 <div className="space-y-1.5">
-                  <Label className="text-[#f4f4f5] text-sm">Vaka (Opsiyonel)</Label>
+                  <Label className="text-[#ffffff] text-sm">Vaka (Opsiyonel)</Label>
                   <div className="relative">
                     <select
                       value={selectedCaseId}
                       onChange={e => setSelectedCaseId(e.target.value)}
-                      className="w-full bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)] text-[#f4f4f5] rounded-xl px-4 py-2.5 text-sm appearance-none focus:outline-none focus:border-[#2563eb] pr-10"
+                      className="w-full bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] rounded-xl px-4 py-2.5 text-sm appearance-none focus:outline-none focus:border-[#2563eb] pr-10"
                     >
                       <option value="">— Vaka seçin —</option>
                       {cases.map(c => (
                         <option key={c.id} value={c.id}>{c.title}</option>
                       ))}
                     </select>
-                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#71717a] pointer-events-none" />
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#999999] pointer-events-none" />
                   </div>
                 </div>
               )}
 
               {/* Pre-filled case badge */}
               {initialCaseTitle && (
-                <div className="flex items-center gap-2 p-3 rounded-xl bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)]">
-                  <span className="text-[#71717a] text-xs">Vaka:</span>
-                  <span className="text-[#f4f4f5] text-sm font-medium">{initialCaseTitle}</span>
+                <div className="flex items-center gap-2 p-3 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)]">
+                  <span className="text-[#999999] text-xs">Vaka:</span>
+                  <span className="text-[#ffffff] text-sm font-medium">{initialCaseTitle}</span>
                 </div>
               )}
 
               <div className="space-y-1.5">
-                <Label className="text-[#f4f4f5] text-sm">Hata Açıklaması *</Label>
+                <Label className="text-[#ffffff] text-sm">Hata Açıklaması *</Label>
                 <textarea
                   value={errorDescription}
                   onChange={e => setErrorDescription(e.target.value)}
                   placeholder="Ör: Zirkonyum kron fırın çıkışında çatlak oluştu. Metal altyapı üzerindeki seramik tabakası 2mm kalınlığındaydı ve pişirme sıcaklığı 960°C'ydi..."
                   rows={5}
                   required
-                  className="w-full bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)] text-[#f4f4f5] placeholder:text-[#71717a] rounded-xl px-4 py-3 text-sm resize-none focus:outline-none focus:border-[#2563eb] leading-relaxed transition-colors"
+                  className="w-full bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] rounded-xl px-4 py-3 text-sm resize-none focus:outline-none focus:border-[#2563eb] leading-relaxed transition-colors"
                 />
-                <p className="text-[#71717a] text-xs">
+                <p className="text-[#999999] text-xs">
                   Ne kadar detaylı açıklarsan, AI analizi o kadar isabetli olur.
                 </p>
               </div>
-
-              {!apiKey && (
-                <div className="p-3 rounded-xl bg-[#f59e0b]/10 border border-[#f59e0b]/20 text-[#f59e0b] text-xs">
-                  API key bulunamadı. D-Console&apos;dan Anthropic API key girin.
-                </div>
-              )}
 
               <div className="flex gap-3 pt-2">
                 <button
                   type="button"
                   onClick={() => handleOpenChange(false)}
-                  className="flex-1 px-4 py-2.5 rounded-full border border-[rgba(255,255,255,0.07)] text-[#71717a] text-sm hover:bg-white/5 transition-colors"
+                  className="flex-1 px-4 py-2.5 rounded-full border border-[rgba(229,231,235,0.08)] text-[#999999] text-sm hover:bg-white/5 transition-colors"
                 >
                   İptal
                 </button>
@@ -257,8 +247,8 @@ export function ErrorAnalysisForm({
                   type="submit"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  disabled={!errorDescription.trim() || !apiKey}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-[#f59e0b] text-black text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                  disabled={!errorDescription.trim()}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-[#999999] text-black text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                 >
                   <Sparkles className="w-4 h-4" />
                   Analiz Et
@@ -276,27 +266,27 @@ export function ErrorAnalysisForm({
               exit={{ opacity: 0 }}
               className="space-y-4"
             >
-              <div className="flex items-center gap-2 text-[#f59e0b] text-sm">
+              <div className="flex items-center gap-2 text-[#999999] text-sm">
                 <Loader2 className="w-4 h-4 animate-spin" />
                 <span>Analiz yapılıyor...</span>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#0a0a0b] border border-[rgba(255,255,255,0.07)] min-h-[200px]">
+              <div className="p-4 rounded-xl bg-[#000000] border border-[rgba(229,231,235,0.08)] min-h-[200px]">
                 <div className="prose prose-invert prose-sm max-w-none text-sm">
                   <ReactMarkdown
                     components={{
-                      p: ({ children }) => <p className="mb-2 last:mb-0 leading-relaxed text-[#f4f4f5]">{children}</p>,
-                      h2: ({ children }) => <h2 className="text-sm font-semibold text-[#f4f4f5] mt-4 mb-2 first:mt-0">{children}</h2>,
+                      p: ({ children }) => <p className="mb-2 last:mb-0 leading-relaxed text-[#ffffff]">{children}</p>,
+                      h2: ({ children }) => <h2 className="text-sm font-semibold text-[#ffffff] mt-4 mb-2 first:mt-0">{children}</h2>,
                       ul: ({ children }) => <ul className="mb-2 pl-4 list-disc space-y-1">{children}</ul>,
                       ol: ({ children }) => <ol className="mb-2 pl-4 list-decimal space-y-1">{children}</ol>,
                       li: ({ children }) => <li className="text-[#d4d4d8]">{children}</li>,
-                      strong: ({ children }) => <strong className="font-semibold text-[#f4f4f5]">{children}</strong>,
+                      strong: ({ children }) => <strong className="font-semibold text-[#ffffff]">{children}</strong>,
                     }}
                   >
                     {analysisText.replace(/<analysis_meta>[\s\S]*?<\/analysis_meta>/g, '')}
                   </ReactMarkdown>
                   {analysisText && (
-                    <span className="inline-block w-0.5 h-4 bg-[#f59e0b] animate-pulse ml-0.5 align-middle" />
+                    <span className="inline-block w-0.5 h-4 bg-[#999999] animate-pulse ml-0.5 align-middle" />
                   )}
                 </div>
               </div>
@@ -317,33 +307,33 @@ export function ErrorAnalysisForm({
                   {SEVERITY_CONFIG[meta.severity].label} Önem
                 </span>
                 {isSaving ? (
-                  <span className="text-[#71717a] text-xs flex items-center gap-1">
+                  <span className="text-[#999999] text-xs flex items-center gap-1">
                     <Loader2 className="w-3 h-3 animate-spin" /> Kaydediliyor...
                   </span>
                 ) : (
-                  <span className="text-[#10b981] text-xs flex items-center gap-1">
+                  <span className="text-[#2563eb] text-xs flex items-center gap-1">
                     <CheckCircle2 className="w-3 h-3" /> Kaydedildi
                   </span>
                 )}
               </div>
 
               {meta.roadmap_impact && (
-                <div className="p-3 rounded-xl bg-[#f59e0b]/10 border border-[#f59e0b]/20">
-                  <p className="text-[#71717a] text-[10px] uppercase tracking-wider mb-1">Üretim Etkisi</p>
-                  <p className="text-[#f4f4f5] text-sm">{meta.roadmap_impact}</p>
+                <div className="p-3 rounded-xl bg-[#999999]/10 border border-[#999999]/20">
+                  <p className="text-[#999999] text-[10px] uppercase tracking-wider mb-1">Üretim Etkisi</p>
+                  <p className="text-[#ffffff] text-sm">{meta.roadmap_impact}</p>
                 </div>
               )}
 
-              <div className="p-4 rounded-xl bg-[#0a0a0b] border border-[rgba(255,255,255,0.07)] max-h-[420px] overflow-y-auto">
+              <div className="p-4 rounded-xl bg-[#000000] border border-[rgba(229,231,235,0.08)] max-h-[420px] overflow-y-auto">
                 <div className="prose prose-invert prose-sm max-w-none text-sm">
                   <ReactMarkdown
                     components={{
-                      p: ({ children }) => <p className="mb-2 last:mb-0 leading-relaxed text-[#f4f4f5]">{children}</p>,
-                      h2: ({ children }) => <h2 className="text-sm font-semibold text-[#f4f4f5] mt-4 mb-2 first:mt-0">{children}</h2>,
+                      p: ({ children }) => <p className="mb-2 last:mb-0 leading-relaxed text-[#ffffff]">{children}</p>,
+                      h2: ({ children }) => <h2 className="text-sm font-semibold text-[#ffffff] mt-4 mb-2 first:mt-0">{children}</h2>,
                       ul: ({ children }) => <ul className="mb-2 pl-4 list-disc space-y-1">{children}</ul>,
                       ol: ({ children }) => <ol className="mb-2 pl-4 list-decimal space-y-1">{children}</ol>,
                       li: ({ children }) => <li className="text-[#d4d4d8]">{children}</li>,
-                      strong: ({ children }) => <strong className="font-semibold text-[#f4f4f5]">{children}</strong>,
+                      strong: ({ children }) => <strong className="font-semibold text-[#ffffff]">{children}</strong>,
                     }}
                   >
                     {analysisText}
@@ -354,7 +344,7 @@ export function ErrorAnalysisForm({
               <div className="flex gap-3 pt-2">
                 <button
                   onClick={() => { reset() }}
-                  className="flex-1 px-4 py-2.5 rounded-full border border-[rgba(255,255,255,0.07)] text-[#71717a] text-sm hover:bg-white/5 transition-colors"
+                  className="flex-1 px-4 py-2.5 rounded-full border border-[rgba(229,231,235,0.08)] text-[#999999] text-sm hover:bg-white/5 transition-colors"
                 >
                   Yeni Analiz
                 </button>

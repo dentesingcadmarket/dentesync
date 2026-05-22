@@ -1,6 +1,8 @@
+export const dynamic = 'force-dynamic'
+
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { SettingsWrapper } from '@/components/dashboard/settings/settings-wrapper'
-import { getApiKey } from '@/app/actions/api-key'
 
 export default async function SettingsPage({
   searchParams,
@@ -11,21 +13,30 @@ export default async function SettingsPage({
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const db = supabase as any
-  const { data: profile } = await db
+  const adminDb = createAdminClient()
+  let { data: profile } = await adminDb
     .from('profiles')
-    .select('full_name, username, avatar_url, subscription_tier, subscription_status, stripe_customer_id, created_at')
+    .select('full_name, avatar_url, username, subscription_tier, subscription_status, created_at')
     .eq('id', user!.id)
     .maybeSingle()
 
-  const apiKey = await getApiKey()
+  // Profil yoksa trigger çalışmamış olabilir — otomatik oluştur
+  if (!profile) {
+    await adminDb
+      .from('profiles')
+      .upsert({ id: user!.id }, { onConflict: 'id', ignoreDuplicates: true })
+    const { data: freshProfile } = await adminDb
+      .from('profiles')
+      .select('full_name, avatar_url, username, subscription_tier, subscription_status, created_at')
+      .eq('id', user!.id)
+      .maybeSingle()
+    profile = freshProfile ?? { subscription_tier: 'm1', subscription_status: 'trial' }
+  }
 
   return (
     <SettingsWrapper
       user={{ id: user!.id, email: user!.email ?? '' }}
       profile={profile}
-      hasApiKey={!!apiKey}
       subParam={params.sub}
     />
   )

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useTransition } from 'react'
 import { motion } from 'framer-motion'
@@ -46,33 +46,33 @@ export function ApiKeyModal({ open, onOpenChange, hasKey, onKeySaved }: ApiKeyMo
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-[#111114] border-[rgba(255,255,255,0.07)] text-[#f4f4f5] max-w-md">
+      <DialogContent className="bg-[#212121] border-[rgba(229,231,235,0.08)] text-[#ffffff] max-w-md">
         <DialogHeader>
           <div className="flex items-center gap-2 mb-1">
-            <div className="w-8 h-8 rounded-full bg-[#2563eb]/10 flex items-center justify-center">
-              <Key className="w-4 h-4 text-[#2563eb]" />
+            <div className="w-8 h-8 rounded-full bg-[#0075ff]/10 flex items-center justify-center">
+              <Key className="w-4 h-4 text-[#0075ff]" />
             </div>
-            <DialogTitle className="text-[#f4f4f5]">Anthropic API Key</DialogTitle>
+            <DialogTitle className="text-[#ffffff]">Anthropic API Key</DialogTitle>
           </div>
-          <p className="text-[#71717a] text-sm">
+          <p className="text-[#999999] text-sm">
             D-Console&apos;u kullanmak için kendi Anthropic API key&apos;inizi girmeniz gerekiyor.
           </p>
         </DialogHeader>
 
         {hasKey ? (
           <div className="space-y-4">
-            <div className="p-4 rounded-xl bg-[#10b981]/10 border border-[#10b981]/20 flex items-center gap-3">
-              <Key className="w-4 h-4 text-[#10b981] shrink-0" />
+            <div className="p-4 rounded-xl bg-[#0075ff]/10 border border-[#0075ff]/20 flex items-center gap-3">
+              <Key className="w-4 h-4 text-[#0075ff] shrink-0" />
               <div>
-                <p className="text-[#10b981] text-sm font-medium">API key aktif</p>
-                <p className="text-[#71717a] text-xs">sk-ant-••••••••••••••••</p>
+                <p className="text-[#0075ff] text-sm font-medium">API key aktif</p>
+                <p className="text-[#999999] text-xs">sk-ant-••••••••••••••••</p>
               </div>
             </div>
 
             <div className="flex gap-3">
               <button
                 onClick={() => onOpenChange(false)}
-                className="flex-1 px-4 py-2.5 rounded-full border border-[rgba(255,255,255,0.07)] text-[#71717a] text-sm hover:bg-white/5 transition-colors"
+                className="flex-1 px-4 py-2.5 rounded-full border border-[rgba(229,231,235,0.08)] text-[#999999] text-sm hover:bg-white/5 transition-colors"
               >
                 Kapat
               </button>
@@ -81,7 +81,7 @@ export function ApiKeyModal({ open, onOpenChange, hasKey, onKeySaved }: ApiKeyMo
                 whileTap={{ scale: 0.98 }}
                 onClick={handleDelete}
                 disabled={isDeleting}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-sm hover:bg-red-500/20 disabled:opacity-50 transition-colors cursor-pointer"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-anchor-graphite0/10 border border-anchor-graphite0/20 text-anchor-graphite text-sm hover:bg-anchor-graphite0/20 disabled:opacity-50 transition-colors cursor-pointer"
               >
                 {isDeleting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
                 Key&apos;i Sil
@@ -91,28 +91,28 @@ export function ApiKeyModal({ open, onOpenChange, hasKey, onKeySaved }: ApiKeyMo
         ) : (
           <form onSubmit={handleSave} className="space-y-4">
             <div className="space-y-1.5">
-              <Label className="text-[#f4f4f5] text-sm">API Key</Label>
+              <Label className="text-[#ffffff] text-sm">API Key</Label>
               <div className="relative">
                 <Input
                   type={showKey ? 'text' : 'password'}
                   value={key}
                   onChange={e => setKey(e.target.value)}
                   placeholder="sk-ant-api03-..."
-                  className="pr-10 bg-[#1a1a1f] border-[rgba(255,255,255,0.07)] text-[#f4f4f5] placeholder:text-[#71717a] rounded-xl focus:border-[#2563eb] font-mono text-xs"
+                  className="pr-10 bg-[#292929] border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] rounded-xl focus:border-[#0075ff] font-mono text-xs"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowKey(p => !p)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#71717a] hover:text-[#f4f4f5]"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#999999] hover:text-[#ffffff]"
                 >
                   {showKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)]">
-              <p className="text-[#71717a] text-xs leading-relaxed">
+            <div className="p-3 rounded-xl bg-[#292929] border border-[rgba(229,231,235,0.08)]">
+              <p className="text-[#999999] text-xs leading-relaxed">
                 API key&apos;iniz şifreli olarak Supabase&apos;de saklanır ve yalnızca sizin isteklerinizde kullanılır.
                 Anthropic hesabınızda kullanım limitlerini takip edebilirsiniz.
               </p>
@@ -120,7 +120,7 @@ export function ApiKeyModal({ open, onOpenChange, hasKey, onKeySaved }: ApiKeyMo
                 href="https://console.anthropic.com/settings/keys"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 text-[#2563eb] text-xs mt-2 hover:underline"
+                className="flex items-center gap-1 text-[#0075ff] text-xs mt-2 hover:underline"
               >
                 API key almak için tıklayın <ExternalLink className="w-3 h-3" />
               </a>
@@ -130,7 +130,7 @@ export function ApiKeyModal({ open, onOpenChange, hasKey, onKeySaved }: ApiKeyMo
               <button
                 type="button"
                 onClick={() => onOpenChange(false)}
-                className="flex-1 px-4 py-2.5 rounded-full border border-[rgba(255,255,255,0.07)] text-[#71717a] text-sm hover:bg-white/5 transition-colors"
+                className="flex-1 px-4 py-2.5 rounded-full border border-[rgba(229,231,235,0.08)] text-[#999999] text-sm hover:bg-white/5 transition-colors"
               >
                 İptal
               </button>
@@ -139,7 +139,7 @@ export function ApiKeyModal({ open, onOpenChange, hasKey, onKeySaved }: ApiKeyMo
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 disabled={isPending || !key}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-[#2563eb] text-white text-sm font-medium disabled:opacity-50 cursor-pointer"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-[#0075ff] text-white text-sm font-medium disabled:opacity-50 cursor-pointer"
               >
                 {isPending && <Loader2 className="w-4 h-4 animate-spin" />}
                 Kaydet

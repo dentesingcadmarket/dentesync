@@ -27,14 +27,14 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json()
-    const { messages, apiKey, currentSteps } = body as {
+    const { messages, currentSteps } = body as {
       messages: Array<{ role: 'user' | 'assistant'; content: string }>
-      apiKey: string
       currentSteps?: Array<{ title: string; status: string }>
     }
 
+    const apiKey = process.env.ANTHROPIC_API_KEY
     if (!apiKey) {
-      return new Response(JSON.stringify({ error: 'API key bulunamadı.' }), { status: 400 })
+      return new Response(JSON.stringify({ error: 'Servis şu an kullanılamıyor.' }), { status: 503 })
     }
 
     let systemWithContext = SYSTEM_PROMPT

@@ -203,11 +203,16 @@ export async function deleteCaseFile(caseId: string, filePath: string) {
   }
   if (caseData?.stl_file_url === filePath) updateData.stl_file_url = null
 
-  await supabase
+  const { error: updErr } = await supabase
     .from('cases')
     .update(updateData)
     .eq('id', caseId)
     .eq('user_id', user.id)
+
+  if (updErr) {
+    console.error('[deleteCaseFile] update failed', updErr)
+    return { error: 'Dosya silindi ama vaka güncellenemedi.' }
+  }
 
   revalidatePath(`/dashboard/case-management/${caseId}`)
   return { success: true }

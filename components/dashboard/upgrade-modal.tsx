@@ -72,28 +72,28 @@ export function UpgradeModal() {
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="bg-[#111114] border-[rgba(255,255,255,0.07)] text-[#f4f4f5] max-w-md">
+      <DialogContent className="bg-[#161617] border-[rgba(229,231,235,0.08)] text-[#ffffff] max-w-md">
         <DialogHeader>
           <div className="flex items-center gap-2 mb-1">
             <div className="w-8 h-8 rounded-full bg-[#2563eb]/10 flex items-center justify-center">
               <Zap className="w-4 h-4 text-[#2563eb]" />
             </div>
-            <DialogTitle className="text-[#f4f4f5]">Plan Yükseltme Gerekli</DialogTitle>
+            <DialogTitle className="text-[#ffffff]">Plan Yükseltme Gerekli</DialogTitle>
           </div>
-          <p className="text-[#71717a] text-sm">
-            Bu özelliği kullanmak için <span className="text-[#f4f4f5] font-medium">{plan.name}</span> planına geçmeniz gerekiyor.
+          <p className="text-[#999999] text-sm">
+            Bu özelliği kullanmak için <span className="text-[#ffffff] font-medium">{plan.name}</span> planına geçmeniz gerekiyor.
           </p>
         </DialogHeader>
 
-        <div className="bg-[#1a1a1f] rounded-xl p-4 border border-[rgba(255,255,255,0.07)]">
+        <div className="bg-[#1f1f20] rounded-xl p-4 border border-[rgba(229,231,235,0.08)]">
           <div className="flex justify-between items-center mb-3">
-            <span className="text-[#f4f4f5] font-medium">{plan.name}</span>
+            <span className="text-[#ffffff] font-medium">{plan.name}</span>
             <span className="text-[#2563eb] font-semibold">{plan.price}</span>
           </div>
           <ul className="space-y-2">
             {plan.features.map(f => (
-              <li key={f} className="flex items-center gap-2 text-sm text-[#71717a]">
-                <Check className="w-3.5 h-3.5 text-[#10b981] shrink-0" />
+              <li key={f} className="flex items-center gap-2 text-sm text-[#999999]">
+                <Check className="w-3.5 h-3.5 text-[#2563eb] shrink-0" />
                 {f}
               </li>
             ))}
@@ -103,7 +103,7 @@ export function UpgradeModal() {
         <div className="flex gap-3 mt-2">
           <button
             onClick={handleClose}
-            className="flex-1 px-4 py-2.5 rounded-full border border-[rgba(255,255,255,0.07)] text-[#71717a] text-sm hover:bg-white/5 transition-colors"
+            className="flex-1 px-4 py-2.5 rounded-full border border-[rgba(229,231,235,0.08)] text-[#999999] text-sm hover:bg-white/5 transition-colors"
           >
             Vazgeç
           </button>

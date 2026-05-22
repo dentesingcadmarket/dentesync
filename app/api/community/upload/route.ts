@@ -1,45 +1,95 @@
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
+
+const BUCKET = 'community-posts'
+const MAX_SIZE = 5 * 1024 * 1024 // 5 MB
+
+const ALLOWED_MIME: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/jpg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+  'image/gif': 'gif',
+}
 
 export async function POST(request: Request) {
   try {
     const supabase = await createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return Response.json({ error: 'Oturum açmanız gerekiyor.' }, { status: 401 })
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    if (authError || !user) {
+      return Response.json({ error: 'Oturum açmanız gerekiyor.' }, { status: 401 })
+    }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const db = supabase as any
-    const { data: profile } = await db
+    const adminDb = createAdminClient()
+    const { data: profile, error: profileError } = await adminDb
       .from('profiles')
       .select('subscription_tier')
       .eq('id', user.id)
       .maybeSingle()
 
+    if (profileError) {
+      return Response.json({ error: 'Profil bilgisi alınamadı.' }, { status: 500 })
+    }
     if (!profile || !['m2', 'm3'].includes(profile.subscription_tier)) {
-      return Response.json({ error: 'Bu özellik M2+ planında mevcut.' }, { status: 403 })
+      return Response.json({ error: 'Görsel yükleme M2+ planında kullanılabilir.' }, { status: 403 })
     }
 
     const formData = await request.formData()
-    const file = formData.get('file') as File
-    if (!file) return Response.json({ error: 'Dosya bulunamadı.' }, { status: 400 })
-    if (file.size > 5 * 1024 * 1024) return Response.json({ error: 'Görsel maksimum 5MB olabilir.' }, { status: 400 })
+    const files = formData.getAll('file') as File[]
 
-    const ext = file.name.split('.').pop()?.toLowerCase()
-    if (!['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext ?? '')) {
-      return Response.json({ error: 'Geçersiz dosya formatı.' }, { status: 400 })
+    if (!files.length || (files.length === 1 && files[0].size === 0)) {
+      return Response.json({ error: 'Lütfen en az bir dosya seçin.' }, { status: 400 })
     }
 
-    const path = `community/${user.id}/${Date.now()}.${ext}`
-    const bytes = await file.arrayBuffer()
-    const { error: uploadError } = await db.storage
-      .from('community-images')
-      .upload(path, bytes, { contentType: file.type })
+    const urls: string[] = []
 
-    if (uploadError) return Response.json({ error: 'Görsel yüklenemedi.' }, { status: 500 })
+    for (const file of files) {
+      if (file.size > MAX_SIZE) {
+        return Response.json({ error: `"${file.name}" boyutu en fazla 5 MB olabilir.` }, { status: 400 })
+      }
 
-    const { data } = db.storage.from('community-images').getPublicUrl(path)
-    return Response.json({ url: data.publicUrl })
+      const mimeType = file.type.toLowerCase()
+      const ext = ALLOWED_MIME[mimeType]
+      if (!ext) {
+        return Response.json(
+          { error: 'Desteklenmeyen dosya formatı. Lütfen JPG, PNG, WebP veya GIF yükleyin.' },
+          { status: 400 }
+        )
+      }
+
+      const path = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
+      const bytes = new Uint8Array(await file.arrayBuffer())
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { error: uploadError } = await (supabase as any).storage
+        .from(BUCKET)
+        .upload(path, bytes, { contentType: mimeType, upsert: false })
+
+      if (uploadError) {
+        console.error('[community/upload] Supabase storage hatası:', uploadError)
+        if (uploadError.message?.toLowerCase().includes('bucket') ||
+            uploadError.message?.toLowerCase().includes('not found')) {
+          return Response.json(
+            { error: 'Depolama alanı henüz yapılandırılmamış. Lütfen yöneticinize bildirin.' },
+            { status: 500 }
+          )
+        }
+        return Response.json(
+          { error: `Görsel yüklenemedi: ${uploadError.message}` },
+          { status: 500 }
+        )
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: urlData } = (supabase as any).storage.from(BUCKET).getPublicUrl(path)
+      urls.push(urlData.publicUrl)
+    }
+
+    return Response.json({ urls, url: urls[0] })
+
   } catch (err) {
-    const msg = err instanceof Error ? err.message : 'Sunucu hatası'
-    return Response.json({ error: msg }, { status: 500 })
+    console.error('[community/upload] Beklenmeyen hata:', err)
+    const msg = err instanceof Error ? err.message : 'Bilinmeyen hata'
+    return Response.json({ error: `Sunucu hatası: ${msg}` }, { status: 500 })
   }
 }

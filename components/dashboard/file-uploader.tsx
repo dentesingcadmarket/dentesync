@@ -16,8 +16,8 @@ function formatBytes(bytes: number) {
 
 function FileIcon({ type }: { type: string }) {
   if (type === 'stl' || type.includes('octet')) return <Box className="w-4 h-4 text-[#2563eb]" />
-  if (type.includes('image')) return <ImageIcon className="w-4 h-4 text-[#10b981]" />
-  return <FileText className="w-4 h-4 text-[#f59e0b]" />
+  if (type.includes('image')) return <ImageIcon className="w-4 h-4 text-[#2563eb]" />
+  return <FileText className="w-4 h-4 text-[#999999]" />
 }
 
 interface FileUploaderProps {
@@ -102,13 +102,13 @@ export function FileUploader({ caseId, attachments: initialAttachments }: FileUp
         {uploading ? (
           <div className="flex flex-col items-center gap-2">
             <Loader2 className="w-8 h-8 text-[#2563eb] animate-spin" />
-            <p className="text-[#71717a] text-sm">Yükleniyor...</p>
+            <p className="text-[#999999] text-sm">Yükleniyor...</p>
           </div>
         ) : (
           <div className="flex flex-col items-center gap-2">
-            <Upload className="w-8 h-8 text-[#71717a]" />
-            <p className="text-[#f4f4f5] text-sm font-medium">Dosyaları sürükle veya tıkla</p>
-            <p className="text-[#71717a] text-xs">STL (50MB), PDF/PNG/JPG/DOCX (5MB)</p>
+            <Upload className="w-8 h-8 text-[#999999]" />
+            <p className="text-[#ffffff] text-sm font-medium">Dosyaları sürükle veya tıkla</p>
+            <p className="text-[#999999] text-xs">STL (50MB), PDF/PNG/JPG/DOCX (5MB)</p>
           </div>
         )}
       </div>
@@ -121,17 +121,17 @@ export function FileUploader({ caseId, attachments: initialAttachments }: FileUp
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="flex items-center gap-3 p-3 rounded-xl bg-[#1a1a1f] border border-[rgba(255,255,255,0.07)]"
+            className="flex items-center gap-3 p-3 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)]"
           >
             <FileIcon type={att.type} />
             <div className="flex-1 min-w-0">
-              <p className="text-[#f4f4f5] text-sm truncate">{att.name}</p>
-              <p className="text-[#71717a] text-xs">{formatBytes(att.size)}</p>
+              <p className="text-[#ffffff] text-sm truncate">{att.name}</p>
+              <p className="text-[#999999] text-xs">{formatBytes(att.size)}</p>
             </div>
             <div className="flex items-center gap-1">
               <button
                 onClick={() => handleDownload(att.path, att.name)}
-                className="p-1.5 rounded-lg text-[#71717a] hover:text-[#f4f4f5] hover:bg-white/10 transition-colors"
+                className="p-1.5 rounded-lg text-[#999999] hover:text-[#ffffff] hover:bg-white/10 transition-colors"
                 title="İndir"
               >
                 <Download className="w-3.5 h-3.5" />
@@ -139,7 +139,7 @@ export function FileUploader({ caseId, attachments: initialAttachments }: FileUp
               <button
                 onClick={() => handleDelete(att.path)}
                 disabled={deletingPath === att.path}
-                className="p-1.5 rounded-lg text-[#71717a] hover:text-red-400 hover:bg-red-500/10 transition-colors disabled:opacity-50"
+                className="p-1.5 rounded-lg text-[#999999] hover:text-anchor-graphite hover:bg-anchor-graphite0/10 transition-colors disabled:opacity-50"
                 title="Sil"
               >
                 {deletingPath === att.path
@@ -153,7 +153,7 @@ export function FileUploader({ caseId, attachments: initialAttachments }: FileUp
       </AnimatePresence>
 
       {attachments.length === 0 && !uploading && (
-        <p className="text-center text-[#71717a] text-xs py-2">Henüz dosya yüklenmedi.</p>
+        <p className="text-center text-[#999999] text-xs py-2">Henüz dosya yüklenmedi.</p>
       )}
     </div>
   )
