@@ -61,8 +61,21 @@ export function CasesGridMockup() {
         </div>
       </div>
 
-      {/* Mockup */}
-      <div className="relative rounded-[24px] overflow-hidden border border-outline-haze/[0.10] bg-nightfall-gray/80 backdrop-blur-xl shadow-[0_30px_120px_-20px_rgba(0,0,0,0.8)]">
+      {/* Mockup — self-aura glow wrapper */}
+      <div className="relative">
+        <div
+          aria-hidden="true"
+          className="absolute -inset-x-8 -inset-y-12 -z-10 pointer-events-none"
+          style={{
+            background: `
+              radial-gradient(50% 60% at 30% 40%, rgba(37,99,235,0.22) 0%, transparent 65%),
+              radial-gradient(60% 50% at 75% 60%, rgba(45,212,191,0.18) 0%, transparent 70%),
+              radial-gradient(40% 40% at 50% 50%, rgba(20,184,166,0.10) 0%, transparent 70%)
+            `,
+            filter: 'blur(40px)',
+          }}
+        />
+      <div className="relative rounded-[24px] overflow-hidden border border-outline-haze/[0.10] bg-nightfall-gray/80 backdrop-blur-xl shadow-[0_30px_120px_-20px_rgba(0,0,0,0.8),0_0_80px_-10px_rgba(45,212,191,0.18)]">
         {/* Top bar */}
         <div className="flex items-center gap-3 px-4 sm:px-5 py-3 border-b border-white/[0.06] bg-black/40">
           <div className="flex gap-1.5">
@@ -156,6 +169,7 @@ export function CasesGridMockup() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </section>
   )

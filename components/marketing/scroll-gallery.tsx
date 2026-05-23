@@ -229,7 +229,7 @@ function GalleryTileItem({ tile, onActivate }: GalleryTileItemProps) {
       onTouchCancel={handleLeave}
       title={tile.title}
       style={{ width: `${tile.width}px` }}
-      className="group/tile relative shrink-0 h-[96px] sm:h-[112px] rounded-[14px] overflow-hidden border border-white/5 hover:border-white/15 transition-colors cursor-pointer"
+      className="group/tile relative shrink-0 h-[128px] sm:h-[148px] rounded-[14px] overflow-hidden border border-white/5 hover:border-white/15 transition-colors cursor-pointer"
     >
       <div className="absolute inset-0 bg-ebony-canvas" />
 
