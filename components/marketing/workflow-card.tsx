@@ -28,12 +28,6 @@ interface WorkflowCardProps {
   className?: string
 }
 
-function hashHue(slug: string): number {
-  let h = 0
-  for (let i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) | 0
-  return Math.abs(h) % 360
-}
-
 /**
  * Morphic-style workflow card.
  * - Idle: blurred placeholder visual + title overlay.
@@ -58,8 +52,7 @@ export function WorkflowCard({ item, className }: WorkflowCardProps) {
     }
   }
 
-  const hue = item.hue ?? hashHue(item.slug)
-  const glow = `hsla(${hue}, 60%, 50%, 0.20)`
+  const glow = 'rgba(45, 212, 191, 0.08)'
 
   return (
     <Link

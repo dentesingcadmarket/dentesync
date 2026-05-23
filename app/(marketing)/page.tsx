@@ -23,6 +23,10 @@ import {
 } from '@/components/marketing/scroll-gallery'
 import { PricingSection } from '@/components/marketing/pricing-section'
 import { SectionReveal } from '@/components/marketing/section-reveal'
+import { ConsoleMockupSection } from '@/components/marketing/console-mockup-section'
+import { PromptShowcase } from '@/components/marketing/prompt-showcase'
+import { PossibilitiesScroller } from '@/components/marketing/possibilities-scroller'
+import { CasesGridMockup } from '@/components/marketing/cases-grid-mockup'
 
 // =====================================================================
 // DATA — workflow grid (12 diş teknolojisi başlığı, foto yok → gradient + motif)
@@ -164,34 +168,51 @@ export default function LandingPage() {
       </nav>
 
       {/* ================================================ */}
-      {/* 2. HERO — Morphic: ortalanmış kolon */}
+      {/* 2. HERO — Morphic: iki-kolon asimetrik */}
       {/* ================================================ */}
       <section className="relative isolate">
-        <div className="relative z-10 max-w-4xl mx-auto px-6 pt-20 sm:pt-28 pb-12 text-center">
-          <h1 className="text-[32px] sm:text-[56px] lg:text-display font-bold tracking-tight leading-[1.06]">
-            Akıllı diş laboratuvarı
-            <br className="hidden sm:block" />{' '}
-            <span className="text-muted-silver">Her teknisyen için</span>
-          </h1>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 pt-20 sm:pt-28 pb-12">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 lg:items-end">
+            {/* SOL: pill badge + büyük başlık, sola yaslı */}
+            <div className="lg:col-span-7">
+              <Link
+                href="/signup"
+                className="inline-flex items-center gap-2 mb-8 px-3 py-1 rounded-pill bg-white/[0.04] border border-outline-haze/[0.08] text-caption hover:bg-white/[0.08] transition-colors"
+              >
+                <span className="text-morphic-green font-semibold">YENİ</span>
+                <span aria-hidden="true" className="h-3 w-px bg-white/15" />
+                <span className="text-cloud-white/85">D-Console 2.0 tüm planlarda</span>
+                <ArrowRight className="w-3 h-3 text-cloud-white/60" />
+              </Link>
+              <h1 className="text-[40px] sm:text-[64px] lg:text-display font-bold tracking-tight leading-[1.04] text-left">
+                Akıllı diş laboratuvarı
+                <br />
+                <span className="text-muted-silver">Her teknisyen için</span>
+              </h1>
+            </div>
 
-          <p className="text-cloud-white/90 text-body-lg leading-relaxed mt-6 max-w-2xl mx-auto">
-            DenteSync, zirkonyum köprüden implant vakasına her işi hızlandırır. Gerçek zamanlı
-            AI rehberlik, merkezi vaka takibi ve hata analizi — tek platformda, sıfır kurulumla.
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-2 mt-8">
-            <Link
-              href="/signup"
-              className="inline-flex items-center px-5 py-2.5 rounded-pill bg-morphic-blue text-cloud-white text-body font-medium hover:bg-morphic-blue-hover transition-colors cursor-pointer"
-            >
-              Ücretsiz Başla
-            </Link>
-            <Link
-              href="/dashboard/support"
-              className="inline-flex items-center px-5 py-2.5 rounded-pill bg-white/[0.06] text-cloud-white text-body font-medium hover:bg-white/[0.10] transition-colors cursor-pointer"
-            >
-              Demo iste
-            </Link>
+            {/* SAĞ: kısa açıklama + 2 CTA */}
+            <div className="lg:col-span-5 lg:pb-3">
+              <p className="text-cloud-white/85 text-body-lg leading-relaxed max-w-md">
+                DenteSync, zirkonyum köprüden implant vakasına her işi hızlandırır.
+                Gerçek zamanlı AI rehberlik, merkezi vaka takibi ve hata analizi
+                — tek platformda.
+              </p>
+              <div className="flex flex-wrap items-center gap-2 mt-6">
+                <Link
+                  href="/signup"
+                  className="inline-flex items-center px-5 py-2.5 rounded-pill bg-morphic-blue text-cloud-white text-body font-medium hover:bg-morphic-blue-hover transition-colors cursor-pointer"
+                >
+                  Ücretsiz Başla
+                </Link>
+                <Link
+                  href="/dashboard/support"
+                  className="inline-flex items-center px-5 py-2.5 rounded-pill bg-white/[0.06] text-cloud-white text-body font-medium hover:bg-white/[0.10] transition-colors cursor-pointer"
+                >
+                  Demo iste
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -229,6 +250,13 @@ export default function LandingPage() {
       </section>
 
       {/* ================================================ */}
+      {/* 2b. CONSOLE MOCKUP — "D-Console ile keşfet" */}
+      {/* ================================================ */}
+      <SectionReveal>
+        <ConsoleMockupSection />
+      </SectionReveal>
+
+      {/* ================================================ */}
       {/* 3. PLATFORM FEATURES — 3'lü statik grid */}
       {/* ================================================ */}
       <section id="features" className="relative max-w-7xl mx-auto px-6 py-24">
@@ -250,6 +278,13 @@ export default function LandingPage() {
       </section>
 
       {/* ================================================ */}
+      {/* 3b. PROMPT SHOWCASE — "Doğal dilden plana" */}
+      {/* ================================================ */}
+      <SectionReveal>
+        <PromptShowcase />
+      </SectionReveal>
+
+      {/* ================================================ */}
       {/* 4. WORKFLOWS */}
       {/* ================================================ */}
       <section id="workflows" className="relative py-24">
@@ -257,6 +292,13 @@ export default function LandingPage() {
           <WorkflowScroller items={WORKFLOWS} seeMoreHref="/dashboard/how-to-use" />
         </SectionReveal>
       </section>
+
+      {/* ================================================ */}
+      {/* 4b. POSSIBILITIES SCROLLER — "Sınırsız olanaklar" */}
+      {/* ================================================ */}
+      <SectionReveal>
+        <PossibilitiesScroller />
+      </SectionReveal>
 
       {/* ================================================ */}
       {/* 5. CAPABILITIES — 7 alternatifli blok */}
@@ -329,6 +371,13 @@ export default function LandingPage() {
           </div>
         </SectionReveal>
       </section>
+
+      {/* ================================================ */}
+      {/* 6b. CASES GRID MOCKUP — "Hız her vakada" */}
+      {/* ================================================ */}
+      <SectionReveal>
+        <CasesGridMockup />
+      </SectionReveal>
 
       {/* ================================================ */}
       {/* 7. USE CASES — 3'lü statik grid */}

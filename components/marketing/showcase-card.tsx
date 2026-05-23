@@ -31,7 +31,12 @@ export function ShowcaseCard({ item, className }: ShowcaseCardProps) {
         className,
       )}
     >
-      <BackgroundVisual intensity="tile" posterSrc={item.posterSrc} videoSrc={item.videoSrc} />
+      <BackgroundVisual
+        intensity="tile"
+        posterSrc={item.posterSrc}
+        videoSrc={item.videoSrc}
+        glowColor="rgba(45, 212, 191, 0.08)"
+      />
 
       {/* Dental motif placeholder — shown when no photo/video asset */}
       {!item.posterSrc && !item.videoSrc ? (

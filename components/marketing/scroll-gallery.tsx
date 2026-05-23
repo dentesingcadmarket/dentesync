@@ -199,11 +199,8 @@ function GalleryTileItem({ tile, onActivate }: GalleryTileItemProps) {
     }
   }, [tile.posterSrc])
 
-  const fallbackColor: RGB = {
-    r: Math.round(127 + 100 * Math.cos((tile.hue * Math.PI) / 180)),
-    g: Math.round(127 + 100 * Math.cos(((tile.hue - 120) * Math.PI) / 180)),
-    b: Math.round(127 + 100 * Math.cos(((tile.hue + 120) * Math.PI) / 180)),
-  }
+  // Sabit Morphic-teal — tüm tile'lar aynı sessiz tonda kalır (rainbow neon yerine)
+  const fallbackColor: RGB = { r: 45, g: 212, b: 191 }
 
   const activeColor: RGB = dominant ?? fallbackColor
 
@@ -232,7 +229,7 @@ function GalleryTileItem({ tile, onActivate }: GalleryTileItemProps) {
       onTouchCancel={handleLeave}
       title={tile.title}
       style={{ width: `${tile.width}px` }}
-      className="group/tile relative shrink-0 h-[110px] sm:h-[130px] rounded-[18px] overflow-hidden border border-white/5 hover:border-white/15 transition-colors cursor-pointer"
+      className="group/tile relative shrink-0 h-[96px] sm:h-[112px] rounded-[14px] overflow-hidden border border-white/5 hover:border-white/15 transition-colors cursor-pointer"
     >
       <div className="absolute inset-0 bg-ebony-canvas" />
 
@@ -266,13 +263,13 @@ function GalleryTileItem({ tile, onActivate }: GalleryTileItemProps) {
           <div
             className="absolute inset-0"
             style={{
-              background: `radial-gradient(120% 90% at 30% 35%, ${rgbString(fallbackColor, 0.38)} 0%, transparent 55%), radial-gradient(140% 100% at 75% 70%, ${rgbString(fallbackColor, 0.22)} 0%, transparent 60%)`,
+              background: `radial-gradient(120% 90% at 30% 35%, ${rgbString(fallbackColor, 0.10)} 0%, transparent 55%), radial-gradient(140% 100% at 75% 70%, ${rgbString(fallbackColor, 0.06)} 0%, transparent 60%)`,
             }}
           />
-          <div className="absolute inset-0 flex items-center justify-center text-cloud-white/35 group-hover/tile:text-cloud-white/55 transition-colors">
+          <div className="absolute inset-0 flex items-center justify-center text-cloud-white/25 group-hover/tile:text-cloud-white/45 transition-colors">
             <DentalMotif
               motif={tile.motif}
-              className="w-10 h-10 sm:w-12 sm:h-12 drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)]"
+              className="w-9 h-9 sm:w-10 sm:h-10 drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)]"
             />
           </div>
         </>
