@@ -48,24 +48,24 @@ const WORKFLOWS: WorkflowItem[] = [
 
 // "Yapılan Çalışmalar" galerisi — bento (variable width fixed height) + dental motif + rainbow hue
 const GALLERY_TILES: GalleryTile[] = [
-  { slug: 'g-zirkonyum', title: 'Zirkonyum köprü vakası', hue: 200, width: 130, motif: 'bridge', href: '/dashboard/community' },
-  { slug: 'g-anterior', title: 'Anterior estetik kron', hue: 25, width: 170, motif: 'crown', href: '/dashboard/community' },
-  { slug: 'g-implant', title: 'Implant üst yapı', hue: 280, width: 150, motif: 'implant', href: '/dashboard/community' },
-  { slug: 'g-pfm', title: 'PFM kor metal', hue: 45, width: 110, motif: 'crown', href: '/dashboard/community' },
-  { slug: 'g-veneer', title: 'Kabuk veneer', hue: 320, width: 110, motif: 'tooth', href: '/dashboard/community' },
-  { slug: 'g-protez', title: 'Tam protez kurulumu', hue: 165, width: 150, motif: 'denture', href: '/dashboard/community' },
-  { slug: 'g-bolumsel', title: 'Bölümsel protez', hue: 95, width: 170, motif: 'denture', href: '/dashboard/community' },
-  { slug: 'g-inlay', title: 'Inlay restorasyon', hue: 350, width: 130, motif: 'molar', href: '/dashboard/community' },
-  { slug: 'g-hibrid', title: 'Hibrid abutment', hue: 220, width: 130, motif: 'implant', href: '/dashboard/community' },
-  { slug: 'g-allon4', title: 'All-on-4 vaka', hue: 5, width: 170, motif: 'implant', href: '/dashboard/community' },
-  { slug: 'g-stl', title: 'STL dosya analizi', hue: 180, width: 150, motif: 'tooth', href: '/dashboard/community' },
-  { slug: 'g-cadcam', title: 'CAD/CAM workflow', hue: 290, width: 110, motif: 'molar', href: '/dashboard/community' },
-  { slug: 'g-sinter', title: 'Sinterleme prosedürü', hue: 55, width: 110, motif: 'crown', href: '/dashboard/community' },
-  { slug: 'g-glazur', title: 'Glazür uygulaması', hue: 305, width: 150, motif: 'tooth', href: '/dashboard/community' },
-  { slug: 'g-renk', title: 'Renk eşleştirme', hue: 145, width: 170, motif: 'molar', href: '/dashboard/community' },
-  { slug: 'g-monolitik', title: 'Monolitik zirkonyum', hue: 15, width: 130, motif: 'crown', href: '/dashboard/community' },
-  { slug: 'g-temporary', title: 'Geçici restorasyon', hue: 250, width: 130, motif: 'bridge', href: '/dashboard/community' },
-  { slug: 'g-emaks', title: 'E-max press tekniği', hue: 195, width: 170, motif: 'denture', href: '/dashboard/community' },
+  { slug: 'g-zirkonyum', title: 'Zirkonyum köprü vakası', hue: 200, width: 210, motif: 'bridge', href: '/dashboard/community' },
+  { slug: 'g-anterior', title: 'Anterior estetik kron', hue: 25, width: 270, motif: 'crown', href: '/dashboard/community' },
+  { slug: 'g-implant', title: 'Implant üst yapı', hue: 280, width: 240, motif: 'implant', href: '/dashboard/community' },
+  { slug: 'g-pfm', title: 'PFM kor metal', hue: 45, width: 180, motif: 'crown', href: '/dashboard/community' },
+  { slug: 'g-veneer', title: 'Kabuk veneer', hue: 320, width: 180, motif: 'tooth', href: '/dashboard/community' },
+  { slug: 'g-protez', title: 'Tam protez kurulumu', hue: 165, width: 240, motif: 'denture', href: '/dashboard/community' },
+  { slug: 'g-bolumsel', title: 'Bölümsel protez', hue: 95, width: 270, motif: 'denture', href: '/dashboard/community' },
+  { slug: 'g-inlay', title: 'Inlay restorasyon', hue: 350, width: 210, motif: 'molar', href: '/dashboard/community' },
+  { slug: 'g-hibrid', title: 'Hibrid abutment', hue: 220, width: 210, motif: 'implant', href: '/dashboard/community' },
+  { slug: 'g-allon4', title: 'All-on-4 vaka', hue: 5, width: 270, motif: 'implant', href: '/dashboard/community' },
+  { slug: 'g-stl', title: 'STL dosya analizi', hue: 180, width: 240, motif: 'tooth', href: '/dashboard/community' },
+  { slug: 'g-cadcam', title: 'CAD/CAM workflow', hue: 290, width: 180, motif: 'molar', href: '/dashboard/community' },
+  { slug: 'g-sinter', title: 'Sinterleme prosedürü', hue: 55, width: 180, motif: 'crown', href: '/dashboard/community' },
+  { slug: 'g-glazur', title: 'Glazür uygulaması', hue: 305, width: 240, motif: 'tooth', href: '/dashboard/community' },
+  { slug: 'g-renk', title: 'Renk eşleştirme', hue: 145, width: 270, motif: 'molar', href: '/dashboard/community' },
+  { slug: 'g-monolitik', title: 'Monolitik zirkonyum', hue: 15, width: 210, motif: 'crown', href: '/dashboard/community' },
+  { slug: 'g-temporary', title: 'Geçici restorasyon', hue: 250, width: 210, motif: 'bridge', href: '/dashboard/community' },
+  { slug: 'g-emaks', title: 'E-max press tekniği', hue: 195, width: 270, motif: 'denture', href: '/dashboard/community' },
 ]
 
 const SHOWCASE: ShowcaseItem[] = [
@@ -138,22 +138,8 @@ export default function LandingPage() {
         />
 
       {/* ================================================ */}
-      {/* 0. ANNOUNCEMENT BANNER */}
-      {/* ================================================ */}
-      <Link
-        href="/signup"
-        className="group relative flex items-center justify-center gap-2 px-4 h-9 bg-nightfall-gray/30 border-b border-outline-haze/[0.06] text-caption backdrop-blur-sm"
-      >
-        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-pill bg-morphic-green/15 text-morphic-green font-semibold tracking-tight">
-          <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-morphic-green" />
-          YENİ
-        </span>
-        <span className="text-cloud-white/85">D-Console 2.0 artık tüm planlarda</span>
-        <ArrowRight className="w-3 h-3 text-cloud-white/60 group-hover:translate-x-0.5 transition-transform" />
-      </Link>
-
-      {/* ================================================ */}
-      {/* 1. NAV */}
+      {/* 1. NAV (üst announcement banner Morphic'te yok — kaldırıldı, */}
+      {/*        duyuru hero içindeki pill'de zaten var) */}
       {/* ================================================ */}
       <nav className="sticky top-0 z-50 bg-ebony-canvas/40 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 h-14 relative flex items-center justify-between">
@@ -207,8 +193,8 @@ export default function LandingPage() {
               </h1>
             </div>
 
-            {/* SAĞ: kısa açıklama + 2 CTA */}
-            <div className="lg:col-span-5 lg:pb-3">
+            {/* SAĞ: kısa açıklama + 2 CTA — alta yapışır (Morphic gibi) */}
+            <div className="lg:col-span-5 lg:pb-3 lg:h-full flex flex-col lg:justify-end">
               <p className="text-cloud-white/85 text-body-lg leading-relaxed max-w-md">
                 DenteSync, zirkonyum köprüden implant vakasına her işi hızlandırır.
                 Gerçek zamanlı AI rehberlik, merkezi vaka takibi ve hata analizi

@@ -8,6 +8,26 @@ import { cn } from '@/lib/utils'
 import { DentalMotif, type DentalMotif as DentalMotifType } from './dental-icons'
 import { extractDominantColor, rgbString, type RGB } from '@/lib/dominant-color'
 
+/** HSL (0-360, 0-1, 0-1) → RGB (0-255) — desaturated dark mood için kullanılır */
+function hslToRgb(h: number, s: number, l: number): RGB {
+  const c = (1 - Math.abs(2 * l - 1)) * s
+  const hp = h / 60
+  const x = c * (1 - Math.abs((hp % 2) - 1))
+  const m = l - c / 2
+  let r = 0, g = 0, b = 0
+  if (hp >= 0 && hp < 1) [r, g, b] = [c, x, 0]
+  else if (hp < 2) [r, g, b] = [x, c, 0]
+  else if (hp < 3) [r, g, b] = [0, c, x]
+  else if (hp < 4) [r, g, b] = [0, x, c]
+  else if (hp < 5) [r, g, b] = [x, 0, c]
+  else [r, g, b] = [c, 0, x]
+  return {
+    r: Math.round((r + m) * 255),
+    g: Math.round((g + m) * 255),
+    b: Math.round((b + m) * 255),
+  }
+}
+
 export interface GalleryTile {
   slug: string
   title: string
@@ -199,8 +219,8 @@ function GalleryTileItem({ tile, onActivate }: GalleryTileItemProps) {
     }
   }, [tile.posterSrc])
 
-  // Sabit Morphic-teal — tüm tile'lar aynı sessiz tonda kalır (rainbow neon yerine)
-  const fallbackColor: RGB = { r: 45, g: 212, b: 191 }
+  // Per-tile desaturated dark mood (sinematik) — neon değil, ama renk hissi var
+  const fallbackColor: RGB = hslToRgb(tile.hue, 0.40, 0.34)
 
   const activeColor: RGB = dominant ?? fallbackColor
 
@@ -263,13 +283,13 @@ function GalleryTileItem({ tile, onActivate }: GalleryTileItemProps) {
           <div
             className="absolute inset-0"
             style={{
-              background: `radial-gradient(120% 90% at 30% 35%, ${rgbString(fallbackColor, 0.10)} 0%, transparent 55%), radial-gradient(140% 100% at 75% 70%, ${rgbString(fallbackColor, 0.06)} 0%, transparent 60%)`,
+              background: `radial-gradient(120% 90% at 30% 35%, ${rgbString(fallbackColor, 0.55)} 0%, transparent 55%), radial-gradient(140% 100% at 75% 70%, ${rgbString(fallbackColor, 0.38)} 0%, transparent 60%)`,
             }}
           />
-          <div className="absolute inset-0 flex items-center justify-center text-cloud-white/25 group-hover/tile:text-cloud-white/45 transition-colors">
+          <div className="absolute inset-0 flex items-center justify-center text-cloud-white/65 group-hover/tile:text-cloud-white/85 transition-colors">
             <DentalMotif
               motif={tile.motif}
-              className="w-9 h-9 sm:w-10 sm:h-10 drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)]"
+              className="w-11 h-11 sm:w-14 sm:h-14 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
             />
           </div>
         </>
