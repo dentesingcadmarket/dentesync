@@ -55,7 +55,7 @@ const CATEGORIES = [
 ]
 
 const DIFFICULTIES = [
-  { id: 'kolay', label: 'Kolay', description: 'Temel kavramlar, 3 soru', color: '#2563eb' },
+  { id: 'kolay', label: 'Kolay', description: 'Temel kavramlar, 3 soru', color: '#2dd4bf' },
   { id: 'orta', label: 'Orta', description: 'Analiz gerektiren, 3 soru', color: '#999999' },
   { id: 'zor', label: 'Zor', description: 'Kompleks vakalar, 3 soru', color: '#525252' },
 ] as const
@@ -73,7 +73,7 @@ export function PracticeWrapper() {
   const fireConfetti = useCallback(() => {
     if (confettiFired.current) return
     confettiFired.current = true
-    confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 }, colors: ['#2563eb', '#2563eb', '#999999', '#ffffff'] })
+    confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 }, colors: ['#2dd4bf', '#2dd4bf', '#999999', '#ffffff'] })
     setTimeout(() => {
       confetti({ particleCount: 60, spread: 100, origin: { y: 0.4 }, angle: 60 })
       confetti({ particleCount: 60, spread: 100, origin: { y: 0.4 }, angle: 120 })
@@ -201,13 +201,16 @@ function SetupScreen({
       exit={{ opacity: 0, y: -16 }}
       className="max-w-2xl mx-auto space-y-8"
     >
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-[#2563eb]/10 flex items-center justify-center">
-          <Dumbbell className="w-5 h-5 text-[#2563eb]" />
-        </div>
-        <div>
-          <h1 className="text-2xl font-semibold text-[#ffffff]">Vaka Pratiği</h1>
-          <p className="text-[#999999] text-sm">AI tarafından oluşturulan gerçekçi vakalarla pratik yapın</p>
+      <div className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#0f1716] via-[#161617] to-[#161617] p-5 lg:p-6">
+        <div className="absolute -right-12 -top-12 w-44 h-44 rounded-full bg-[#2dd4bf]/10 blur-3xl pointer-events-none" />
+        <div className="relative flex items-center gap-3">
+          <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#2dd4bf]/20 to-[#2dd4bf]/5 border border-[#2dd4bf]/25 flex items-center justify-center">
+            <Dumbbell className="w-5 h-5 text-[#2dd4bf]" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-semibold text-white">Vaka Pratiği</h1>
+            <p className="text-[#999999] text-sm">AI tarafından oluşturulan gerçekçi vakalarla pratik yapın</p>
+          </div>
         </div>
       </div>
 
@@ -220,7 +223,7 @@ function SetupScreen({
               onClick={() => setDifficulty(d.id)}
               className={`p-4 rounded-xl border text-left transition-all ${
                 difficulty === d.id
-                  ? 'border-[#2563eb] bg-[#2563eb]/10'
+                  ? 'border-[#2dd4bf] bg-[#2dd4bf]/10'
                   : 'border-[rgba(229,231,235,0.08)] bg-[#161617] hover:bg-[#1f1f20]'
               }`}
             >
@@ -243,7 +246,7 @@ function SetupScreen({
               onClick={() => setCategory(cat.id)}
               className={`px-3 py-2.5 rounded-xl border text-sm transition-all ${
                 category === cat.id
-                  ? 'border-[#2563eb] bg-[#2563eb]/10 text-[#ffffff]'
+                  ? 'border-[#2dd4bf] bg-[#2dd4bf]/10 text-[#ffffff]'
                   : 'border-[rgba(229,231,235,0.08)] bg-[#161617] text-[#999999] hover:text-[#ffffff] hover:bg-[#1f1f20]'
               }`}
             >
@@ -257,7 +260,7 @@ function SetupScreen({
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         onClick={onGenerate}
-        className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-black font-medium text-sm cursor-pointer"
+        className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#2dd4bf] text-[#0a0a0a] hover:bg-[#5eead4] shadow-[0_0_24px_rgba(45,212,191,0.18)] font-medium text-sm cursor-pointer"
       >
         <Sparkles className="w-4 h-4" />
         Vaka Oluştur
@@ -277,11 +280,11 @@ function GeneratingScreen() {
       className="flex flex-col items-center justify-center min-h-[60vh] gap-6"
     >
       <div className="relative">
-        <div className="w-16 h-16 rounded-full bg-[#2563eb]/10 flex items-center justify-center">
-          <Brain className="w-8 h-8 text-[#2563eb]" />
+        <div className="w-16 h-16 rounded-full bg-[#2dd4bf]/10 flex items-center justify-center">
+          <Brain className="w-8 h-8 text-[#2dd4bf]" />
         </div>
         <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#000000] flex items-center justify-center">
-          <Loader2 className="w-3 h-3 text-[#2563eb] animate-spin" />
+          <Loader2 className="w-3 h-3 text-[#2dd4bf] animate-spin" />
         </div>
       </div>
       <div className="text-center">
@@ -302,11 +305,11 @@ function EvaluatingScreen() {
       className="flex flex-col items-center justify-center min-h-[60vh] gap-6"
     >
       <div className="relative">
-        <div className="w-16 h-16 rounded-full bg-[#2563eb]/10 flex items-center justify-center">
-          <Zap className="w-8 h-8 text-[#2563eb]" />
+        <div className="w-16 h-16 rounded-full bg-[#2dd4bf]/10 flex items-center justify-center">
+          <Zap className="w-8 h-8 text-[#2dd4bf]" />
         </div>
         <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#000000] flex items-center justify-center">
-          <Loader2 className="w-3 h-3 text-[#2563eb] animate-spin" />
+          <Loader2 className="w-3 h-3 text-[#2dd4bf] animate-spin" />
         </div>
       </div>
       <div className="text-center">
@@ -326,7 +329,7 @@ function PracticeScreen({
   onSubmit: () => void
   allAnswered: boolean
 }) {
-  const difficultyColor = { kolay: '#2563eb', orta: '#999999', zor: '#525252' }[caseData.difficulty]
+  const difficultyColor = { kolay: '#2dd4bf', orta: '#999999', zor: '#525252' }[caseData.difficulty]
 
   return (
     <motion.div
@@ -346,8 +349,8 @@ function PracticeScreen({
 
       <div className="p-5 rounded-xl bg-[#161617] border border-[rgba(229,231,235,0.08)]">
         <div className="flex items-start gap-3">
-          <div className="w-8 h-8 rounded-full bg-[#2563eb]/10 flex items-center justify-center shrink-0 mt-0.5">
-            <Target className="w-4 h-4 text-[#2563eb]" />
+          <div className="w-8 h-8 rounded-full bg-[#2dd4bf]/10 flex items-center justify-center shrink-0 mt-0.5">
+            <Target className="w-4 h-4 text-[#2dd4bf]" />
           </div>
           <div>
             <h2 className="text-[#ffffff] font-semibold mb-2">{caseData.title}</h2>
@@ -366,7 +369,7 @@ function PracticeScreen({
             className="p-5 rounded-xl bg-[#161617] border border-[rgba(229,231,235,0.08)]"
           >
             <p className="text-[#ffffff] text-sm font-medium mb-4">
-              <span className="text-[#2563eb] mr-2">{index + 1}.</span>
+              <span className="text-[#2dd4bf] mr-2">{index + 1}.</span>
               {q.question}
             </p>
 
@@ -378,12 +381,12 @@ function PracticeScreen({
                     onClick={() => setAnswers({ ...answers, [q.id]: i })}
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border text-left text-sm transition-all ${
                       answers[q.id] === i
-                        ? 'border-[#2563eb] bg-[#2563eb]/10 text-[#ffffff]'
+                        ? 'border-[#2dd4bf] bg-[#2dd4bf]/10 text-[#ffffff]'
                         : 'border-[rgba(229,231,235,0.08)] text-[#999999] hover:text-[#ffffff] hover:border-[rgba(255,255,255,0.15)] hover:bg-[#1f1f20]'
                     }`}
                   >
                     <span className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 text-xs font-medium ${
-                      answers[q.id] === i ? 'border-[#2563eb] bg-[#2563eb] text-white' : 'border-[rgba(255,255,255,0.2)]'
+                      answers[q.id] === i ? 'border-[#2dd4bf] bg-[#2dd4bf] text-white' : 'border-[rgba(255,255,255,0.2)]'
                     }`}>
                       {String.fromCharCode(65 + i)}
                     </span>
@@ -397,7 +400,7 @@ function PracticeScreen({
                 onChange={e => setAnswers({ ...answers, [q.id]: e.target.value })}
                 placeholder="Yanıtınızı buraya yazın..."
                 rows={4}
-                className="w-full px-4 py-3 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm resize-none focus:outline-none focus:border-[#2563eb] transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm resize-none focus:outline-none focus:border-[#2dd4bf] transition-colors"
               />
             )}
           </motion.div>
@@ -409,7 +412,7 @@ function PracticeScreen({
         whileTap={{ scale: allAnswered ? 0.98 : 1 }}
         onClick={onSubmit}
         disabled={!allAnswered}
-        className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-black font-medium text-sm disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+        className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#2dd4bf] text-[#0a0a0a] hover:bg-[#5eead4] shadow-[0_0_24px_rgba(45,212,191,0.18)] font-medium text-sm disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
       >
         <Zap className="w-4 h-4" />
         Değerlendir
@@ -426,7 +429,7 @@ function ResultsScreen({
   onReset: () => void
 }) {
   const score = evaluation.score
-  const scoreColor = score >= 80 ? '#2563eb' : score >= 60 ? '#999999' : '#525252'
+  const scoreColor = score >= 80 ? '#2dd4bf' : score >= 60 ? '#999999' : '#525252'
   const scoreLabel = score >= 80 ? 'Mükemmel!' : score >= 60 ? 'İyi iş!' : 'Geliştirebilirsiniz'
 
   return (
@@ -467,10 +470,10 @@ function ResultsScreen({
 
       <div className="grid grid-cols-2 gap-4">
         {evaluation.strengths.length > 0 && (
-          <div className="p-4 rounded-xl bg-[#2563eb]/5 border border-[#2563eb]/15">
+          <div className="p-4 rounded-xl bg-[#2dd4bf]/5 border border-[#2dd4bf]/15">
             <div className="flex items-center gap-2 mb-3">
-              <CheckCircle2 className="w-4 h-4 text-[#2563eb]" />
-              <p className="text-[#2563eb] text-sm font-medium">Güçlü Yönler</p>
+              <CheckCircle2 className="w-4 h-4 text-[#2dd4bf]" />
+              <p className="text-[#2dd4bf] text-sm font-medium">Güçlü Yönler</p>
             </div>
             <ul className="space-y-1.5">
               {evaluation.strengths.map((s, i) => (
@@ -502,7 +505,7 @@ function ResultsScreen({
             <div key={q.id} className="p-4 rounded-xl bg-[#161617] border border-[rgba(229,231,235,0.08)]">
               <div className="flex items-start gap-3">
                 {fb?.correct ? (
-                  <CheckCircle2 className="w-4 h-4 text-[#2563eb] mt-0.5 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#2dd4bf] mt-0.5 shrink-0" />
                 ) : (
                   <XCircle className="w-4 h-4 text-[#525252] mt-0.5 shrink-0" />
                 )}
@@ -515,7 +518,7 @@ function ResultsScreen({
                   )}
                   <div className="mt-2 p-2.5 rounded-lg bg-[#1f1f20]">
                     <p className="text-[#999999] text-xs">
-                      <span className="text-[#2563eb] font-medium">Açıklama: </span>
+                      <span className="text-[#2dd4bf] font-medium">Açıklama: </span>
                       {q.explanation}
                     </p>
                   </div>
@@ -531,7 +534,7 @@ function ResultsScreen({
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={onReset}
-          className="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-black font-medium text-sm cursor-pointer"
+          className="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#2dd4bf] text-[#0a0a0a] hover:bg-[#5eead4] shadow-[0_0_24px_rgba(45,212,191,0.18)] font-medium text-sm cursor-pointer"
         >
           <RotateCcw className="w-4 h-4" />
           Yeni Vaka

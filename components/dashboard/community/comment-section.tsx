@@ -22,7 +22,7 @@ function timeAgo(dateStr: string) {
 }
 
 function Avatar({ profile, size = 8 }: { profile?: Pick<Profile, 'username' | 'full_name' | 'avatar_url'> | null; size?: number }) {
-  const cls = `w-${size} h-${size} rounded-full bg-[#2563eb]/20 flex items-center justify-center text-[#2563eb] text-xs font-semibold shrink-0 overflow-hidden`
+  const cls = `w-${size} h-${size} rounded-full bg-[#2dd4bf]/20 flex items-center justify-center text-[#2dd4bf] text-xs font-semibold shrink-0 overflow-hidden`
   return (
     <div className={cls}>
       {profile?.avatar_url
@@ -94,8 +94,8 @@ function CommentItem({ comment, postOwnerId, currentUserId, postId, canWrite, on
         <p className="text-[#999999] text-sm leading-relaxed">{comment.content}</p>
 
         {comment.technical_note && (
-          <div className="mt-2 p-2 rounded-lg bg-[#1f1f20] border-l-2 border-[#2563eb]/50">
-            <p className="text-[10px] text-[#2563eb] font-medium mb-0.5">Teknik Değerlendirme</p>
+          <div className="mt-2 p-2 rounded-lg bg-[#1f1f20] border-l-2 border-[#2dd4bf]/50">
+            <p className="text-[10px] text-[#2dd4bf] font-medium mb-0.5">Teknik Değerlendirme</p>
             <p className="text-[#999999] text-xs">{comment.technical_note}</p>
           </div>
         )}
@@ -110,7 +110,7 @@ function CommentItem({ comment, postOwnerId, currentUserId, postId, canWrite, on
           <button
             onClick={handleHelpful}
             disabled={helpfulLoading}
-            className="flex items-center gap-1 text-[#999999] hover:text-[#2563eb] transition-colors text-xs"
+            className="flex items-center gap-1 text-[#999999] hover:text-[#2dd4bf] transition-colors text-xs"
           >
             {helpfulLoading ? <Loader2 className="w-3 h-3 animate-spin" /> : <ThumbsUp className="w-3 h-3" />}
             Yardımcı Oldu{helpfulCount > 0 && ` (${helpfulCount})`}
@@ -257,7 +257,7 @@ export function CommentSection({
                           onChange={e => setTechnicalNote(e.target.value)}
                           rows={2}
                           placeholder="Teknik açıdan değerlendirmeniz..."
-                          className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] text-xs placeholder:text-[#999999] resize-none focus:outline-none focus:border-[#2563eb]/60"
+                          className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] text-xs placeholder:text-[#999999] resize-none focus:outline-none focus:border-[#2dd4bf]/60"
                         />
                       </div>
                       <div>
@@ -267,7 +267,7 @@ export function CommentSection({
                           onChange={e => setSuggestion(e.target.value)}
                           rows={2}
                           placeholder="Öneriniz veya çözüm yolunuz..."
-                          className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] text-xs placeholder:text-[#999999] resize-none focus:outline-none focus:border-[#2563eb]/60"
+                          className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] text-xs placeholder:text-[#999999] resize-none focus:outline-none focus:border-[#2dd4bf]/60"
                         />
                       </div>
                     </>
@@ -278,12 +278,12 @@ export function CommentSection({
                       onChange={e => setContent(e.target.value)}
                       rows={2}
                       placeholder={isStructured ? 'Ek notlarınız...' : 'Yorumunuzu yazın...'}
-                      className="flex-1 px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] text-sm placeholder:text-[#999999] resize-none focus:outline-none focus:border-[#2563eb]/60"
+                      className="flex-1 px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] text-sm placeholder:text-[#999999] resize-none focus:outline-none focus:border-[#2dd4bf]/60"
                     />
                     <button
                       type="submit"
                       disabled={submitting || !content.trim()}
-                      className="self-end px-4 py-2 rounded-xl bg-[#2563eb] text-white text-xs font-medium hover:bg-[#1d4ed8] disabled:opacity-50 transition-colors"
+                      className="self-end px-4 py-2 rounded-xl bg-[#2dd4bf] text-white text-xs font-medium hover:bg-[#1d4ed8] disabled:opacity-50 transition-colors"
                     >
                       {submitting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : 'Gönder'}
                     </button>

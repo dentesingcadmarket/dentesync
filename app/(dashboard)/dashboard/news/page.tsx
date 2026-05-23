@@ -35,60 +35,74 @@ export default async function NewsPage() {
   }[]
 
   return (
-    <div className="max-w-3xl mx-auto p-6 lg:p-8">
-      <div className="flex items-center gap-3 mb-8">
-        <div className="w-10 h-10 rounded-full bg-[#2563eb]/10 flex items-center justify-center">
-          <Newspaper className="w-5 h-5 text-[#2563eb]" />
-        </div>
-        <div>
-          <h1 className="text-2xl font-semibold text-[#ffffff]">Haberler</h1>
-          <p className="text-[#999999] text-sm">Sektör haberleri ve DenteSync duyuruları</p>
+    <div className="max-w-[1280px] mx-auto p-4 md:p-6 lg:p-8 space-y-6">
+      <div className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#0f1716] via-[#161617] to-[#161617] p-5 lg:p-6">
+        <div className="absolute -right-12 -top-12 w-44 h-44 rounded-full bg-[#2dd4bf]/10 blur-3xl pointer-events-none" />
+        <div className="relative flex items-center gap-3">
+          <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#2dd4bf]/20 to-[#2dd4bf]/5 border border-[#2dd4bf]/25 flex items-center justify-center">
+            <Newspaper className="w-5 h-5 text-[#2dd4bf]" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-semibold text-white">Haberler</h1>
+            <p className="text-[#999999] text-sm mt-0.5">Sektör haberleri ve DenteSync duyuruları</p>
+          </div>
         </div>
       </div>
 
       {items.length === 0 ? (
-        <div className="text-center py-20 text-[#999999]">
-          <Newspaper className="w-8 h-8 mx-auto mb-3 opacity-40" />
-          <p className="text-sm">Henüz haber yok. Yakında içerik gelecek.</p>
+        <div className="text-center py-20 bg-[#161617] border border-white/[0.06] rounded-2xl">
+          <Newspaper className="w-10 h-10 mx-auto mb-3 text-[#525252]" />
+          <p className="text-[#999999] text-sm">Henüz haber yok. Yakında içerik gelecek.</p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {items.map((item, i) => (
-            <div
+            <Link
               key={item.id}
-              className={`p-5 rounded-xl bg-[#161617] border border-[rgba(229,231,235,0.08)] flex gap-4 ${i === 0 ? 'ring-1 ring-[#2563eb]/20' : ''}`}
+              href={`/dashboard/news/${item.id}`}
+              className={`group relative overflow-hidden rounded-2xl bg-[#161617] border ${
+                i === 0
+                  ? 'border-[#2dd4bf]/25 md:col-span-2 lg:col-span-2'
+                  : 'border-white/[0.06] hover:border-[#2dd4bf]/25'
+              } transition-all flex flex-col`}
             >
-              {item.cover_image_url && (
+              {item.cover_image_url ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={item.cover_image_url}
                   alt={item.title}
-                  className="w-20 h-20 rounded-xl object-cover shrink-0 border border-[rgba(255,255,255,0.05)]"
+                  className={`w-full object-cover ${i === 0 ? 'h-56' : 'h-40'} group-hover:scale-[1.02] transition-transform`}
                 />
+              ) : (
+                <div className={`w-full ${i === 0 ? 'h-56' : 'h-40'} bg-gradient-to-br from-[#0f1716] to-[#161617] flex items-center justify-center`}>
+                  <Newspaper className="w-10 h-10 text-[#525252]" />
+                </div>
               )}
-              <div className="flex-1 min-w-0">
+              <div className="p-5 flex-1 flex flex-col">
                 {i === 0 && (
-                  <span className="inline-block px-2 py-0.5 rounded-full bg-[#2563eb]/20 text-[#2563eb] text-[10px] font-medium mb-2">
+                  <span className="inline-block self-start px-2 py-0.5 rounded-full bg-[#2dd4bf]/20 text-[#2dd4bf] text-[10px] font-medium mb-2 border border-[#2dd4bf]/30">
                     Son Haber
                   </span>
                 )}
-                <h2 className="text-[#ffffff] font-medium text-sm mb-1.5 leading-snug">{item.title}</h2>
+                <h2 className={`text-white font-medium leading-snug mb-2 ${i === 0 ? 'text-lg line-clamp-2' : 'text-sm line-clamp-2'}`}>
+                  {item.title}
+                </h2>
                 {item.excerpt && (
-                  <p className="text-[#999999] text-xs leading-relaxed line-clamp-2 mb-2">{item.excerpt}</p>
+                  <p className="text-[#999999] text-xs leading-relaxed line-clamp-2 mb-3 flex-1">{item.excerpt}</p>
                 )}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/[0.04]">
                   {item.published_at && (
-                    <span className="flex items-center gap-1 text-[#999999] text-xs">
+                    <span className="flex items-center gap-1 text-[#737373] text-[11px]">
                       <Clock className="w-3 h-3" />
                       {timeAgo(item.published_at)}
                     </span>
                   )}
-                  <Link href={`/dashboard/news/${item.id}`} className="flex items-center gap-1 text-[#2563eb] text-xs hover:underline">
+                  <span className="flex items-center gap-1 text-[#2dd4bf] text-xs group-hover:translate-x-0.5 transition-transform">
                     Devamını oku <ExternalLink className="w-3 h-3" />
-                  </Link>
+                  </span>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

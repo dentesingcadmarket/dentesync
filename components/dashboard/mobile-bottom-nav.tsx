@@ -16,8 +16,7 @@ export function MobileBottomNav() {
   const pathname = usePathname()
 
   return (
-    /* lg:hidden — sadece mobil görünür | pb-safe — home indicator alanı */
-    <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-[#161617] border-t border-[rgba(229,231,235,0.08)] pb-safe">
+    <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-[#0a0a0a]/95 backdrop-blur-xl border-t border-white/[0.06] pb-safe">
       <div className="flex items-center">
         {NAV_ITEMS.map(({ href, icon: Icon, label, exact }) => {
           const active = exact ? pathname === href : pathname.startsWith(href)
@@ -25,16 +24,20 @@ export function MobileBottomNav() {
             <Link
               key={href}
               href={href}
-              /* min 44px touch target per mobile-design — kullanıcı başarısız dokunuşları önler */
-              className={`flex-1 flex flex-col items-center justify-center min-h-[56px] gap-1 transition-colors active:scale-95 ${
-                active ? 'text-[#2563eb]' : 'text-[#999999]'
+              className={`relative flex-1 flex flex-col items-center justify-center min-h-[60px] gap-1 transition-all active:scale-95 ${
+                active ? 'text-[#2dd4bf]' : 'text-[#737373] hover:text-[#999999]'
               }`}
             >
-              <Icon className="w-5 h-5 shrink-0" />
-              <span className="text-[10px] font-medium leading-none">{label}</span>
               {active && (
-                <span className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full bg-[#2563eb]" />
+                <span className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full bg-[#2dd4bf] shadow-[0_0_8px_rgba(45,212,191,0.6)]" />
               )}
+              <div className={`relative flex items-center justify-center transition-transform ${active ? 'scale-110' : ''}`}>
+                {active && (
+                  <span className="absolute inset-0 -m-1.5 rounded-lg bg-[#2dd4bf]/12 blur-sm" />
+                )}
+                <Icon className="relative w-5 h-5 shrink-0" strokeWidth={active ? 2.25 : 1.75} />
+              </div>
+              <span className="text-[10px] font-medium leading-none">{label}</span>
             </Link>
           )
         })}

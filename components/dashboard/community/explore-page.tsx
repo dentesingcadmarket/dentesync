@@ -28,8 +28,8 @@ export function ExplorePageClient({ trendingHashtags, popularPosts }: Props) {
   return (
     <div className="max-w-2xl mx-auto p-6 lg:p-8 space-y-8">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-[#2563eb]/10 flex items-center justify-center">
-          <TrendingUp className="w-5 h-5 text-[#2563eb]" />
+        <div className="w-10 h-10 rounded-full bg-[#2dd4bf]/10 flex items-center justify-center">
+          <TrendingUp className="w-5 h-5 text-[#2dd4bf]" />
         </div>
         <div>
           <h1 className="text-2xl font-semibold text-[#ffffff]">Keşfet</h1>
@@ -41,7 +41,7 @@ export function ExplorePageClient({ trendingHashtags, popularPosts }: Props) {
       {trendingHashtags.length > 0 && (
         <section>
           <div className="flex items-center gap-2 mb-4">
-            <Hash className="w-4 h-4 text-[#2563eb]" />
+            <Hash className="w-4 h-4 text-[#2dd4bf]" />
             <h2 className="text-[#ffffff] text-sm font-semibold">Trend Etiketler</h2>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -51,9 +51,9 @@ export function ExplorePageClient({ trendingHashtags, popularPosts }: Props) {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: i * 0.04 }}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#161617] border border-[rgba(229,231,235,0.08)] group-hover:border-[#2563eb]/40 group-hover:bg-[#2563eb]/5 transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#161617] border border-[rgba(229,231,235,0.08)] group-hover:border-[#2dd4bf]/40 group-hover:bg-[#2dd4bf]/5 transition-colors"
                 >
-                  <Hash className="w-3.5 h-3.5 text-[#2563eb]" />
+                  <Hash className="w-3.5 h-3.5 text-[#2dd4bf]" />
                   <span className="text-[#ffffff] text-sm font-medium">{tag.name}</span>
                   <span className="text-[#999999] text-xs">{tag.post_count}</span>
                 </motion.div>
@@ -81,7 +81,7 @@ export function ExplorePageClient({ trendingHashtags, popularPosts }: Props) {
                 className="p-4 rounded-2xl bg-[#161617] border border-[rgba(229,231,235,0.08)]"
               >
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 rounded-full bg-[#2563eb]/20 flex items-center justify-center text-[#2563eb] text-xs font-semibold shrink-0 overflow-hidden">
+                  <div className="w-8 h-8 rounded-full bg-[#2dd4bf]/20 flex items-center justify-center text-[#2dd4bf] text-xs font-semibold shrink-0 overflow-hidden">
                     {post.profiles?.avatar_url
                       // eslint-disable-next-line @next/next/no-img-element
                       ? <img src={post.profiles.avatar_url} alt="" className="w-full h-full object-cover" />

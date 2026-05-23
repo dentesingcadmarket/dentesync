@@ -48,7 +48,7 @@ const WORKFLOWS: WorkflowItem[] = [
 
 // "Yapılan Çalışmalar" galerisi — bento (variable width fixed height) + dental motif + rainbow hue
 const GALLERY_TILES: GalleryTile[] = [
-  { slug: 'g-zirkonyum', title: 'Zirkonyum köprü vakası', hue: 200, width: 210, motif: 'bridge', href: '/dashboard/community' },
+  { slug: 'g-zirkonyum', title: 'Zirkonyum köprü vakası', hue: 200, width: 210, motif: 'bridge', href: '/dashboard/community', posterSrc: 'https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=1920&q=80' },
   { slug: 'g-anterior', title: 'Anterior estetik kron', hue: 25, width: 270, motif: 'crown', href: '/dashboard/community' },
   { slug: 'g-implant', title: 'Implant üst yapı', hue: 280, width: 240, motif: 'implant', href: '/dashboard/community' },
   { slug: 'g-pfm', title: 'PFM kor metal', hue: 45, width: 180, motif: 'crown', href: '/dashboard/community' },
@@ -122,24 +122,7 @@ export default function LandingPage() {
   return (
     <main className="min-h-screen bg-ebony-canvas text-cloud-white overflow-x-hidden font-sans">
       {/* ================================================ */}
-      {/* ÜST-ALAN GLOW WRAPPER — banner + nav + hero'yu kapsar */}
-      {/* ================================================ */}
-      <div className="relative isolate">
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 top-0 -z-10 h-[1100px] pointer-events-none"
-          style={{
-            background: `
-              radial-gradient(80% 60% at 50% 35%, rgba(45,212,191,0.18) 0%, transparent 60%),
-              radial-gradient(60% 50% at 70% 20%, rgba(37,99,235,0.10) 0%, transparent 65%),
-              radial-gradient(50% 40% at 30% 50%, rgba(45,212,191,0.08) 0%, transparent 65%)
-            `,
-          }}
-        />
-
-      {/* ================================================ */}
-      {/* 1. NAV (üst announcement banner Morphic'te yok — kaldırıldı, */}
-      {/*        duyuru hero içindeki pill'de zaten var) */}
+      {/* 1. NAV */}
       {/* ================================================ */}
       <nav className="sticky top-0 z-50 bg-ebony-canvas/40 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 h-14 relative flex items-center justify-between">
@@ -250,8 +233,6 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-      </div>
-      {/* ÜST-ALAN GLOW WRAPPER kapanış */}
 
       {/* ================================================ */}
       {/* 2b. CONSOLE MOCKUP — "D-Console ile keşfet" */}

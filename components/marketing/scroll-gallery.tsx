@@ -64,10 +64,12 @@ export function ScrollGallery({
   seeMoreLabel = 'Hepsini gör',
 }: ScrollGalleryProps) {
   const scrollerRef = useRef<HTMLDivElement | null>(null)
+  const galleryWrapperRef = useRef<HTMLDivElement | null>(null)
   const [canPrev, setCanPrev] = useState(false)
   const [canNext, setCanNext] = useState(true)
 
   const [activeColor, setActiveColor] = useState<RGB | null>(null)
+  const [hoveredSrc, setHoveredSrc] = useState<string | null>(null)
 
   const rowBuckets: GalleryTile[][] = Array.from({ length: rows }, () => [])
   tiles.forEach((tile, i) => {
@@ -93,6 +95,17 @@ export function ScrollGallery({
     }
   }, [])
 
+  useEffect(() => {
+    const el = galleryWrapperRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (!entry.isIntersecting) setHoveredSrc(null) },
+      { threshold: 0 },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   const scrollByAmount = (dir: 1 | -1) => {
     const el = scrollerRef.current
     if (!el) return
@@ -104,14 +117,44 @@ export function ScrollGallery({
     : 'transparent'
 
   return (
-    <div className="relative group/gallery">
-      {/* Backdrop reflection — adopts the hovered tile's real dominant color */}
+    <div ref={galleryWrapperRef} className="relative group/gallery">
+      {/* Full-screen blurred image backdrop — fixed, covers entire viewport on tile hover */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none"
+        style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 0,
+          opacity: hoveredSrc ? 0.55 : 0,
+          transition: 'opacity 500ms ease',
+        }}
+      >
+        {hoveredSrc && (
+          <img
+            src={hoveredSrc}
+            alt=""
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              filter: 'blur(8px) saturate(1.1)',
+              transform: 'scale(1.12)',
+            }}
+          />
+        )}
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.50)' }} />
+      </div>
+
+      {/* Backdrop reflection — per-tile color radial (posterSrc'siz tile'lar için) */}
       <div
         aria-hidden="true"
         className="absolute -inset-x-12 -inset-y-24 pointer-events-none z-0"
         style={{
           background: reflectionBg,
-          opacity: activeColor !== null ? 1 : 0,
+          opacity: activeColor !== null && !hoveredSrc ? 1 : 0,
           filter: 'blur(60px) saturate(1.15)',
           transition: 'opacity 400ms ease, background 400ms ease',
         }}
@@ -174,7 +217,7 @@ export function ScrollGallery({
 
       <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-ebony-canvas to-transparent z-20" />
       <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-ebony-canvas to-transparent z-20" />
-
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-ebony-canvas to-transparent z-20" />
       <div
         ref={scrollerRef}
         className="relative z-10 overflow-x-auto overflow-y-hidden scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -187,6 +230,7 @@ export function ScrollGallery({
                   key={tile.slug}
                   tile={tile}
                   onActivate={color => setActiveColor(color)}
+                  onHoverSrc={src => setHoveredSrc(src)}
                 />
               ))}
             </div>
@@ -200,9 +244,10 @@ export function ScrollGallery({
 interface GalleryTileItemProps {
   tile: GalleryTile
   onActivate: (color: RGB | null) => void
+  onHoverSrc: (src: string | null) => void
 }
 
-function GalleryTileItem({ tile, onActivate }: GalleryTileItemProps) {
+function GalleryTileItem({ tile, onActivate, onHoverSrc }: GalleryTileItemProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const [hovered, setHovered] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
@@ -227,11 +272,13 @@ function GalleryTileItem({ tile, onActivate }: GalleryTileItemProps) {
   const handleEnter = () => {
     setHovered(true)
     onActivate(activeColor)
+    onHoverSrc(tile.posterSrc ?? null)
     if (videoRef.current) videoRef.current.play().catch(() => undefined)
   }
   const handleLeave = () => {
     setHovered(false)
     onActivate(null)
+    onHoverSrc(null)
     if (videoRef.current) videoRef.current.pause()
   }
 

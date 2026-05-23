@@ -26,7 +26,7 @@ function CopyButton({ text }: { text: string }) {
       onClick={() => { navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000) }}
       className="absolute top-2 right-2 p-1.5 rounded-md bg-white/10 hover:bg-white/20 transition-colors"
     >
-      {copied ? <Check className="w-3 h-3 text-[#0075ff]" /> : <Copy className="w-3 h-3 text-[#999999]" />}
+      {copied ? <Check className="w-3 h-3 text-[#2dd4bf]" /> : <Copy className="w-3 h-3 text-[#999999]" />}
     </button>
   )
 }
@@ -42,15 +42,15 @@ function MessageBubble({ message }: { message: Message }) {
     >
       {/* Avatar */}
       <div className={`w-7 h-7 rounded-full shrink-0 flex items-center justify-center text-xs font-bold mt-1 ${
-        isUser ? 'bg-[#0075ff] text-white' : 'bg-[#292929] border border-[rgba(229,231,235,0.08)]'
+        isUser ? 'bg-[#2dd4bf] text-white' : 'bg-[#292929] border border-[rgba(229,231,235,0.08)]'
       }`}>
-        {isUser ? 'S' : <Terminal className="w-3.5 h-3.5 text-[#0075ff]" />}
+        {isUser ? 'S' : <Terminal className="w-3.5 h-3.5 text-[#2dd4bf]" />}
       </div>
 
       {/* Mesaj */}
       <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm ${
         isUser
-          ? 'bg-[#0075ff] text-white rounded-tr-sm'
+          ? 'bg-[#2dd4bf] text-white rounded-tr-sm'
           : 'bg-[#212121] border border-[rgba(229,231,235,0.08)] text-[#ffffff] rounded-tl-sm'
       }`}>
         {isUser ? (
@@ -88,7 +88,7 @@ function MessageBubble({ message }: { message: Message }) {
               h3: ({ children }) => <h3 className="text-sm font-semibold mb-1 text-[#ffffff]">{children}</h3>,
               strong: ({ children }) => <strong className="font-semibold text-[#ffffff]">{children}</strong>,
               blockquote: ({ children }) => (
-                <blockquote className="border-l-2 border-[#0075ff] pl-3 my-2 text-[#999999]">{children}</blockquote>
+                <blockquote className="border-l-2 border-[#2dd4bf] pl-3 my-2 text-[#999999]">{children}</blockquote>
               ),
             }}
           >
@@ -105,7 +105,7 @@ function ThinkingIndicator() {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3">
       <div className="w-7 h-7 rounded-full bg-[#292929] border border-[rgba(229,231,235,0.08)] flex items-center justify-center shrink-0 mt-1">
-        <Terminal className="w-3.5 h-3.5 text-[#0075ff]" />
+        <Terminal className="w-3.5 h-3.5 text-[#2dd4bf]" />
       </div>
       <div className="bg-[#212121] border border-[rgba(229,231,235,0.08)] rounded-2xl rounded-tl-sm px-4 py-3">
         <div className="flex gap-1.5 items-center h-4">
@@ -244,17 +244,22 @@ export function Chat({ initialSessionId, initialMessages = [] }: ChatProps) {
   return (
     <div className="flex flex-col h-full">
       {/* Toolbar */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-[rgba(229,231,235,0.08)] shrink-0">
-        <div className="flex items-center gap-2">
-          <Terminal className="w-4 h-4 text-[#0075ff]" />
-          <span className="text-[#ffffff] text-sm font-medium">D-Console</span>
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06] shrink-0 bg-gradient-to-r from-[#0f1716]/40 to-transparent">
+        <div className="flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-lg bg-[#2dd4bf]/12 border border-[#2dd4bf]/20 flex items-center justify-center">
+            <Terminal className="w-3.5 h-3.5 text-[#2dd4bf]" />
+          </div>
+          <span className="text-white text-sm font-medium">D-Console</span>
           {sessionId && (
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#0075ff]/15 text-[#0075ff]">Oturum aktif</span>
+            <span className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-[#2dd4bf]/15 text-[#2dd4bf] font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf] animate-pulse" />
+              Oturum aktif
+            </span>
           )}
         </div>
         <button
           onClick={newChat}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[#999999] hover:text-[#ffffff] hover:bg-[#292929] text-xs transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[#999999] hover:text-white border border-white/[0.06] hover:border-[#2dd4bf]/30 hover:bg-[#2dd4bf]/8 text-xs transition-all"
         >
           <Plus className="w-3.5 h-3.5" />
           Yeni sohbet
@@ -269,14 +274,15 @@ export function Chat({ initialSessionId, initialMessages = [] }: ChatProps) {
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col items-center justify-center h-full text-center py-12"
           >
-            <div className="w-14 h-14 rounded-2xl bg-[#292929] border border-[rgba(229,231,235,0.08)] flex items-center justify-center mb-4">
-              <Terminal className="w-7 h-7 text-[#0075ff]" />
+            <div className="relative w-16 h-16 rounded-2xl bg-gradient-to-br from-[#2dd4bf]/20 to-[#2dd4bf]/5 border border-[#2dd4bf]/25 flex items-center justify-center mb-4">
+              <Terminal className="w-7 h-7 text-[#2dd4bf]" />
+              <div className="absolute inset-0 rounded-2xl bg-[#2dd4bf]/10 blur-xl -z-10" />
             </div>
-            <h3 className="text-[#ffffff] font-medium mb-2">D-Console&apos;a hoş geldiniz</h3>
+            <h3 className="text-white font-semibold text-lg mb-2">D-Console&apos;a hoş geldiniz</h3>
             <p className="text-[#999999] text-sm max-w-xs">
               Diş teknisyenliği konularında sorularınızı sorun. Protez, implant, zirkonyum ve daha fazlası.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-6 w-full max-w-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-6 w-full max-w-md">
               {[
                 'Zirkonyum kron için ideal kalınlık nedir?',
                 'İmplant üstü protezde vida açıklaması',
@@ -286,9 +292,10 @@ export function Chat({ initialSessionId, initialMessages = [] }: ChatProps) {
                 <button
                   key={s}
                   onClick={() => setInput(s)}
-                  className="text-left px-3 py-2 rounded-xl bg-[#292929] border border-[rgba(229,231,235,0.08)] text-[#999999] text-xs hover:text-[#ffffff] hover:border-[rgba(255,255,255,0.12)] transition-all"
+                  className="group relative text-left px-3.5 py-2.5 rounded-xl bg-[#161617] border border-white/[0.06] text-[#999999] text-xs hover:text-white hover:border-[#2dd4bf]/30 hover:bg-[#2dd4bf]/5 transition-all overflow-hidden"
                 >
-                  {s}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" style={{ background: 'radial-gradient(60% 50% at 100% 0%, rgba(45,212,191,0.10), transparent 70%)' }} />
+                  <span className="relative">{s}</span>
                 </button>
               ))}
             </div>
@@ -307,8 +314,8 @@ export function Chat({ initialSessionId, initialMessages = [] }: ChatProps) {
       </div>
 
       {/* Input */}
-      <div className="px-4 pb-4 pt-2 shrink-0 border-t border-[rgba(229,231,235,0.08)]">
-        <div className="flex gap-3 items-end bg-[#212121] border border-[rgba(229,231,235,0.08)] rounded-2xl px-4 py-3 focus-within:border-[#0075ff]/50 transition-colors">
+      <div className="px-4 pb-4 pt-2 shrink-0 border-t border-white/[0.06]">
+        <div className="flex gap-3 items-end bg-[#161617] border border-white/[0.06] rounded-2xl px-4 py-3 focus-within:border-[#2dd4bf]/40 focus-within:bg-[#161617] focus-within:shadow-[0_0_0_3px_rgba(45,212,191,0.10)] transition-all">
           <textarea
             ref={textareaRef}
             value={input}
@@ -325,11 +332,11 @@ export function Chat({ initialSessionId, initialMessages = [] }: ChatProps) {
             whileTap={{ scale: 0.95 }}
             onClick={handleSend}
             disabled={!input.trim() || isStreaming}
-            className="w-8 h-8 rounded-full bg-[#0075ff] flex items-center justify-center shrink-0 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity cursor-pointer"
+            className="w-9 h-9 rounded-full bg-[#2dd4bf] hover:bg-[#5eead4] flex items-center justify-center shrink-0 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer shadow-[0_0_18px_rgba(45,212,191,0.30)]"
           >
             {isStreaming
-              ? <Loader2 className="w-4 h-4 text-white animate-spin" />
-              : <Send className="w-4 h-4 text-white" />
+              ? <Loader2 className="w-4 h-4 text-[#0a0a0a] animate-spin" />
+              : <Send className="w-4 h-4 text-[#0a0a0a]" />
             }
           </motion.button>
         </div>

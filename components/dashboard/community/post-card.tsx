@@ -64,8 +64,8 @@ function StlDownloadLink({ post }: { post: PostWithProfile }) {
   return (
     <a href={stlUrl}
       download={(post.metadata?.stl_filename as string) || 'model.stl'}
-      className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(255,255,255,0.08)] text-[#999999] text-xs hover:border-[#2563eb]/40 hover:text-[#2563eb] transition-colors">
-      <Box className="w-3.5 h-3.5 text-[#2563eb] shrink-0" />
+      className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(255,255,255,0.08)] text-[#999999] text-xs hover:border-[#2dd4bf]/40 hover:text-[#2dd4bf] transition-colors">
+      <Box className="w-3.5 h-3.5 text-[#2dd4bf] shrink-0" />
       {(post.metadata?.stl_filename as string) || 'STL Dosyasını İndir'}
     </a>
   )
@@ -166,7 +166,7 @@ function PostCardBody({ post, onOpenComments, onImageClick }: { post: PostWithPr
             <>
               <button
                 onClick={() => setStepsOpen(v => !v)}
-                className="flex items-center gap-1.5 text-xs text-[#2563eb] hover:text-[#2563eb] transition-colors"
+                className="flex items-center gap-1.5 text-xs text-[#2dd4bf] hover:text-[#2dd4bf] transition-colors"
               >
                 {stepsOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
                 {stepsOpen ? 'Adımları gizle' : 'Tüm adımları gör'}
@@ -306,7 +306,7 @@ export function PostCard({
       <div className="flex items-start justify-between px-4 pt-4 pb-3">
         <div className="flex items-center gap-3">
           <Link href={`/dashboard/community/profile/${post.profiles?.username}`}>
-            <div className="w-9 h-9 rounded-full bg-[#2563eb]/20 flex items-center justify-center text-[#2563eb] text-sm font-semibold shrink-0 overflow-hidden hover:ring-2 hover:ring-[#2563eb]/40 transition-all">
+            <div className="w-9 h-9 rounded-full bg-[#2dd4bf]/20 flex items-center justify-center text-[#2dd4bf] text-sm font-semibold shrink-0 overflow-hidden hover:ring-2 hover:ring-[#2dd4bf]/40 transition-all">
               {post.profiles?.avatar_url
                 // eslint-disable-next-line @next/next/no-img-element
                 ? <img src={post.profiles.avatar_url} alt="" className="w-full h-full object-cover" />
@@ -367,9 +367,9 @@ export function PostCard({
         <button
           onClick={handleSave}
           disabled={saving}
-          className={`transition-colors ${saved ? 'text-[#2563eb]' : 'text-[#999999] hover:text-[#2563eb]'}`}
+          className={`transition-colors ${saved ? 'text-[#2dd4bf]' : 'text-[#999999] hover:text-[#2dd4bf]'}`}
         >
-          <Bookmark className={`w-4 h-4 ${saved ? 'fill-[#2563eb]' : ''}`} />
+          <Bookmark className={`w-4 h-4 ${saved ? 'fill-[#2dd4bf]' : ''}`} />
         </button>
       </div>
 

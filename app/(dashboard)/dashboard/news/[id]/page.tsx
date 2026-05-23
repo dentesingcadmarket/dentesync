@@ -1,100 +1,96 @@
-import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
-import { ArrowLeft, Clock, Newspaper } from 'lucide-react'
-import ReactMarkdown from 'react-markdown'
+import { Newspaper, Clock, ExternalLink } from 'lucide-react'
 
-function formatDate(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString('tr-TR', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  })
+function timeAgo(dateStr: string) {
+  const diff = Date.now() - new Date(dateStr).getTime()
+  const d = Math.floor(diff / 86400000)
+  if (d < 1) return 'Bugün'
+  if (d === 1) return 'Dün'
+  if (d < 7) return `${d} gün önce`
+  const w = Math.floor(d / 7)
+  if (w < 4) return `${w} hafta önce`
+  const m = Math.floor(d / 30)
+  return `${m} ay önce`
 }
 
-interface Props {
-  params: { id: string }
-}
-
-export default async function NewsDetailPage({ params }: Props) {
+export default async function NewsPage() {
   const supabase = await createClient()
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const db = supabase as any
 
-  const { data: item } = await db
+  const { data: news } = await db
     .from('news')
     .select('*')
-    .eq('id', params.id)
     .eq('is_published', true)
-    .maybeSingle()
+    .order('published_at', { ascending: false })
+    .limit(30)
 
-  if (!item) notFound()
+  const items = (news ?? []) as {
+    id: string
+    title: string
+    excerpt: string | null
+    cover_image_url: string | null
+    published_at: string | null
+  }[]
 
   return (
-    <div className="max-w-2xl mx-auto p-6 lg:p-8">
-      {/* Back link */}
-      <Link
-        href="/dashboard/news"
-        className="inline-flex items-center gap-2 text-[#999999] hover:text-[#ffffff] text-sm mb-8 transition-colors"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Haberlere Dön
-      </Link>
-
-      {/* Cover image */}
-      {item.cover_image_url && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={item.cover_image_url}
-          alt={item.title}
-          className="w-full h-56 object-cover rounded-2xl mb-6 border border-[rgba(229,231,235,0.08)]"
-        />
-      )}
-
-      {/* Meta */}
-      <div className="flex items-center gap-2 mb-4">
-        <div className="w-7 h-7 rounded-full bg-[#2563eb]/10 flex items-center justify-center">
-          <Newspaper className="w-3.5 h-3.5 text-[#2563eb]" />
+    <div className="max-w-3xl mx-auto p-6 lg:p-8">
+      <div className="flex items-center gap-3 mb-8">
+        <div className="w-10 h-10 rounded-full bg-[#2dd4bf]/10 flex items-center justify-center">
+          <Newspaper className="w-5 h-5 text-[#2dd4bf]" />
         </div>
-        {item.published_at && (
-          <span className="flex items-center gap-1 text-[#999999] text-xs">
-            <Clock className="w-3 h-3" />
-            {formatDate(item.published_at)}
-          </span>
-        )}
+        <div>
+          <h1 className="text-2xl font-semibold text-[#ffffff]">Haberler</h1>
+          <p className="text-[#999999] text-sm">Sektör haberleri ve DenteSync duyuruları</p>
+        </div>
       </div>
 
-      {/* Title */}
-      <h1 className="text-[#ffffff] text-2xl font-semibold leading-snug mb-3">
-        {item.title}
-      </h1>
-
-      {/* Excerpt */}
-      {item.excerpt && (
-        <p className="text-[#999999] text-base leading-relaxed mb-6 border-l-2 border-[#2563eb]/40 pl-4">
-          {item.excerpt}
-        </p>
-      )}
-
-      {/* Divider */}
-      <div className="border-t border-[rgba(229,231,235,0.08)] mb-6" />
-
-      {/* Content */}
-      {item.content ? (
-        <div className="prose prose-invert prose-sm max-w-none text-[#d4d4d8] leading-relaxed
-          prose-headings:text-[#ffffff] prose-headings:font-semibold
-          prose-a:text-[#2563eb] prose-a:no-underline hover:prose-a:underline
-          prose-strong:text-[#ffffff]
-          prose-code:bg-[#1f1f20] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-[#2563eb] prose-code:text-xs prose-code:before:content-none prose-code:after:content-none
-          prose-pre:bg-[#1f1f20] prose-pre:border prose-pre:border-[rgba(229,231,235,0.08)] prose-pre:rounded-xl
-          prose-blockquote:border-l-[#2563eb]/60 prose-blockquote:text-[#999999]
-          prose-hr:border-[rgba(229,231,235,0.08)]
-          prose-li:text-[#d4d4d8]
-        ">
-          <ReactMarkdown>{item.content}</ReactMarkdown>
+      {items.length === 0 ? (
+        <div className="text-center py-20 text-[#999999]">
+          <Newspaper className="w-8 h-8 mx-auto mb-3 opacity-40" />
+          <p className="text-sm">Henüz haber yok. Yakında içerik gelecek.</p>
         </div>
       ) : (
-        <p className="text-[#999999] text-sm">İçerik henüz eklenmemiş.</p>
+        <div className="space-y-4">
+          {items.map((item, i) => (
+            <div
+              key={item.id}
+              className={`p-5 rounded-xl bg-[#161617] border border-[rgba(229,231,235,0.08)] flex gap-4 ${i === 0 ? 'ring-1 ring-[#2dd4bf]/20' : ''}`}
+            >
+              {item.cover_image_url && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={item.cover_image_url}
+                  alt={item.title}
+                  className="w-20 h-20 rounded-xl object-cover shrink-0 border border-[rgba(255,255,255,0.05)]"
+                />
+              )}
+              <div className="flex-1 min-w-0">
+                {i === 0 && (
+                  <span className="inline-block px-2 py-0.5 rounded-full bg-[#2dd4bf]/20 text-[#2dd4bf] text-[10px] font-medium mb-2">
+                    Son Haber
+                  </span>
+                )}
+                <h2 className="text-[#ffffff] font-medium text-sm mb-1.5 leading-snug">{item.title}</h2>
+                {item.excerpt && (
+                  <p className="text-[#999999] text-xs leading-relaxed line-clamp-2 mb-2">{item.excerpt}</p>
+                )}
+                <div className="flex items-center gap-3">
+                  {item.published_at && (
+                    <span className="flex items-center gap-1 text-[#999999] text-xs">
+                      <Clock className="w-3 h-3" />
+                      {timeAgo(item.published_at)}
+                    </span>
+                  )}
+                  <Link href={`/dashboard/news/${item.id}`} className="flex items-center gap-1 text-[#2dd4bf] text-xs hover:underline">
+                    Devamını oku <ExternalLink className="w-3 h-3" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   )

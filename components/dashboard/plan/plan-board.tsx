@@ -42,10 +42,10 @@ const STATUS_CONFIG = {
   completed: {
     label: 'Tamamlandı',
     icon: CheckCircle2,
-    color: 'text-[#2563eb]',
-    bg: 'bg-[#2563eb]/10',
-    border: 'border-[#2563eb]/20',
-    badge: 'text-[#2563eb]',
+    color: 'text-[#2dd4bf]',
+    bg: 'bg-[#2dd4bf]/10',
+    border: 'border-[#2dd4bf]/20',
+    badge: 'text-[#2dd4bf]',
   },
 } as const
 
@@ -72,7 +72,7 @@ function StepCard({
       transition={{ duration: 0.2 }}
       className={`rounded-xl border p-4 transition-colors ${
         step.status === 'completed'
-          ? 'bg-[#2563eb]/5 border-[#2563eb]/15 opacity-70'
+          ? 'bg-[#2dd4bf]/5 border-[#2dd4bf]/15 opacity-70'
           : 'bg-[#161617] border-[rgba(229,231,235,0.08)] hover:border-[rgba(255,255,255,0.12)]'
       }`}
     >
@@ -114,7 +114,7 @@ function StepCard({
           {step.status === 'in_progress' && (
             <button
               onClick={() => onComplete(step)}
-              className="p-1.5 rounded-lg text-[#999999] hover:text-[#2563eb] hover:bg-[#2563eb]/10 transition-colors"
+              className="p-1.5 rounded-lg text-[#999999] hover:text-[#2dd4bf] hover:bg-[#2dd4bf]/10 transition-colors"
               title="Tamamla"
             >
               <CheckCircle2 className="w-3.5 h-3.5" />
@@ -188,10 +188,10 @@ export function PlanBoard({ steps, onStepCompleted, onClearPlan }: PlanBoardProp
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-[rgba(229,231,235,0.08)] shrink-0">
         <div className="flex items-center gap-2">
-          <Map className="w-4 h-4 text-[#2563eb]" />
+          <Map className="w-4 h-4 text-[#2dd4bf]" />
           <span className="text-[#ffffff] text-sm font-medium">Planım</span>
           {steps.length > 0 && (
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#2563eb]/15 text-[#2563eb]">
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#2dd4bf]/15 text-[#2dd4bf]">
               {steps.length} adım
             </span>
           )}
@@ -222,7 +222,7 @@ export function PlanBoard({ steps, onStepCompleted, onClearPlan }: PlanBoardProp
           </div>
           <div className="h-1 rounded-full bg-[#1f1f20] overflow-hidden">
             <motion.div
-              className="h-full rounded-full bg-[#2563eb]"
+              className="h-full rounded-full bg-[#2dd4bf]"
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.4 }}
@@ -266,10 +266,10 @@ export function PlanBoard({ steps, onStepCompleted, onClearPlan }: PlanBoardProp
               <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="rounded-xl bg-[#2563eb]/10 border border-[#2563eb]/20 p-4 text-center mt-2"
+                className="rounded-xl bg-[#2dd4bf]/10 border border-[#2dd4bf]/20 p-4 text-center mt-2"
               >
-                <CheckCircle2 className="w-5 h-5 text-[#2563eb] mx-auto mb-1.5" />
-                <p className="text-[#2563eb] text-sm font-medium">Plan Tamamlandı!</p>
+                <CheckCircle2 className="w-5 h-5 text-[#2dd4bf] mx-auto mb-1.5" />
+                <p className="text-[#2dd4bf] text-sm font-medium">Plan Tamamlandı!</p>
                 <p className="text-[#999999] text-xs mt-0.5">Tüm adımları başarıyla tamamladın.</p>
               </motion.div>
             )}

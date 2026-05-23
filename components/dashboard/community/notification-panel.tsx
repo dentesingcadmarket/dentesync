@@ -19,7 +19,7 @@ function timeAgo(dateStr: string) {
 function notifIcon(type: string) {
   switch (type) {
     case 'like': return <Heart className="w-3.5 h-3.5 text-anchor-graphite fill-anchor-graphite" />
-    case 'comment': return <MessageCircle className="w-3.5 h-3.5 text-[#2563eb]" />
+    case 'comment': return <MessageCircle className="w-3.5 h-3.5 text-[#2dd4bf]" />
     case 'follow': return <UserPlus className="w-3.5 h-3.5 text-primary" />
     case 'mention': return <AtSign className="w-3.5 h-3.5 text-muted-silver" />
     default: return <Bell className="w-3.5 h-3.5 text-[#999999]" />
@@ -154,7 +154,7 @@ export function NotificationPanel({ currentUserId, initialUnreadCount = 0 }: Pro
                 <div
                   key={n.id}
                   className={`px-4 py-3 flex items-start gap-3 transition-colors hover:bg-white/5 ${
-                    !n.read ? 'bg-[#2563eb]/5' : ''
+                    !n.read ? 'bg-[#2dd4bf]/5' : ''
                   }`}
                 >
                   <div className="w-8 h-8 rounded-full bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] flex items-center justify-center shrink-0 overflow-hidden">
@@ -179,7 +179,7 @@ export function NotificationPanel({ currentUserId, initialUnreadCount = 0 }: Pro
                     <p className="text-[#999999] text-[10px] mt-1">{timeAgo(n.created_at)}</p>
                   </div>
                   {!n.read && (
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#2563eb] mt-1 shrink-0" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#2dd4bf] mt-1 shrink-0" />
                   )}
                 </div>
               ))}

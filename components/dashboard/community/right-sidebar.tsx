@@ -91,11 +91,11 @@ export function RightSidebar({ sidebarData }: RightSidebarProps) {
               <Link
                 key={tag.id}
                 href={`/dashboard/community/hashtag/${tag.name}`}
-                className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#161617] border border-[rgba(255,255,255,0.06)] hover:border-[#2563eb]/30 hover:bg-[#2563eb]/5 transition-all group"
+                className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#161617] border border-[rgba(255,255,255,0.06)] hover:border-[#2dd4bf]/30 hover:bg-[#2dd4bf]/5 transition-all group"
               >
                 <div className="flex items-center gap-2">
-                  <Hash className="w-3 h-3 text-[#2563eb]" />
-                  <span className="text-[#ffffff] text-xs group-hover:text-[#2563eb] transition-colors">{tag.name}</span>
+                  <Hash className="w-3 h-3 text-[#2dd4bf]" />
+                  <span className="text-[#ffffff] text-xs group-hover:text-[#2dd4bf] transition-colors">{tag.name}</span>
                 </div>
                 <span className="text-[#999999] text-[10px]">{tag.post_count}</span>
               </Link>
@@ -115,7 +115,7 @@ export function RightSidebar({ sidebarData }: RightSidebarProps) {
                 href={`/dashboard/community/profile/${member.username}`}
                 className="flex items-center gap-3 p-2.5 rounded-xl bg-[#161617] border border-[rgba(255,255,255,0.06)] hover:border-[rgba(255,255,255,0.1)] transition-all group"
               >
-                <div className="w-8 h-8 rounded-full bg-[#2563eb]/20 flex items-center justify-center text-[#2563eb] text-xs font-semibold shrink-0 overflow-hidden">
+                <div className="w-8 h-8 rounded-full bg-[#2dd4bf]/20 flex items-center justify-center text-[#2dd4bf] text-xs font-semibold shrink-0 overflow-hidden">
                   {member.avatar_url
                     // eslint-disable-next-line @next/next/no-img-element
                     ? <img src={member.avatar_url} alt="" className="w-full h-full object-cover" />
@@ -127,7 +127,7 @@ export function RightSidebar({ sidebarData }: RightSidebarProps) {
                   <p className="text-[#999999] text-[10px] truncate">{member.specialty ?? '@' + member.username}</p>
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="text-[#2563eb] text-xs font-semibold">{member.activity_count}</p>
+                  <p className="text-[#2dd4bf] text-xs font-semibold">{member.activity_count}</p>
                   <p className="text-[#999999] text-[10px]">katkı</p>
                 </div>
               </Link>

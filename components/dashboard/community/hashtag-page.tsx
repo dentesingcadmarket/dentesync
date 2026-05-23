@@ -45,7 +45,7 @@ function Avatar({ profile, size = 'sm' }: {
     return <img src={profile.avatar_url} alt={initials} className={`${dim} rounded-full object-cover shrink-0`} />
   }
   return (
-    <div className={`${dim} rounded-full shrink-0 bg-[#2563eb]/20 flex items-center justify-center text-[#2563eb] font-semibold`}>
+    <div className={`${dim} rounded-full shrink-0 bg-[#2dd4bf]/20 flex items-center justify-center text-[#2dd4bf] font-semibold`}>
       {initials}
     </div>
   )
@@ -56,7 +56,7 @@ function renderContent(content: string) {
   return parts.map((part, i) =>
     part.startsWith('#')
       ? <Link key={i} href={`/dashboard/community/hashtag/${part.slice(1).toLowerCase()}`}
-          className="text-[#2563eb] hover:underline">{part}</Link>
+          className="text-[#2dd4bf] hover:underline">{part}</Link>
       : <span key={i}>{part}</span>
   )
 }
@@ -154,7 +154,7 @@ function PostCard({
                 {canWrite && (
                   <button onClick={() => { onSave(post.id, savedByMe); setShowMenu(false) }}
                     className="w-full flex items-center gap-2 px-3 py-2.5 text-[#ffffff] text-sm hover:bg-white/5 transition-colors">
-                    <Bookmark className={`w-3.5 h-3.5 ${savedByMe ? 'text-[#2563eb] fill-[#2563eb]' : 'text-[#999999]'}`} />
+                    <Bookmark className={`w-3.5 h-3.5 ${savedByMe ? 'text-[#2dd4bf] fill-[#2dd4bf]' : 'text-[#999999]'}`} />
                     {savedByMe ? 'Kayıttan Çıkar' : 'Kaydet'}
                   </button>
                 )}
@@ -192,13 +192,13 @@ function PostCard({
           <Heart className={`w-4 h-4 transition-all ${likedByMe ? 'fill-anchor-graphite' : ''}`} />
           <span>{post.likes ?? 0}</span>
         </motion.button>
-        <button onClick={loadComments} className="flex items-center gap-1.5 text-[#999999] hover:text-[#2563eb] transition-colors text-sm">
+        <button onClick={loadComments} className="flex items-center gap-1.5 text-[#999999] hover:text-[#2dd4bf] transition-colors text-sm">
           <MessageCircle className="w-4 h-4" />
           <span>{commentCount > 0 ? commentCount : 'Yorum'}</span>
         </button>
         <motion.button onClick={() => onSave(post.id, savedByMe)} whileTap={{ scale: 0.85 }}
-          className={`flex items-center gap-1.5 text-sm transition-colors ml-auto ${savedByMe ? 'text-[#2563eb]' : 'text-[#999999] hover:text-[#2563eb]'}`}>
-          <Bookmark className={`w-4 h-4 ${savedByMe ? 'fill-[#2563eb]' : ''}`} />
+          className={`flex items-center gap-1.5 text-sm transition-colors ml-auto ${savedByMe ? 'text-[#2dd4bf]' : 'text-[#999999] hover:text-[#2dd4bf]'}`}>
+          <Bookmark className={`w-4 h-4 ${savedByMe ? 'fill-[#2dd4bf]' : ''}`} />
         </motion.button>
       </div>
 
@@ -222,9 +222,9 @@ function PostCard({
               {canWrite ? (
                 <form onSubmit={handleComment} className="flex items-center gap-2 pt-1">
                   <input value={commentText} onChange={e => setCommentText(e.target.value)} placeholder="Yorum yaz..." maxLength={500}
-                    className="flex-1 px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2563eb] transition-colors" />
+                    className="flex-1 px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2dd4bf] transition-colors" />
                   <button type="submit" disabled={isSubmitting || !commentText.trim()}
-                    className="p-2 rounded-xl bg-[#2563eb] text-white disabled:opacity-40 transition-opacity cursor-pointer">
+                    className="p-2 rounded-xl bg-[#2dd4bf] text-white disabled:opacity-40 transition-opacity cursor-pointer">
                     {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                   </button>
                 </form>
@@ -327,8 +327,8 @@ export function HashtagPageClient({
           <ArrowLeft className="w-4 h-4" />
         </button>
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-[#2563eb]/10 flex items-center justify-center">
-            <Hash className="w-5 h-5 text-[#2563eb]" />
+          <div className="w-10 h-10 rounded-full bg-[#2dd4bf]/10 flex items-center justify-center">
+            <Hash className="w-5 h-5 text-[#2dd4bf]" />
           </div>
           <div>
             <h1 className="text-2xl font-semibold text-[#ffffff]">#{tag}</h1>

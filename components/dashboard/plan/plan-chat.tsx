@@ -35,7 +35,7 @@ function ThinkingDots() {
   return (
     <div className="flex gap-3">
       <div className="w-7 h-7 rounded-full bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] flex items-center justify-center shrink-0 mt-1">
-        <Map className="w-3.5 h-3.5 text-[#2563eb]" />
+        <Map className="w-3.5 h-3.5 text-[#2dd4bf]" />
       </div>
       <div className="bg-[#161617] border border-[rgba(229,231,235,0.08)] rounded-2xl rounded-tl-sm px-4 py-3">
         <div className="flex gap-1.5 items-center h-4">
@@ -193,7 +193,7 @@ export function PlanChat({ steps, nextStepTrigger, onStepGenerated }: PlanChatPr
     <div className="h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center gap-2 px-4 py-3 border-b border-[rgba(229,231,235,0.08)] shrink-0">
-        <Map className="w-4 h-4 text-[#2563eb]" />
+        <Map className="w-4 h-4 text-[#2dd4bf]" />
         <span className="text-[#ffffff] text-sm font-medium">Plan Asistanı</span>
       </div>
 
@@ -206,7 +206,7 @@ export function PlanChat({ steps, nextStepTrigger, onStepGenerated }: PlanChatPr
             className="flex flex-col items-center justify-center h-full text-center py-8"
           >
             <div className="w-12 h-12 rounded-2xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] flex items-center justify-center mb-3">
-              <Map className="w-6 h-6 text-[#2563eb]" />
+              <Map className="w-6 h-6 text-[#2dd4bf]" />
             </div>
             <h3 className="text-[#ffffff] font-medium mb-1 text-sm">Hedefini Paylaş</h3>
             <p className="text-[#999999] text-xs max-w-[240px] mb-5 leading-relaxed">
@@ -236,14 +236,14 @@ export function PlanChat({ steps, nextStepTrigger, onStepGenerated }: PlanChatPr
           >
             <div className={`w-7 h-7 rounded-full shrink-0 flex items-center justify-center text-xs font-bold mt-0.5 ${
               msg.role === 'user'
-                ? 'bg-[#2563eb] text-white'
+                ? 'bg-[#2dd4bf] text-white'
                 : 'bg-[#1f1f20] border border-[rgba(229,231,235,0.08)]'
             }`}>
-              {msg.role === 'user' ? 'S' : <Map className="w-3.5 h-3.5 text-[#2563eb]" />}
+              {msg.role === 'user' ? 'S' : <Map className="w-3.5 h-3.5 text-[#2dd4bf]" />}
             </div>
             <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm ${
               msg.role === 'user'
-                ? 'bg-[#2563eb] text-white rounded-tr-sm'
+                ? 'bg-[#2dd4bf] text-white rounded-tr-sm'
                 : 'bg-[#161617] border border-[rgba(229,231,235,0.08)] text-[#ffffff] rounded-tl-sm'
             }`}>
               {msg.role === 'user' ? (
@@ -274,7 +274,7 @@ export function PlanChat({ steps, nextStepTrigger, onStepGenerated }: PlanChatPr
 
       {/* Input */}
       <div className="px-4 pb-4 pt-2 shrink-0 border-t border-[rgba(229,231,235,0.08)]">
-        <div className="flex gap-2.5 items-end bg-[#161617] border border-[rgba(229,231,235,0.08)] rounded-2xl px-4 py-2.5 focus-within:border-[#2563eb]/50 transition-colors">
+        <div className="flex gap-2.5 items-end bg-[#161617] border border-[rgba(229,231,235,0.08)] rounded-2xl px-4 py-2.5 focus-within:border-[#2dd4bf]/50 transition-colors">
           <textarea
             ref={textareaRef}
             value={input}
@@ -291,7 +291,7 @@ export function PlanChat({ steps, nextStepTrigger, onStepGenerated }: PlanChatPr
             whileTap={{ scale: 0.95 }}
             onClick={() => sendMessage(input)}
             disabled={!input.trim() || isStreaming}
-            className="w-8 h-8 rounded-full bg-[#2563eb] flex items-center justify-center shrink-0 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+            className="w-8 h-8 rounded-full bg-[#2dd4bf] flex items-center justify-center shrink-0 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
           >
             {isStreaming
               ? <Loader2 className="w-4 h-4 text-white animate-spin" />

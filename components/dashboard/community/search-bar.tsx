@@ -105,7 +105,7 @@ export function SearchBar({ placeholder = 'Kullanıcı, hashtag veya konu ara...
           onChange={e => setQuery(e.target.value)}
           onFocus={() => { if (query.length >= 2 && hasResults) setOpen(true) }}
           placeholder={placeholder}
-          className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2563eb]/60 transition-colors"
+          className="w-full pl-10 pr-9 py-2.5 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2dd4bf]/60 transition-colors"
         />
         {(query || loading) && (
           <button
@@ -127,7 +127,7 @@ export function SearchBar({ placeholder = 'Kullanıcı, hashtag veya konu ara...
                 onClick={() => handleTabChange(tab.id)}
                 className={`flex-1 py-2.5 text-xs font-medium transition-colors ${
                   activeTab === tab.id
-                    ? 'text-[#2563eb] border-b-2 border-[#2563eb]'
+                    ? 'text-[#2dd4bf] border-b-2 border-[#2dd4bf]'
                     : 'text-[#999999] hover:text-[#ffffff]'
                 }`}
               >
@@ -183,7 +183,7 @@ export function SearchBar({ placeholder = 'Kullanıcı, hashtag veya konu ara...
                     onClick={() => { router.push(`/dashboard/community/profile/${user.username}`); setOpen(false) }}
                     className="w-full px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-colors text-left"
                   >
-                    <div className="w-8 h-8 rounded-full bg-[#2563eb]/20 flex items-center justify-center text-[#2563eb] text-xs font-semibold shrink-0 overflow-hidden">
+                    <div className="w-8 h-8 rounded-full bg-[#2dd4bf]/20 flex items-center justify-center text-[#2dd4bf] text-xs font-semibold shrink-0 overflow-hidden">
                       {user.avatar_url
                         // eslint-disable-next-line @next/next/no-img-element
                         ? <img src={user.avatar_url} alt="" className="w-full h-full object-cover" />
@@ -215,8 +215,8 @@ export function SearchBar({ placeholder = 'Kullanıcı, hashtag veya konu ara...
                     onClick={() => { router.push(`/dashboard/community/hashtag/${tag.name}`); setOpen(false) }}
                     className="w-full px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-colors text-left"
                   >
-                    <div className="w-8 h-8 rounded-full bg-[#2563eb]/10 flex items-center justify-center shrink-0">
-                      <Hash className="w-4 h-4 text-[#2563eb]" />
+                    <div className="w-8 h-8 rounded-full bg-[#2dd4bf]/10 flex items-center justify-center shrink-0">
+                      <Hash className="w-4 h-4 text-[#2dd4bf]" />
                     </div>
                     <div>
                       <p className="text-[#ffffff] text-sm font-medium">#{tag.name}</p>

@@ -42,7 +42,7 @@ function renderContent(content: string) {
   return parts.map((part, i) =>
     part.startsWith('#')
       ? <Link key={i} href={`/dashboard/community/hashtag/${part.slice(1).toLowerCase()}`}
-          className="text-[#2563eb] hover:underline">{part}</Link>
+          className="text-[#2dd4bf] hover:underline">{part}</Link>
       : <span key={i}>{part}</span>
   )
 }
@@ -71,7 +71,7 @@ interface Props {
 function tierBadge(tier: string) {
   const map: Record<string, { label: string; cls: string; desc: string }> = {
     m1: { label: 'M1', cls: 'bg-[#999999]/20 text-[#999999]', desc: 'Temel Plan' },
-    m2: { label: 'M2', cls: 'bg-[#2563eb]/20 text-[#2563eb]', desc: 'Standart Plan' },
+    m2: { label: 'M2', cls: 'bg-[#2dd4bf]/20 text-[#2dd4bf]', desc: 'Standart Plan' },
     m3: { label: 'M3', cls: 'bg-primary0/20 text-primary', desc: 'Premium Plan' },
   }
   const b = map[tier] ?? map.m1
@@ -139,8 +139,8 @@ function CommentCard({ comment }: { comment: CommentWithPost }) {
       )}
       <p className="text-[#999999] text-sm leading-relaxed">{comment.content}</p>
       {comment.technical_note && (
-        <div className="mt-2 p-2 rounded-lg bg-[#1f1f20] border-l-2 border-[#2563eb]/50">
-          <p className="text-[10px] text-[#2563eb] font-medium mb-0.5">Teknik Değerlendirme</p>
+        <div className="mt-2 p-2 rounded-lg bg-[#1f1f20] border-l-2 border-[#2dd4bf]/50">
+          <p className="text-[10px] text-[#2dd4bf] font-medium mb-0.5">Teknik Değerlendirme</p>
           <p className="text-[#999999] text-xs">{comment.technical_note}</p>
         </div>
       )}
@@ -260,7 +260,7 @@ function EditProfileModal({ profile, onClose }: { profile: ProfileData; onClose:
         </div>
 
         <form onSubmit={handleSubmit} className="p-5 space-y-4">
-          <div className="relative h-20 rounded-xl overflow-hidden bg-gradient-to-r from-[#2563eb]/30 to-[#1d4ed8]/10 border border-[rgba(229,231,235,0.08)]">
+          <div className="relative h-20 rounded-xl overflow-hidden bg-gradient-to-r from-[#2dd4bf]/30 to-[#1d4ed8]/10 border border-[rgba(229,231,235,0.08)]">
             {formData.cover_url && (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={formData.cover_url} alt="" className="w-full h-full object-cover" />
@@ -275,7 +275,7 @@ function EditProfileModal({ profile, onClose }: { profile: ProfileData; onClose:
 
           <div className="flex justify-center -mt-2">
             <div className="relative">
-              <div className="w-16 h-16 rounded-full bg-[#2563eb]/20 flex items-center justify-center text-[#2563eb] text-2xl font-semibold overflow-hidden border-2 border-[#161617]">
+              <div className="w-16 h-16 rounded-full bg-[#2dd4bf]/20 flex items-center justify-center text-[#2dd4bf] text-2xl font-semibold overflow-hidden border-2 border-[#161617]">
                 {formData.avatar_url
                   // eslint-disable-next-line @next/next/no-img-element
                   ? <img src={formData.avatar_url} alt="Avatar" className="w-full h-full object-cover" />
@@ -295,7 +295,7 @@ function EditProfileModal({ profile, onClose }: { profile: ProfileData; onClose:
             <label className="text-[#999999] text-xs mb-1.5 block">Ad Soyad</label>
             <input value={formData.full_name} onChange={e => setFormData(p => ({ ...p, full_name: e.target.value }))}
               placeholder="Adınız Soyadınız"
-              className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2563eb] transition-colors" />
+              className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2dd4bf] transition-colors" />
           </div>
 
           <div>
@@ -304,7 +304,7 @@ function EditProfileModal({ profile, onClose }: { profile: ProfileData; onClose:
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#999999] text-sm">@</span>
               <input value={formData.username} onChange={e => setFormData(p => ({ ...p, username: e.target.value }))}
                 placeholder="kullanici_adi" maxLength={30}
-                className="w-full pl-7 pr-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2563eb] transition-colors" />
+                className="w-full pl-7 pr-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2dd4bf] transition-colors" />
             </div>
           </div>
 
@@ -312,7 +312,7 @@ function EditProfileModal({ profile, onClose }: { profile: ProfileData; onClose:
             <label className="text-[#999999] text-xs mb-1.5 block">Uzmanlık Alanı</label>
             <input value={formData.specialty} onChange={e => setFormData(p => ({ ...p, specialty: e.target.value }))}
               placeholder="ör. İmplantoloji, Protetik Diş"
-              className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2563eb] transition-colors" />
+              className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2dd4bf] transition-colors" />
           </div>
 
           <div>
@@ -320,7 +320,7 @@ function EditProfileModal({ profile, onClose }: { profile: ProfileData; onClose:
             <input type="number" min={0} max={50} value={formData.experience_years}
               onChange={e => setFormData(p => ({ ...p, experience_years: e.target.value }))}
               placeholder="ör. 5"
-              className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2563eb] transition-colors" />
+              className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2dd4bf] transition-colors" />
           </div>
 
           <div>
@@ -330,7 +330,7 @@ function EditProfileModal({ profile, onClose }: { profile: ProfileData; onClose:
             </label>
             <textarea value={formData.bio} onChange={e => setFormData(p => ({ ...p, bio: e.target.value }))}
               placeholder="Kendinizden kısaca bahsedin..." rows={3} maxLength={160}
-              className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm resize-none focus:outline-none focus:border-[#2563eb] transition-colors" />
+              className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm resize-none focus:outline-none focus:border-[#2dd4bf] transition-colors" />
           </div>
 
           <div className="flex gap-2 pt-1">
@@ -339,7 +339,7 @@ function EditProfileModal({ profile, onClose }: { profile: ProfileData; onClose:
               İptal
             </button>
             <motion.button type="submit" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} disabled={isSaving}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-[#2563eb] text-white text-sm font-medium disabled:opacity-50 cursor-pointer">
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-[#2dd4bf] text-white text-sm font-medium disabled:opacity-50 cursor-pointer">
               {isSaving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
               Kaydet
             </motion.button>
@@ -351,7 +351,7 @@ function EditProfileModal({ profile, onClose }: { profile: ProfileData; onClose:
 }
 
 const HASHTAG_COLORS = [
-  'bg-[#2563eb]/15 text-[#2563eb] border-[#2563eb]/20',
+  'bg-[#2dd4bf]/15 text-[#2dd4bf] border-[#2dd4bf]/20',
   'bg-primary0/15 text-primary border-primary0/20',
   'bg-primary0/15 text-primary border-primary0/20',
   'bg-anchor-graphite0/15 text-anchor-graphite border-anchor-graphite0/20',
@@ -484,7 +484,7 @@ export function ProfilePageClient({ profile: initialProfile, initialPosts, isSel
   return (
     <div className="max-w-2xl mx-auto">
       {/* Cover */}
-      <div className="relative h-36 lg:h-48 bg-gradient-to-r from-[#2563eb]/30 to-[#1d4ed8]/10 overflow-hidden">
+      <div className="relative h-36 lg:h-48 bg-gradient-to-r from-[#2dd4bf]/30 to-[#1d4ed8]/10 overflow-hidden">
         {profile.cover_url && (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={profile.cover_url} alt="Kapak" className="w-full h-full object-cover" />
@@ -498,7 +498,7 @@ export function ProfilePageClient({ profile: initialProfile, initialPosts, isSel
       {/* Profile Info */}
       <div className="px-6 pb-2">
         <div className="flex items-end justify-between -mt-10 mb-4">
-          <div className="w-20 h-20 rounded-full border-4 border-[#000000] bg-[#2563eb]/20 flex items-center justify-center text-[#2563eb] text-3xl font-semibold overflow-hidden shrink-0">
+          <div className="w-20 h-20 rounded-full border-4 border-[#000000] bg-[#2dd4bf]/20 flex items-center justify-center text-[#2dd4bf] text-3xl font-semibold overflow-hidden shrink-0">
             {profile.avatar_url
               // eslint-disable-next-line @next/next/no-img-element
               ? <img src={profile.avatar_url} alt={profile.username || ''} className="w-full h-full object-cover" />
@@ -577,7 +577,7 @@ export function ProfilePageClient({ profile: initialProfile, initialPosts, isSel
               <button key={tab.key} onClick={() => handleTabChange(tab.key)}
                 className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-medium transition-all ${
                   active
-                    ? 'bg-[#2563eb] text-white shadow-sm'
+                    ? 'bg-[#2dd4bf] text-white shadow-sm'
                     : 'text-[#999999] hover:text-[#999999] hover:bg-white/5'
                 }`}>
                 <Icon className="w-3.5 h-3.5" />
@@ -637,7 +637,7 @@ export function ProfilePageClient({ profile: initialProfile, initialPosts, isSel
                 <div className="p-4 rounded-2xl bg-[#161617] border border-[rgba(229,231,235,0.08)]">
                   <p className="text-[#999999] text-xs font-medium uppercase tracking-wider mb-4">Yetkinlik Puanları</p>
                   <div className="space-y-3.5">
-                    <SkillBar label="Teknik" value={profile.technical_score ?? 0} color="bg-[#2563eb]" />
+                    <SkillBar label="Teknik" value={profile.technical_score ?? 0} color="bg-[#2dd4bf]" />
                     <SkillBar label="Çözüm" value={profile.solution_score ?? 0} color="bg-primary0" />
                     <SkillBar label="Öğretme" value={profile.teaching_score ?? 0} color="bg-primary0" />
                   </div>

@@ -240,25 +240,28 @@ export function ProductManager({ initialProducts }: Props) {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto p-6 md:p-8">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-[#2563eb]/10 flex items-center justify-center">
-            <ShieldCheck className="w-5 h-5 text-[#2563eb]" />
+    <div className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 max-w-[1280px] mx-auto w-full space-y-6">
+      {/* Header banner */}
+      <div className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#0f1716] via-[#161617] to-[#161617] p-5 lg:p-6">
+        <div className="absolute -right-12 -top-12 w-44 h-44 rounded-full bg-[#2dd4bf]/10 blur-3xl pointer-events-none" />
+        <div className="relative flex items-center justify-between flex-wrap gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#2dd4bf]/20 to-[#2dd4bf]/5 border border-[#2dd4bf]/25 flex items-center justify-center">
+              <ShieldCheck className="w-5 h-5 text-[#2dd4bf]" />
+            </div>
+            <div>
+              <h1 className="text-white font-semibold text-2xl leading-tight">Ürün Yönetimi</h1>
+              <p className="text-[#999999] text-sm mt-0.5">{products.length} ürün</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-[#ffffff] font-semibold text-lg leading-tight">Ürün Yönetimi</h1>
-            <p className="text-[#999999] text-xs">{products.length} ürün</p>
-          </div>
+          <Button
+            onClick={openCreate}
+            className="flex items-center gap-2 bg-[#2dd4bf] hover:bg-[#5eead4] text-[#0a0a0a] font-semibold rounded-full px-4 shadow-[0_0_24px_rgba(45,212,191,0.18)]"
+          >
+            <Plus className="w-4 h-4" />
+            Yeni Ürün
+          </Button>
         </div>
-        <Button
-          onClick={openCreate}
-          className="flex items-center gap-2 bg-[#2563eb] hover:bg-[#1d4ed8] text-white"
-        >
-          <Plus className="w-4 h-4" />
-          Yeni Ürün
-        </Button>
       </div>
 
       {/* Product List */}
@@ -326,7 +329,7 @@ export function ProductManager({ initialProducts }: Props) {
                   className={cn(
                     'text-xs px-2 py-0.5 rounded-full shrink-0 hidden sm:inline',
                     product.is_active
-                      ? 'bg-[#2563eb]/15 text-[#2563eb]'
+                      ? 'bg-[#2dd4bf]/15 text-[#2dd4bf]'
                       : 'bg-[#999999]/15 text-[#999999]'
                   )}
                 >
@@ -348,7 +351,7 @@ export function ProductManager({ initialProducts }: Props) {
                   <button
                     onClick={() => openEdit(product)}
                     title="Düzenle"
-                    className="p-1.5 text-[#999999] hover:text-[#2563eb] hover:bg-[#2563eb]/10 rounded-lg transition-colors"
+                    className="p-1.5 text-[#999999] hover:text-[#2dd4bf] hover:bg-[#2dd4bf]/10 rounded-lg transition-colors"
                   >
                     <Pencil className="w-4 h-4" />
                   </button>
@@ -395,7 +398,7 @@ export function ProductManager({ initialProducts }: Props) {
                 onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
                 placeholder="Ürün açıklaması..."
                 rows={3}
-                className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2563eb] transition-colors resize-none"
+                className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2dd4bf] transition-colors resize-none"
               />
             </div>
 
@@ -476,7 +479,7 @@ export function ProductManager({ initialProducts }: Props) {
               </label>
               <label
                 className={cn(
-                  'flex flex-col items-center justify-center gap-2 p-5 rounded-xl bg-[#1f1f20] border border-dashed border-[rgba(255,255,255,0.12)] cursor-pointer hover:border-[#2563eb]/50 transition-colors',
+                  'flex flex-col items-center justify-center gap-2 p-5 rounded-xl bg-[#1f1f20] border border-dashed border-[rgba(255,255,255,0.12)] cursor-pointer hover:border-[#2dd4bf]/50 transition-colors',
                   uploadingImages && 'opacity-60 cursor-not-allowed'
                 )}
               >
@@ -537,7 +540,7 @@ export function ProductManager({ initialProducts }: Props) {
             <Button
               onClick={handleSubmit}
               disabled={isSaving || uploadingImages}
-              className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white"
+              className="bg-[#2dd4bf] hover:bg-[#1d4ed8] text-white"
             >
               {isSaving && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
               {editingProduct ? 'Güncelle' : 'Oluştur'}

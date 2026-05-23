@@ -47,8 +47,8 @@ export function StlUpload({ value, filename, onChange }: StlUploadProps) {
 
   if (value) {
     return (
-      <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-[#1f1f20] border border-[#2563eb]/30">
-        <Box className="w-4 h-4 text-[#2563eb] shrink-0" />
+      <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-[#1f1f20] border border-[#2dd4bf]/30">
+        <Box className="w-4 h-4 text-[#2dd4bf] shrink-0" />
         <div className="flex-1 min-w-0">
           <p className="text-[#ffffff] text-xs font-medium truncate">{filename || 'model.stl'}</p>
           {fileSize && <p className="text-[#999999] text-[10px]">{formatBytes(fileSize)}</p>}
@@ -68,7 +68,7 @@ export function StlUpload({ value, filename, onChange }: StlUploadProps) {
     <label className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border border-dashed cursor-pointer transition-colors ${
       uploading
         ? 'border-[rgba(255,255,255,0.12)] text-[#999999]'
-        : 'border-[rgba(255,255,255,0.12)] text-[#999999] hover:border-[#2563eb]/50 hover:text-[#999999]'
+        : 'border-[rgba(255,255,255,0.12)] text-[#999999] hover:border-[#2dd4bf]/50 hover:text-[#999999]'
     }`}>
       {uploading
         ? <Loader2 className="w-4 h-4 animate-spin shrink-0" />

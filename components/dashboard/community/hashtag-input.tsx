@@ -95,11 +95,11 @@ export function HashtagInput({ value, onChange, maxTags = 5 }: HashtagInputProps
   return (
     <div ref={containerRef} className="relative">
       <div
-        className={`min-h-[42px] flex flex-wrap gap-1.5 items-center px-3 py-2 rounded-xl bg-[#1f1f20] border ${open ? 'border-[#2563eb]/60' : 'border-[rgba(229,231,235,0.08)]'} transition-colors cursor-text`}
+        className={`min-h-[42px] flex flex-wrap gap-1.5 items-center px-3 py-2 rounded-xl bg-[#1f1f20] border ${open ? 'border-[#2dd4bf]/60' : 'border-[rgba(229,231,235,0.08)]'} transition-colors cursor-text`}
         onClick={() => inputRef.current?.focus()}
       >
         {value.map(tag => (
-          <span key={tag.id} className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#2563eb]/15 border border-[#2563eb]/30 text-[#2563eb] text-xs font-medium">
+          <span key={tag.id} className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#2dd4bf]/15 border border-[#2dd4bf]/30 text-[#2dd4bf] text-xs font-medium">
             #{tag.name}
             <button
               type="button"
@@ -143,7 +143,7 @@ export function HashtagInput({ value, onChange, maxTags = 5 }: HashtagInputProps
               onClick={() => selectTag(tag)}
               className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-white/5 transition-colors text-left"
             >
-              <Hash className="w-3.5 h-3.5 text-[#2563eb] shrink-0" />
+              <Hash className="w-3.5 h-3.5 text-[#2dd4bf] shrink-0" />
               <span className="text-[#ffffff] text-sm">#{tag.name}</span>
               <span className="text-[#999999] text-xs ml-auto">{tag.post_count}</span>
             </button>

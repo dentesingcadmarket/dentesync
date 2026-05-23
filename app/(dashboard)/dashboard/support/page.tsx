@@ -71,21 +71,24 @@ export default function SupportPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6 lg:p-8 space-y-10">
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-[#2563eb]/10 flex items-center justify-center">
-          <HelpCircle className="w-5 h-5 text-[#2563eb]" />
-        </div>
-        <div>
-          <h1 className="text-2xl font-semibold text-[#ffffff]">Destek</h1>
-          <p className="text-[#999999] text-sm">Sorularınız için buradayız</p>
+    <div className="max-w-3xl mx-auto p-4 md:p-6 lg:p-8 space-y-6">
+      <div className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#0f1716] via-[#161617] to-[#161617] p-5 lg:p-6">
+        <div className="absolute -right-12 -top-12 w-44 h-44 rounded-full bg-[#2dd4bf]/10 blur-3xl pointer-events-none" />
+        <div className="relative flex items-center gap-3">
+          <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#2dd4bf]/20 to-[#2dd4bf]/5 border border-[#2dd4bf]/25 flex items-center justify-center">
+            <HelpCircle className="w-5 h-5 text-[#2dd4bf]" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-semibold text-white">Destek</h1>
+            <p className="text-[#999999] text-sm mt-0.5">Sorularınız için buradayız</p>
+          </div>
         </div>
       </div>
 
       {/* FAQ */}
       <div>
         <div className="flex items-center gap-2 mb-4">
-          <MessageSquare className="w-4 h-4 text-[#2563eb]" />
+          <MessageSquare className="w-4 h-4 text-[#2dd4bf]" />
           <h2 className="text-[#ffffff] font-medium">Sık Sorulan Sorular</h2>
         </div>
         <div className="space-y-2">
@@ -96,7 +99,7 @@ export default function SupportPage() {
       {/* Contact Form */}
       <div>
         <div className="flex items-center gap-2 mb-4">
-          <Mail className="w-4 h-4 text-[#2563eb]" />
+          <Mail className="w-4 h-4 text-[#2dd4bf]" />
           <h2 className="text-[#ffffff] font-medium">Bize Yazın</h2>
         </div>
 
@@ -104,12 +107,12 @@ export default function SupportPage() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="p-6 rounded-xl bg-[#2563eb]/10 border border-[#2563eb]/20 flex flex-col items-center text-center gap-3"
+            className="p-6 rounded-xl bg-[#2dd4bf]/10 border border-[#2dd4bf]/20 flex flex-col items-center text-center gap-3"
           >
-            <CheckCircle2 className="w-8 h-8 text-[#2563eb]" />
+            <CheckCircle2 className="w-8 h-8 text-[#2dd4bf]" />
             <p className="text-[#ffffff] font-medium">Mesajınız alındı!</p>
             <p className="text-[#999999] text-sm">En kısa sürede size geri döneceğiz. Genellikle 24 saat içinde yanıt veriyoruz.</p>
-            <button onClick={() => { setSent(false); setSubject(''); setMessage('') }} className="text-[#2563eb] text-sm hover:underline">
+            <button onClick={() => { setSent(false); setSubject(''); setMessage('') }} className="text-[#2dd4bf] text-sm hover:underline">
               Yeni mesaj gönder
             </button>
           </motion.div>
@@ -122,7 +125,7 @@ export default function SupportPage() {
                 onChange={e => setSubject(e.target.value)}
                 placeholder="Sorununuzu özetleyin"
                 required
-                className="w-full px-4 py-2.5 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2563eb] transition-colors"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2dd4bf] transition-colors"
               />
             </div>
             <div>
@@ -133,7 +136,7 @@ export default function SupportPage() {
                 placeholder="Sorununuzu detaylı açıklayın..."
                 rows={5}
                 required
-                className="w-full px-4 py-2.5 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm resize-none focus:outline-none focus:border-[#2563eb] transition-colors"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm resize-none focus:outline-none focus:border-[#2dd4bf] transition-colors"
               />
             </div>
             <motion.button
@@ -141,7 +144,7 @@ export default function SupportPage() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               disabled={isSending}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-full bg-white text-black font-medium text-sm disabled:opacity-50 cursor-pointer"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-full bg-[#2dd4bf] text-[#0a0a0a] font-semibold text-sm hover:bg-[#5eead4] disabled:opacity-50 cursor-pointer transition-colors shadow-[0_0_24px_rgba(45,212,191,0.18)]"
             >
               {isSending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
               Gönder

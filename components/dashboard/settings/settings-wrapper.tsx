@@ -24,8 +24,8 @@ interface Props {
 
 const TIER_INFO: Record<string, { label: string; color: string }> = {
   m1: { label: 'M1 — Başlangıç', color: '#999999' },
-  m2: { label: 'M2 — Profesyonel', color: '#2563eb' },
-  m3: { label: 'M3 — B2B', color: '#2563eb' },
+  m2: { label: 'M2 — Profesyonel', color: '#2dd4bf' },
+  m3: { label: 'M3 — B2B', color: '#2dd4bf' },
 }
 
 export function SettingsWrapper({ user, profile, subParam }: Props) {
@@ -93,14 +93,17 @@ export function SettingsWrapper({ user, profile, subParam }: Props) {
 
   return (
     <>
-      <div className="max-w-2xl mx-auto p-6 lg:p-8 space-y-6">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-[#2563eb]/10 flex items-center justify-center">
-            <Settings className="w-5 h-5 text-[#2563eb]" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-semibold text-[#ffffff]">Ayarlar</h1>
-            <p className="text-[#999999] text-sm">Hesap ve abonelik yönetimi</p>
+      <div className="max-w-3xl mx-auto p-4 md:p-6 lg:p-8 space-y-6">
+        <div className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#0f1716] via-[#161617] to-[#161617] p-5 lg:p-6">
+          <div className="absolute -right-12 -top-12 w-44 h-44 rounded-full bg-[#2dd4bf]/10 blur-3xl pointer-events-none" />
+          <div className="relative flex items-center gap-3">
+            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#2dd4bf]/20 to-[#2dd4bf]/5 border border-[#2dd4bf]/25 flex items-center justify-center">
+              <Settings className="w-5 h-5 text-[#2dd4bf]" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-semibold text-white">Ayarlar</h1>
+              <p className="text-[#999999] text-sm mt-0.5">Hesap ve abonelik yönetimi</p>
+            </div>
           </div>
         </div>
 
@@ -109,9 +112,9 @@ export function SettingsWrapper({ user, profile, subParam }: Props) {
           <motion.div
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-4 rounded-xl bg-[#2563eb]/10 border border-[#2563eb]/20 flex items-center gap-3"
+            className="p-4 rounded-xl bg-[#2dd4bf]/10 border border-[#2dd4bf]/20 flex items-center gap-3"
           >
-            <CheckCircle2 className="w-5 h-5 text-[#2563eb] shrink-0" />
+            <CheckCircle2 className="w-5 h-5 text-[#2dd4bf] shrink-0" />
             <div>
               <p className="text-[#ffffff] text-sm font-medium">Abonelik aktifleştirildi!</p>
               <p className="text-[#999999] text-xs">Planınız güncellendi. Tüm özelliklere artık erişebilirsiniz.</p>
@@ -138,7 +141,7 @@ export function SettingsWrapper({ user, profile, subParam }: Props) {
         <div className="p-5 rounded-xl bg-[#161617] border border-[rgba(229,231,235,0.08)]">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <User className="w-4 h-4 text-[#2563eb]" />
+              <User className="w-4 h-4 text-[#2dd4bf]" />
               <h2 className="text-[#ffffff] font-medium">Profil</h2>
             </div>
             {!editingProfile ? (
@@ -167,7 +170,7 @@ export function SettingsWrapper({ user, profile, subParam }: Props) {
                   whileTap={{ scale: 0.98 }}
                   onClick={handleSaveProfile}
                   disabled={isSavingProfile}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#2563eb] text-white text-xs disabled:opacity-50 transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#2dd4bf] text-[#0a0a0a] text-xs font-semibold disabled:opacity-50 hover:bg-[#5eead4] transition-colors"
                 >
                   {isSavingProfile ? <Loader2 className="w-3 h-3 animate-spin" /> : <Save className="w-3 h-3" />}
                   Kaydet
@@ -179,7 +182,7 @@ export function SettingsWrapper({ user, profile, subParam }: Props) {
           {/* Avatar */}
           <div className="flex justify-center mb-4">
             <div className="relative">
-              <div className="w-16 h-16 rounded-full bg-[#2563eb]/20 flex items-center justify-center text-[#2563eb] text-2xl font-semibold overflow-hidden border-2 border-[#161617]">
+              <div className="w-16 h-16 rounded-full bg-[#2dd4bf]/20 flex items-center justify-center text-[#2dd4bf] text-2xl font-semibold overflow-hidden border-2 border-[#161617]">
                 {currentAvatarUrl
                   // eslint-disable-next-line @next/next/no-img-element
                   ? <img src={currentAvatarUrl} alt="Avatar" className="w-full h-full object-cover" />
@@ -224,7 +227,7 @@ export function SettingsWrapper({ user, profile, subParam }: Props) {
                   value={profileData.full_name}
                   onChange={e => setProfileData(p => ({ ...p, full_name: e.target.value }))}
                   placeholder="Adınız Soyadınız"
-                  className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2563eb] transition-colors"
+                  className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2dd4bf] transition-colors"
                 />
               </div>
               <div>
@@ -236,7 +239,7 @@ export function SettingsWrapper({ user, profile, subParam }: Props) {
                     onChange={e => setProfileData(p => ({ ...p, username: e.target.value }))}
                     placeholder="kullanici_adi"
                     maxLength={30}
-                    className="w-full pl-7 pr-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2563eb] transition-colors"
+                    className="w-full pl-7 pr-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2dd4bf] transition-colors"
                   />
                 </div>
               </div>
@@ -247,7 +250,7 @@ export function SettingsWrapper({ user, profile, subParam }: Props) {
         {/* Abonelik Durumu */}
         <div className="p-5 rounded-xl bg-[#161617] border border-[rgba(229,231,235,0.08)]">
           <div className="flex items-center gap-3 mb-4">
-            <CreditCard className="w-4 h-4 text-[#2563eb]" />
+            <CreditCard className="w-4 h-4 text-[#2dd4bf]" />
             <h2 className="text-[#ffffff] font-medium">Abonelik</h2>
           </div>
 
@@ -265,7 +268,7 @@ export function SettingsWrapper({ user, profile, subParam }: Props) {
             </div>
             <div className={`px-2.5 py-1 rounded-full text-xs font-medium ${
               isActive
-                ? 'bg-[#2563eb]/15 text-[#2563eb]'
+                ? 'bg-[#2dd4bf]/15 text-[#2dd4bf]'
                 : 'bg-[#525252]/15 text-[#525252]'
             }`}>
               {status === 'trial' ? 'Deneme' : isActive ? 'Aktif' : 'Pasif'}

@@ -44,7 +44,7 @@ function SubmitBtn({ loading, label = 'Paylaş' }: { loading: boolean; label?: s
     <button
       type="submit"
       disabled={loading}
-      className="flex items-center gap-2 px-5 py-2 rounded-xl bg-[#2563eb] text-white text-sm font-medium hover:bg-[#1d4ed8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+      className="flex items-center gap-2 px-5 py-2 rounded-xl bg-[#2dd4bf] text-white text-sm font-medium hover:bg-[#1d4ed8] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
     >
       {loading && <Loader2 className="w-4 h-4 animate-spin" />}
       {label}
@@ -96,7 +96,7 @@ function ImageUpload({ onUpload, value, label = 'Görsel Yükle (zorunlu)' }: {
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={uploading}
-          className="w-full h-32 rounded-xl border-2 border-dashed border-[rgba(255,255,255,0.1)] hover:border-[#2563eb]/50 hover:bg-[#2563eb]/5 flex flex-col items-center justify-center gap-2 text-[#999999] hover:text-[#2563eb] transition-all disabled:opacity-50"
+          className="w-full h-32 rounded-xl border-2 border-dashed border-[rgba(255,255,255,0.1)] hover:border-[#2dd4bf]/50 hover:bg-[#2dd4bf]/5 flex flex-col items-center justify-center gap-2 text-[#999999] hover:text-[#2dd4bf] transition-all disabled:opacity-50"
         >
           {uploading ? <Loader2 className="w-6 h-6 animate-spin" /> : <Upload className="w-6 h-6" />}
           <span className="text-xs">{uploading ? 'Yükleniyor...' : 'Tıkla veya sürükle'}</span>
@@ -135,7 +135,7 @@ function Textarea({ label, value, onChange, placeholder, required, maxLength = 1
         placeholder={placeholder}
         rows={rows}
         maxLength={maxLength}
-        className="w-full px-4 py-3 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm resize-none focus:outline-none focus:border-[#2563eb]/60 transition-colors"
+        className="w-full px-4 py-3 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm resize-none focus:outline-none focus:border-[#2dd4bf]/60 transition-colors"
       />
     </div>
   )
@@ -270,7 +270,7 @@ export function ConsultationForm({ onCreated, onClose }: BaseFormProps) {
               onChange={e => setTitle(e.target.value)}
               placeholder="Örn: Zirkonyum kron marjin sorunu"
               maxLength={150}
-              className="w-full px-4 py-2.5 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2563eb]/60 transition-colors"
+              className="w-full px-4 py-2.5 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] placeholder:text-[#999999] text-sm focus:outline-none focus:border-[#2dd4bf]/60 transition-colors"
             />
           </div>
           <ImageUpload onUpload={setImageUrl} value={imageUrl} label="Görsel (zorunlu)" />
@@ -281,7 +281,7 @@ export function ConsultationForm({ onCreated, onClose }: BaseFormProps) {
             type="button"
             onClick={getAiAnalysis}
             disabled={aiLoading}
-            className="flex items-center gap-2 w-full px-4 py-2.5 rounded-xl border border-[#2563eb]/30 bg-[#2563eb]/5 text-[#2563eb] text-sm hover:bg-[#2563eb]/10 transition-colors disabled:opacity-50"
+            className="flex items-center gap-2 w-full px-4 py-2.5 rounded-xl border border-[#2dd4bf]/30 bg-[#2dd4bf]/5 text-[#2dd4bf] text-sm hover:bg-[#2dd4bf]/10 transition-colors disabled:opacity-50"
           >
             {aiLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
             AI Ön Analizi Al
@@ -290,9 +290,9 @@ export function ConsultationForm({ onCreated, onClose }: BaseFormProps) {
           <AnimatePresence>
             {aiAnalysis && aiOpen && (
               <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
-                className="p-4 rounded-xl bg-[#1f1f20] border border-[#2563eb]/20">
+                className="p-4 rounded-xl bg-[#1f1f20] border border-[#2dd4bf]/20">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-medium text-[#2563eb] flex items-center gap-1.5"><Sparkles className="w-3 h-3" /> AI Analizi</span>
+                  <span className="text-xs font-medium text-[#2dd4bf] flex items-center gap-1.5"><Sparkles className="w-3 h-3" /> AI Analizi</span>
                   <button type="button" onClick={() => setAiOpen(false)} className="text-[#999999] hover:text-[#ffffff]">
                     {aiOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
                   </button>
@@ -423,18 +423,18 @@ export function MaterialReviewForm({ onCreated, onClose }: BaseFormProps) {
             <div>
               <label className="block text-xs font-medium text-[#999999] mb-2">Materyal Adı <span className="text-anchor-graphite">*</span></label>
               <input value={materialName} onChange={e => setMaterialName(e.target.value)} placeholder="Örn: Zirkonyum disk"
-                className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] text-sm focus:outline-none focus:border-[#2563eb]/60" />
+                className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] text-sm focus:outline-none focus:border-[#2dd4bf]/60" />
             </div>
             <div>
               <label className="block text-xs font-medium text-[#999999] mb-2">Marka</label>
               <input value={brand} onChange={e => setBrand(e.target.value)} placeholder="Marka adı"
-                className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] text-sm focus:outline-none focus:border-[#2563eb]/60" />
+                className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] text-sm focus:outline-none focus:border-[#2dd4bf]/60" />
             </div>
           </div>
           <div>
             <label className="block text-xs font-medium text-[#999999] mb-2">Kullanım Alanı</label>
             <input value={usageArea} onChange={e => setUsageArea(e.target.value)} placeholder="Örn: Ön grup kron"
-              className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] text-sm focus:outline-none focus:border-[#2563eb]/60" />
+              className="w-full px-3 py-2 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] text-sm focus:outline-none focus:border-[#2dd4bf]/60" />
           </div>
 
           {/* Yıldız puanları */}
@@ -545,14 +545,14 @@ export function StepByStepForm({ onCreated, onClose }: BaseFormProps) {
             <label className="block text-xs font-medium text-[#999999] mb-2">Vaka Başlığı <span className="text-anchor-graphite">*</span></label>
             <input value={caseTitle} onChange={e => setCaseTitle(e.target.value)} placeholder="Örn: Tam seramik kron vaka süreci"
               maxLength={150}
-              className="w-full px-4 py-2.5 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] text-sm focus:outline-none focus:border-[#2563eb]/60" />
+              className="w-full px-4 py-2.5 rounded-xl bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] text-sm focus:outline-none focus:border-[#2dd4bf]/60" />
           </div>
 
           {/* Adımlar */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <p className="text-xs font-medium text-[#999999]">Adımlar <span className="text-anchor-graphite">*</span> <span className="text-[#999999] font-normal">(min 2)</span></p>
-              <button type="button" onClick={addStep} className="flex items-center gap-1 text-xs text-[#2563eb] hover:text-[#2563eb] transition-colors">
+              <button type="button" onClick={addStep} className="flex items-center gap-1 text-xs text-[#2dd4bf] hover:text-[#2dd4bf] transition-colors">
                 <Plus className="w-3.5 h-3.5" /> Adım Ekle
               </button>
             </div>
@@ -572,7 +572,7 @@ export function StepByStepForm({ onCreated, onClose }: BaseFormProps) {
                   onChange={e => updateStep(step.id, 'description', e.target.value)}
                   placeholder={`Adım ${i + 1} açıklaması...`}
                   rows={2}
-                  className="w-full px-3 py-2 rounded-lg bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] text-xs placeholder:text-[#999999] resize-none focus:outline-none focus:border-[#2563eb]/60"
+                  className="w-full px-3 py-2 rounded-lg bg-[#1f1f20] border border-[rgba(229,231,235,0.08)] text-[#ffffff] text-xs placeholder:text-[#999999] resize-none focus:outline-none focus:border-[#2dd4bf]/60"
                 />
                 {step.imageUrl ? (
                   <div className="relative">
@@ -584,7 +584,7 @@ export function StepByStepForm({ onCreated, onClose }: BaseFormProps) {
                     </button>
                   </div>
                 ) : (
-                  <label className="flex items-center gap-2 cursor-pointer text-[#999999] hover:text-[#2563eb] transition-colors text-xs">
+                  <label className="flex items-center gap-2 cursor-pointer text-[#999999] hover:text-[#2dd4bf] transition-colors text-xs">
                     <ImageIcon className="w-3.5 h-3.5" />
                     <span>Görsel ekle (opsiyonel)</span>
                     <input type="file" accept="image/*" className="hidden"
