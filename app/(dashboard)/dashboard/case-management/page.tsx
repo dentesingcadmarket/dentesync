@@ -2,13 +2,12 @@ import Link from 'next/link'
 import { FolderOpen, Paperclip, FileText, Sparkles } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
 import { CaseForm } from '@/components/dashboard/case-form'
-import { StatusBadge, STATUS_CONFIG } from '@/components/dashboard/widgets/status-badge'
+import { StatusBadge } from '@/components/dashboard/widgets/status-badge'
 import { EmptyState } from '@/components/dashboard/widgets/empty-state'
 import type { Case } from '@/lib/supabase/types'
 
 function CaseCard({ c }: { c: Case }) {
   const attachments = (c.attachments ?? []) as unknown[]
-  const accent = STATUS_CONFIG[c.status]?.color.replace('text-', '').replace('[', '').replace(']', '') ?? '#2dd4bf'
   const accentColor = c.status === 'completed' ? '#22c55e'
     : c.status === 'in_progress' ? '#2563eb'
     : c.status === 'open' ? '#2dd4bf'
